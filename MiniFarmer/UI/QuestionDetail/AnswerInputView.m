@@ -45,8 +45,7 @@
 }
 
 - (void)sendAsk:(UIButton *)button{
-    
-    NSString *textStreing = [_textView.placeholder stringByAppendingString:_textView.text];
+   
     
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     
@@ -56,7 +55,7 @@
     
     [dic setObject:userid forKey:@"userid"];
     [dic setObject:username forKey:@"username"];
-    [dic setObject:textStreing forKey:@"replytext"];
+    [dic setObject:_textView.text forKey:@"replytext"];
     
     //model为回答问题的model,所包含的信息为为回答问题者的信息
     //replymodel的为回复问题的model，
@@ -74,9 +73,17 @@
         [dic setObject:_replymodel.usertx forKey:@"usertx"];
         
         [dic setObject:_replymodel.hf_id  forKey:@"hfid"];
-        [dic setObject:_replymodel.user_id forKey:@"rruserid"];
+        //[dic setObject:_replymodel.user_id forKey:@"rruserid"];
+        if (_replymodel.rr_userid == nil) {
+            _replymodel.rr_userid = _model.userid;
+        }
         [dic setObject:_replymodel.rr_userid forKey:@"rruserid"];
+        if (_replymodel.rr_name) {
+            _replymodel.rr_name = _model.xm;
+        }
         [dic setObject:_replymodel.rr_name forKey:@"rrusername"];
+       
+        
         
         
     }

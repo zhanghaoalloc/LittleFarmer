@@ -125,6 +125,8 @@
     }
    // colloctionbutton.backgroundColor = [UIColor greenColor];
     
+    [self initAnswerView];
+    
     
 
 }
@@ -146,11 +148,7 @@
         [self requestQuDataWithUserId:userid wtid:_curWtid];
     }];
     _tableView.header = mjHeader;
-    
 
-    //我来回答按钮
-    [self initAnswerView];
-    
     
 }
 // 初始化我解答的按钮
@@ -158,7 +156,6 @@
     UIView *answerView = [[UIView alloc] initWithFrame:CGRectMake(0,kScreenSizeHeight-60,kScreenSizeWidth, 60)];
     answerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:answerView];
-    
     
     //我解答视图上方的分割线
     UIView *separatorLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 0.5)];
@@ -168,6 +165,7 @@
     //我解答的按钮
     _answerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     _answerbutton.frame = CGRectMake(12,8,kScreenSizeWidth-24,44 );
+    
     [_answerbutton setBackgroundImage:[UIImage imageNamed:@"home_question_list_answer_btn"] forState:UIControlStateNormal];
     [_answerbutton setBackgroundImage:[UIImage imageNamed:@"home_question_list_answer_btn"] forState:UIControlStateHighlighted];
     [_answerbutton setTitle:@"我解答" forState:UIControlStateNormal];
@@ -189,9 +187,9 @@
         
         [self presentViewController:loginVC animated:YES completion:nil];
         loginVC.loginBackBlock = ^{
-            
         };
     }else{
+        
         MyanswerViewController *myanswerVC = [[MyanswerViewController alloc] init];
         myanswerVC.info = self.qInfo;
         myanswerVC.wtid = _curWtid;
@@ -211,9 +209,6 @@
     //如果是自己提的问题
     _colloctionbutton.hidden = _isSelf;
     
-    
-    
-    
     //问题及回答列表
     CGFloat curY = kStatusBarHeight+kNavigationBarHeight+1;
     _tableView.frame = CGRectMake(0, curY, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-curY-60);
@@ -225,14 +220,13 @@
     
     _tableView.tableHeaderView = _commonView;
     
-    
-    
-    
     //如果问题的回答列表为空
     [self initNoanswerView];
     
     if (self.qAnsArr.count == 0) {
         _noanswerView.hidden = NO;
+        
+       // _tableView.hidden = YES;
     }
     
 
@@ -242,17 +236,17 @@
     [_tableView reloadData];
 }
 - (void)initNoanswerView{
+    
     if (_commonView) {
-        _noanswerView =[[UIView alloc] initWithFrame:CGRectMake(0, _commonView.bottom+kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-_commonView.bottom)];
-        _noanswerView.hidden = YES;
+        _noanswerView =[[UIView alloc] initWithFrame:CGRectMake(0, _commonView.bottom+kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-_commonView.bottom-60-kStatusBarHeight-kNavigationBarHeight)];
 
+        _noanswerView.hidden = YES;
+        
         
         //分割线
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 1)];
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 0.5)];
         lineView.backgroundColor  = [UIColor colorWithHexString:@"#dddddd"];
         [_noanswerView addSubview:lineView];
-        
-        
         
         //图片
         UIImageView *noAnswer = [UIImageView new];
@@ -269,8 +263,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.text = @"暂时还没有人回答";
         [_noanswerView addSubview:label];
-        
-        
+
         [self.view addSubview:_noanswerView];
     }
 
@@ -281,8 +274,8 @@
 - (void)requestQuDataWithUserId:(NSString *)uid wtid:(NSString *)wtid
 {
     NSDictionary *dicPar =@{
-//                            @"c":@"tw",
-//                            @"m":@"getwthflist",
+//                          @"c":@"tw",
+//                          @"m":@"getwthflist",
                             @"userid":[NSNumber numberWithInt:[uid intValue]],
                             @"wtid":[NSNumber numberWithInt:[wtid intValue]],
                             };
@@ -293,20 +286,17 @@
                                          parameters:dicPar
                                      prepareExecute:nil
                                             success:^(NSURLSessionDataTask *task, id responseObject)
-     
      {
          [_tableView.header endRefreshing];
         if (!responseObject) {
             DLOG(@"responseObject is nil");
             return ;
         }
-        
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             NSDictionary *dicResult = responseObject;
             BOOL code = [[dicResult objectForKey:@"code"] boolValue];
             NSString *msg = [dicResult objectForKey:@"msg"];
             
-
             DLOG(@"code = %d,msg = %@",code,msg);
             if (!code) {
                 //显示加载错误提示
@@ -325,7 +315,6 @@
                 
                     _isSelf = NO;
                 }
-                
                 //回答列表
                 self.qAnsArr = [QuestionAnsModel arrayOfModelsFromDictionaries:[dicResult objectForKey:@"list"]];
                // NSDictionary *dic = [dicResult objectForKey:@"list"];
@@ -412,7 +401,6 @@
     if(!myHeader) {
         myHeader = [[QuAnswerHeaderView alloc] initWithReuseIdentifier:HeaderIdentifier];
     }
-    
     [myHeader refreshWithAnsModel:ansItem];
      myHeader.isSelf = _isSelf;
     //只是判断了单个单元格是否被采纳
@@ -465,7 +453,7 @@
         };
     }else{
         if (button.selected == NO) {//收藏
-            
+
             [self requestCollection:@"?c=tw&m=add_wt_collection" isCollection:YES action:button];
             
         }else{
@@ -507,7 +495,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 button.selected = !button.selected;
             });
-            
         }else{
             
             if (iscoll == YES) {

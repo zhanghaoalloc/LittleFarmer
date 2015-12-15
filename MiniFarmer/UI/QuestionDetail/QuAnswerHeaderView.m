@@ -396,8 +396,8 @@
         if (button.selected == YES) {//已点赞，取消点赞
             [self _requestData:@"?c=tw&m=canceluserdzhf" type:NO];
         }else{//没有点赞，点赞
-#warning 取消点赞的URL需要修改
-            [self _requestData:@"?c=tw&m=saveuserdzhf" type:YES];
+
+            [self _requestData:@"?c=tw&m=canceluserdzhf" type:YES];
         }
         
     }

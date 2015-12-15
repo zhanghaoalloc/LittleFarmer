@@ -241,6 +241,7 @@
 }
 //发送回复的按钮
 - (void)sendAsk:(UIButton *)btn{
+    
     if (!self.ansTextView.text.length) {
         [self.view showWeakPromptViewWithMessage:@"回复不能为空"];
     }
@@ -278,12 +279,6 @@
    // NSData *imgData = nil;
 
    // NSData *imgData = [NSData dataWithContentsOfFile:_path];
-   
-    
-    
-    
-    
-    
     
     NSDictionary *dic = @{
                           @"wtid":_wtid,
@@ -292,6 +287,7 @@
                           @"hdnr":_ansTextView.text
                          
                                     };
+    [self.view showLoadingWihtText:@"发送中"];
     //没有图片的时候
     if (imgData == nil) {
         [[SHHttpClient defaultClient]requestWithMethod:SHHttpRequestPost subUrl:@"?c=tw&m=savewthf" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -302,6 +298,7 @@
 
     }else{//有图片的时候
         
+        
         NSDictionary *fileData = @{
                                    @"upfile":imgData
                                   };
@@ -311,7 +308,14 @@
             
             
             if (error == nil) {
-                NSLog(@"发送成功");
+                [self.view dismissLoading];
+                [self.view showWeakPromptViewWithMessage:@"回答成功"];
+                
+            }else{
+            
+                [self.view dismissLoading];
+                [self.view  showWeakPromptViewWithMessage:@"回答失败"];
+            
             }
         }];
         

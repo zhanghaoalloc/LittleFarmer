@@ -85,7 +85,7 @@
     
     [self.view addSubview:backButton];
     //3.导航栏底部分割线
-    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:1];
+    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:0.5];
     
     
     

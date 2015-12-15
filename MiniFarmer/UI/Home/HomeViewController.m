@@ -265,29 +265,21 @@
     return cell;
 }
 #pragma mark ----菜单按钮绑定的事件
+//学技术
 - (void)studyAction:(UIButton *)button{
     
-    /*
-    MessageViewController *messageVC = [[MessageViewController alloc] init];
-    messageVC.view.backgroundColor = [UIColor whiteColor];
-    
-    self.ViewController.tabBarController.hidesBottomBarWhenPushed = YES;
-    
-    [self.ViewController.navigationController pushViewController:messageVC animated:YES];
-     */
-
     StudyViewController *studyVC = [[StudyViewController alloc] init];
     self.tabBarController.hidesBottomBarWhenPushed = YES;
 
     [self.navigationController pushViewController:studyVC animated:YES];
 }
 
-
-
 #pragma mark - clickevent
 - (void)tapAskBtn:(UIButton *)btn
 {
     AskSpecialistViewController *askSVC = [[AskSpecialistViewController alloc] init];
+    
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:askSVC animated:YES];
 
 }

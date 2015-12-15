@@ -42,7 +42,11 @@
 @property (nonatomic, strong) NSMutableArray *arrayPhotos;
 @end
 
-@implementation AskViewController
+@implementation AskViewController{
+
+    NSInteger index;
+
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,21 +115,23 @@
       @"userid":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]],
       @"mobile":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userLoginNumber]],
       @"zjid":@"0",
-      @"wtzw":self.askCropNameView.text,
+      @"zwmc":self.askCropNameView.text,
       @"wtms":self.askTextView.text};
     
     __weak AskViewController *wself = self;
+    [self.view showLoadingWihtText:@"发送中"];
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=tw&m=savetw" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         wself.sendModel = [[AskSendModel alloc] initWithDictionary:
                            (NSDictionary *)responseObject error:nil];
-
-        if ([wself.sendModel.msg isEqualToString:@"success"])
-        {
+        NSNumber *code = [responseObject objectForKey:@"code"];
+        int  i = [code intValue];
+        
+        if (i == 1) {
+            
             [wself sendPicture];
-            [self.view showWeakPromptViewWithMessage:@"发送成功"];
-            [self dismissAskVC:nil];
+           
         }
         else
         {
@@ -134,7 +140,7 @@
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [self.view showWeakPromptViewWithMessage:@"发送失败"];
+        
     }];
     
     
@@ -143,40 +149,46 @@
    }
 - (void)sendPicture{
     
-    for (int i =0; i<self.arrayPhotos.count; i++) {
+
+    
+    for (int i = 0;i<self.arrayPhotos.count-1; i++) {
+        
         MTPickerInfo *info = self.arrayPhotos[i];
         UIImage *image =info.image;
-        NSData *imgData = UIImageJPEGRepresentation(image, 0.1);
+        NSData *imgData = UIImageJPEGRepresentation(image, 0.5);
         NSString  *wtid = _sendModel.wtid;
         
-        NSNumber *number = [NSNumber numberWithInt:i];
+        NSString *number = [NSString  stringWithFormat:@"%d",i+1];
         
         NSDictionary * dic =@{
-                              @"wtid":wtid,
-                              @"zpxh":number
-                              };
+                              @"twid":wtid,
+                              @"zpxh":number                             };
         
         NSDictionary *fileData = @{
                                    @"upfile":imgData
                                    };
+        __weak AskViewController *wself = self;
         [SHHttpClient uploadURL:@"?c=tw&m=do_uploadtw" params:dic fileData:fileData completion:^(id result, NSError *error) {
             if (error == nil ) {
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    index ++;
+                    if (index == (wself.arrayPhotos.count-1)) {
+                        [wself.view dismissLoading];
+                        [wself.view showWeakPromptViewWithMessage:@"发送成功"];
+                        [self dismissAskVC:nil];
+                    }
+                });
             }else {
-                
-                
             }
-            
         }];
-        
     }
-
-
+    
 }
+//此方法用于统计图片是否上传成功
+
 
 
 #pragma mark -
-
 - (void)mt_AssetsPickerController:(MTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
     
@@ -432,8 +444,6 @@
     }
     return newImages;
 }
-
-
 
 
 @end

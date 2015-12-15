@@ -8,9 +8,11 @@
 
 #import "AskSpecialistViewController.h"
 #import "BaseViewController+Navigation.h"
+#import "SeachView.h"
 
 @interface AskSpecialistViewController ()
 
+@property (nonatomic ,strong) SeachView *searchView;
 @property (nonatomic, strong) UIButton *specialistTypeBT;
 @property (nonatomic, strong) UIButton *intelligentSortingBT;
 
@@ -23,12 +25,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     
-    self.view.backgroundColor = RGBCOLOR(239, 239, 239);
-    [self setBarLeftDefualtButtonWithTarget:self action:@selector(back:)];
+    self.view.backgroundColor =[UIColor colorWithHexString:@"#ffffff"];
+    [self setNavigationBarIsHidden:NO];
+   
+    //初始化导航栏
+    [self setNavigation];
+    
     [self initsubviews];
     
 }
+- (void)setNavigation{
+    //1.搜索栏
+    _searchView  = [[NSBundle mainBundle] loadNibNamed:@"SeachView" owner:self options:nil].lastObject;
+    _searchView.frame = CGRectMake(35,kStatusBarHeight , kScreenSizeWidth-35,kNavigationBarHeigth);
+    _searchView.imageNmae = @"home_btn_message_nm";
+    _searchView.isSearch = NO;
+    _searchView.index = 3;
+    
+    [self.view addSubview:_searchView];
+    
+    //2.导航栏返回按钮
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backButton setFrame:CGRectMake(0,kStatusBarHeight,44, 44)];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"home_navigation_back_btn"] forState:UIControlStateNormal];
+    [backButton setImage:[UIImage imageNamed:@"home_navigation_back_btn"] forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(back:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:backButton];
+    //3.导航栏底部分割线
+    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:0.5];
+}
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,17 +99,11 @@
     [self.view addSubview:self.specialistTypeBT];
     [self.view addSubview:self.intelligentSortingBT];
     
-    [self.specialistTypeBT mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(38);
-        make.top.equalTo(self.view.mas_top).offset(self.yDispaceToTop + 12);
-        make.size.mas_equalTo(CGSizeMake(59, 13));
-    }];
+    CGFloat  weigth = kScreenSizeWidth/2;
     
-    [self.intelligentSortingBT mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self.specialistTypeBT.mas_centerY);
-        make.size.mas_equalTo(CGSizeMake(59, 13));
-        make.right.equalTo(self.view.mas_right).offset(-38);
-    }];
+    
+    
+    
 }
 
 #pragma mark - 初始化方法
@@ -89,8 +113,8 @@
     {
         _specialistTypeBT = [UIButton buttonWithType:UIButtonTypeCustom];
         [_specialistTypeBT setTitle:@"专家类型" forState:UIControlStateNormal];
-        [_specialistTypeBT setBTFont:kTextFont(13)];
-        [_specialistTypeBT setTitleColor:[UIColor colorWithHexString:@"333333"] forState:UIControlStateNormal];
+        [_specialistTypeBT setBTFont:kTextFont(16)];
+        [_specialistTypeBT setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     }
     return _specialistTypeBT;
 }
@@ -100,7 +124,7 @@
     if (!_intelligentSortingBT)
     {
         _intelligentSortingBT = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_intelligentSortingBT setBTFont:kTextFont(13)];
+        [_intelligentSortingBT setBTFont:kTextFont(16)];
         [_intelligentSortingBT setTitle:@"智能排序" forState:UIControlStateNormal];
         [_intelligentSortingBT setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
     }

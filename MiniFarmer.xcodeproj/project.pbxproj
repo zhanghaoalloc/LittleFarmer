@@ -149,8 +149,6 @@
 		313E981C1C05957500DC7B4F /* (null) in Resources */ = {isa = PBXBuildFile; settings = {ASSET_TAGS = (); }; };
 		31A0DBC21C0899780017D1F0 /* NSString+CustomAttributeString.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A0DBBF1C0899780017D1F0 /* NSString+CustomAttributeString.m */; settings = {ASSET_TAGS = (); }; };
 		31A0DBC31C0899780017D1F0 /* UIButton+Font.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A0DBC11C0899780017D1F0 /* UIButton+Font.m */; settings = {ASSET_TAGS = (); }; };
-		31A0DBDE1C089F8C0017D1F0 /* AskSpecialistView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A0DBDC1C089F8C0017D1F0 /* AskSpecialistView.m */; settings = {ASSET_TAGS = (); }; };
-		31A0DBDF1C089F8C0017D1F0 /* AskSpecialistView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31A0DBDD1C089F8C0017D1F0 /* AskSpecialistView.xib */; settings = {ASSET_TAGS = (); }; };
 		31A0DBE21C089F980017D1F0 /* AskSpecialistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */; settings = {ASSET_TAGS = (); }; };
 		31D4FDC21BF3A5320081F64F /* MTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D4FDC11BF3A5320081F64F /* MTAssetsPickerController.m */; settings = {ASSET_TAGS = (); }; };
 		31D4FDC91BF3A8DA0081F64F /* UIButton+MTButtonCheckMarkAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D4FDC81BF3A8DA0081F64F /* UIButton+MTButtonCheckMarkAnimation.m */; settings = {ASSET_TAGS = (); }; };
@@ -561,11 +559,8 @@
 		31A0DBBF1C0899780017D1F0 /* NSString+CustomAttributeString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CustomAttributeString.m"; sourceTree = "<group>"; };
 		31A0DBC01C0899780017D1F0 /* UIButton+Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Font.h"; sourceTree = "<group>"; };
 		31A0DBC11C0899780017D1F0 /* UIButton+Font.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Font.m"; sourceTree = "<group>"; };
-		31A0DBDB1C089F8C0017D1F0 /* AskSpecialistView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskSpecialistView.h; sourceTree = "<group>"; };
-		31A0DBDC1C089F8C0017D1F0 /* AskSpecialistView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskSpecialistView.m; sourceTree = "<group>"; };
-		31A0DBDD1C089F8C0017D1F0 /* AskSpecialistView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AskSpecialistView.xib; sourceTree = "<group>"; };
-		31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AskSpecialistViewController.h; path = HomeDetail/AskSpecialistViewController.h; sourceTree = "<group>"; };
-		31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AskSpecialistViewController.m; path = HomeDetail/AskSpecialistViewController.m; sourceTree = "<group>"; };
+		31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AskSpecialistViewController.h; path = ../../HomeDetail/AskSpecialistViewController.h; sourceTree = "<group>"; };
+		31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AskSpecialistViewController.m; path = ../../HomeDetail/AskSpecialistViewController.m; sourceTree = "<group>"; };
 		31D4FDC01BF3A5320081F64F /* MTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTAssetsPickerController.h; sourceTree = "<group>"; };
 		31D4FDC11BF3A5320081F64F /* MTAssetsPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTAssetsPickerController.m; sourceTree = "<group>"; };
 		31D4FDC71BF3A8DA0081F64F /* UIButton+MTButtonCheckMarkAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MTButtonCheckMarkAnimation.h"; sourceTree = "<group>"; };
@@ -907,6 +902,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B173C671C200780000854FC /* AskExpert */ = {
+			isa = PBXGroup;
+			children = (
+				1B173C681C200780000854FC /* Model */,
+				1B173C691C200780000854FC /* View */,
+				1B173C6A1C200780000854FC /* ViewController */,
+			);
+			path = AskExpert;
+			sourceTree = "<group>";
+		};
+		1B173C681C200780000854FC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */,
+				31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1B173C691C200780000854FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1B173C6A1C200780000854FC /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1B1BDF441C146C61005F4274 /* UMSocial_Sdk_4.4 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1155,6 +1183,8 @@
 		1BC52DBE1C158E60007A49DE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1BC52DBA1C15394C007A49DE /* QuAnswerReplyCell.h */,
+				1BC52DBB1C15394C007A49DE /* QuAnswerReplyCell.m */,
 				1BC52DB81C15394C007A49DE /* QuAnswerHeaderView.h */,
 				1BC52DB91C15394C007A49DE /* QuAnswerHeaderView.m */,
 				FCC630B61BF4D70000A2B08C /* QuCommonView.h */,
@@ -1362,9 +1392,6 @@
 		313E98171C05950700DC7B4F /* HomeDetailViews */ = {
 			isa = PBXGroup;
 			children = (
-				31A0DBDB1C089F8C0017D1F0 /* AskSpecialistView.h */,
-				31A0DBDC1C089F8C0017D1F0 /* AskSpecialistView.m */,
-				31A0DBDD1C089F8C0017D1F0 /* AskSpecialistView.xib */,
 			);
 			path = HomeDetailViews;
 			sourceTree = "<group>";
@@ -1626,8 +1653,7 @@
 		FCC6266D1BCA7A0E00943F99 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */,
-				31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */,
+				1B173C671C200780000854FC /* AskExpert */,
 				313E98101C058B2B00DC7B4F /* HomeDetail */,
 				FCC6266E1BCA7A0E00943F99 /* HomeViewController.h */,
 				FCC6266F1BCA7A0E00943F99 /* HomeViewController.m */,
@@ -1676,8 +1702,6 @@
 		FCC630B51BF4D70000A2B08C /* QuestionDetail */ = {
 			isa = PBXGroup;
 			children = (
-				1BC52DBA1C15394C007A49DE /* QuAnswerReplyCell.h */,
-				1BC52DBB1C15394C007A49DE /* QuAnswerReplyCell.m */,
 				1B1DCED21C1593B500DB54BD /* Model */,
 				1B1DCED11C1593B100DB54BD /* ViewController */,
 				1BC52DBE1C158E60007A49DE /* View */,
@@ -2266,7 +2290,6 @@
 				1BD3ECCC1C1E9A34001C2421 /* MineSegmentView.xib in Resources */,
 				1B1BDF691C146C61005F4274 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				1BD3EC911C1E9A34001C2421 /* AboutViewController.xib in Resources */,
-				31A0DBDF1C089F8C0017D1F0 /* AskSpecialistView.xib in Resources */,
 				1B0DB3F71C192D6300116B36 /* AnswerInputView.xib in Resources */,
 				1B1BDF671C146C61005F4274 /* UMSnsAccountViewController.xib in Resources */,
 				FCC884C11BC3EBB900A1200B /* Assets.xcassets in Resources */,
@@ -2331,7 +2354,6 @@
 				313E98131C058B6100DC7B4F /* (null) in Sources */,
 				FCC90DB01BD3AE5B00D341DD /* QuestionCell.m in Sources */,
 				313E98061C01F99C00DC7B4F /* (null) in Sources */,
-				31A0DBDE1C089F8C0017D1F0 /* AskSpecialistView.m in Sources */,
 				1BD3ECBA1C1E9A34001C2421 /* MineSaveQuestionModel.m in Sources */,
 				31EC679C1BF0E4A700B8E1BC /* PSTCollectionViewItemKey.m in Sources */,
 				FCC74FF61BD27DAF008446ED /* QuestionInfo.m in Sources */,
