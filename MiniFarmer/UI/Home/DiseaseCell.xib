@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="105" id="KGk-i7-Jjw" customClass="DiseaseCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="104.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_study_diseaseDeatial" translatesAutoresizingMaskIntoConstraints="NO" id="637-4R-Dln">
+                        <rect key="frame" x="16" y="23" width="10" height="10"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="01j-Al-f0Z"/>
+                            <constraint firstAttribute="width" constant="10" id="jbd-ut-lUB"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HXp-zV-UVO">
+                        <rect key="frame" x="16" y="56" width="288" height="32.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tV6-zL-xZG">
+                        <rect key="frame" x="38" y="16" width="68" height="24"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="Aux-cu-wDq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="HXp-zV-UVO" secondAttribute="trailing" constant="16" id="0so-3q-Gry"/>
+                    <constraint firstItem="HXp-zV-UVO" firstAttribute="top" secondItem="tV6-zL-xZG" secondAttribute="bottom" constant="16" id="D3p-7E-bat"/>
+                    <constraint firstItem="tV6-zL-xZG" firstAttribute="centerY" secondItem="637-4R-Dln" secondAttribute="centerY" id="Okt-uP-NxB"/>
+                    <constraint firstItem="tV6-zL-xZG" firstAttribute="leading" secondItem="637-4R-Dln" secondAttribute="trailing" constant="12" id="RV4-KZ-SlC"/>
+                    <constraint firstItem="tV6-zL-xZG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="WUW-zk-tWi"/>
+                    <constraint firstItem="HXp-zV-UVO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="bXc-a3-Keq"/>
+                    <constraint firstItem="637-4R-Dln" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="sK3-ia-tN6"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="HXp-zV-UVO" secondAttribute="bottom" constant="8" id="sgZ-Wh-KOo"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="_commentLabel" destination="HXp-zV-UVO" id="KzF-sN-uCC"/>
+                <outlet property="_titleLabel" destination="tV6-zL-xZG" id="Gef-Gy-Iq5"/>
+            </connections>
+            <point key="canvasLocation" x="168" y="42.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="home_study_diseaseDeatial" width="10" height="10"/>
+    </resources>
+</document>

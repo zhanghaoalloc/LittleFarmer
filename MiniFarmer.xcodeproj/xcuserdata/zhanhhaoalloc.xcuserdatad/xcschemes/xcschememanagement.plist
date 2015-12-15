@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>MiniFarmer.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>FCC884B01BC3EBB900A1200B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FCC884C91BC3EBB900A1200B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FCC884D41BC3EBB900A1200B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

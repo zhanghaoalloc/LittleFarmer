@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="SAO-V4-JIA" customClass="SeachView">
+            <rect key="frame" x="0.0" y="0.0" width="345" height="58"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view tag="101" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAl-bd-unW">
+                    <rect key="frame" x="12" y="8" width="285" height="42"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_btn_search_nm" translatesAutoresizingMaskIntoConstraints="NO" id="zUU-J9-noR">
+                            <rect key="frame" x="8" y="2" width="13" height="38"/>
+                            <animations/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入要搜索的内容" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JVs-AE-Kh5">
+                            <rect key="frame" x="29" y="0.0" width="254" height="42"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" red="1" green="0.37555315316661819" blue="0.36030991842989968" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="JVs-AE-Kh5" firstAttribute="leading" secondItem="zUU-J9-noR" secondAttribute="trailing" constant="8" id="9oB-OY-kXG"/>
+                        <constraint firstItem="zUU-J9-noR" firstAttribute="leading" secondItem="VAl-bd-unW" secondAttribute="leading" constant="8" id="GQj-UR-aDL"/>
+                        <constraint firstItem="JVs-AE-Kh5" firstAttribute="top" secondItem="VAl-bd-unW" secondAttribute="top" id="TYi-xE-v8l"/>
+                        <constraint firstAttribute="trailing" secondItem="JVs-AE-Kh5" secondAttribute="trailing" constant="2" id="Z0A-d8-T6t"/>
+                        <constraint firstAttribute="bottom" secondItem="JVs-AE-Kh5" secondAttribute="bottom" id="dRf-3i-4eC"/>
+                        <constraint firstItem="zUU-J9-noR" firstAttribute="top" secondItem="VAl-bd-unW" secondAttribute="top" constant="2" id="sqC-uD-L2a"/>
+                        <constraint firstAttribute="bottom" secondItem="zUU-J9-noR" secondAttribute="bottom" constant="2" id="xMT-rX-BRq"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0dE-k0-mcm">
+                    <rect key="frame" x="299" y="0.0" width="44" height="58"/>
+                    <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="44" id="0ag-jP-vZ4"/>
+                    </constraints>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="0dE-k0-mcm" secondAttribute="bottom" id="AWa-1z-XhB"/>
+                <constraint firstAttribute="bottom" secondItem="VAl-bd-unW" secondAttribute="bottom" constant="8" id="DOS-gr-kgr"/>
+                <constraint firstItem="VAl-bd-unW" firstAttribute="top" secondItem="SAO-V4-JIA" secondAttribute="top" constant="8" id="HsO-wI-Y5q"/>
+                <constraint firstItem="0dE-k0-mcm" firstAttribute="leading" secondItem="VAl-bd-unW" secondAttribute="trailing" constant="2" id="JcR-gK-tjJ"/>
+                <constraint firstItem="VAl-bd-unW" firstAttribute="leading" secondItem="SAO-V4-JIA" secondAttribute="leading" constant="12" id="R1X-Ws-qmC"/>
+                <constraint firstAttribute="trailing" secondItem="0dE-k0-mcm" secondAttribute="trailing" constant="2" id="qP5-hE-oub"/>
+                <constraint firstItem="0dE-k0-mcm" firstAttribute="top" secondItem="SAO-V4-JIA" secondAttribute="top" id="y0J-It-z25"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="_message" destination="0dE-k0-mcm" id="RAM-fy-rTZ"/>
+                <outlet property="_textView" destination="VAl-bd-unW" id="GFC-n3-i70"/>
+            </connections>
+            <point key="canvasLocation" x="6.5" y="262"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="home_btn_search_nm" width="13" height="13"/>
+    </resources>
+</document>
