@@ -71,9 +71,19 @@
 - (void)setData:(NSArray *)data{
 
     _data = data;
+    
     CGRect frame = self.frame;
-    frame.size.height = _data.count*150;
-    self.frame = frame;
+    
+    CGFloat heigth = _data.count*150;
+    if (heigth<frame.size.height) {
+        frame.size.height = heigth;
+        self.frame = frame;
+    }else{
+        frame.size.height =  kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44);
+        self.frame = frame;
+        
+    
+    }
     
     [self reloadData];
 

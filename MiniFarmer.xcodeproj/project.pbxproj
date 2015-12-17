@@ -61,6 +61,8 @@
 		1B7C5DF61C214A54004251BB /* ExpertListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF41C214A54004251BB /* ExpertListCell.m */; settings = {ASSET_TAGS = (); }; };
 		1B7C5DF71C214A54004251BB /* ExpertListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF51C214A54004251BB /* ExpertListCell.xib */; settings = {ASSET_TAGS = (); }; };
 		1B7C5DFA1C215C76004251BB /* ExpertModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF91C215C76004251BB /* ExpertModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B804B071C22EAAE00E52199 /* BusinessCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B804B061C22EAAE00E52199 /* BusinessCardCell.m */; settings = {ASSET_TAGS = (); }; };
+		1B804B091C22EC6800E52199 /* BusinessCardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B804B081C22EC6800E52199 /* BusinessCardCell.xib */; settings = {ASSET_TAGS = (); }; };
 		1B883BA41C22402600B95426 /* ExpertDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA31C22402600B95426 /* ExpertDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B883BA71C229C1200B95426 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA61C229C1200B95426 /* UIImage+ImageEffects.m */; settings = {ASSET_TAGS = (); }; };
 		1B883BAA1C229C7300B95426 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA91C229C7300B95426 /* ParallaxHeaderView.m */; settings = {ASSET_TAGS = (); }; };
@@ -418,6 +420,9 @@
 		1B7C5DF51C214A54004251BB /* ExpertListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpertListCell.xib; sourceTree = "<group>"; };
 		1B7C5DF81C215C76004251BB /* ExpertModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertModel.h; sourceTree = "<group>"; };
 		1B7C5DF91C215C76004251BB /* ExpertModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertModel.m; sourceTree = "<group>"; };
+		1B804B051C22EAAE00E52199 /* BusinessCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessCardCell.h; sourceTree = "<group>"; };
+		1B804B061C22EAAE00E52199 /* BusinessCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessCardCell.m; sourceTree = "<group>"; };
+		1B804B081C22EC6800E52199 /* BusinessCardCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessCardCell.xib; sourceTree = "<group>"; };
 		1B883BA21C22402600B95426 /* ExpertDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertDetailViewController.h; sourceTree = "<group>"; };
 		1B883BA31C22402600B95426 /* ExpertDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertDetailViewController.m; sourceTree = "<group>"; };
 		1B883BA51C229C1200B95426 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -961,6 +966,9 @@
 				1B7C5DF51C214A54004251BB /* ExpertListCell.xib */,
 				1B883BAB1C22B69700B95426 /* ExpertDetailHearView.h */,
 				1B883BAC1C22B69700B95426 /* ExpertDetailHearView.m */,
+				1B804B051C22EAAE00E52199 /* BusinessCardCell.h */,
+				1B804B061C22EAAE00E52199 /* BusinessCardCell.m */,
+				1B804B081C22EC6800E52199 /* BusinessCardCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2355,6 +2363,7 @@
 				1BEC27B11C0B34230046F96A /* StudyHeaderView.xib in Resources */,
 				1B337D741C06F27E00F2FE5B /* StudymoreCell.xib in Resources */,
 				1B6BE1791C04582200D69A2D /* SortView.xib in Resources */,
+				1B804B091C22EC6800E52199 /* BusinessCardCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2558,6 +2567,7 @@
 				313E981A1C05955300DC7B4F /* (null) in Sources */,
 				FCC7529C1BC4E01500DE4B27 /* JSONKeyMapper.m in Sources */,
 				1BD3ECC31C1E9A34001C2421 /* Colours.m in Sources */,
+				1B804B071C22EAAE00E52199 /* BusinessCardCell.m in Sources */,
 				FCCB90611BE1B738005F1A83 /* AnswersButton.m in Sources */,
 				FCCA8FAD1BDD255E00B1CCF4 /* BaseViewController.m in Sources */,
 				1BD3ECB71C1E9A34001C2421 /* MineExpertModel.m in Sources */,

@@ -10,20 +10,26 @@
 #import "ParallaxHeaderView.h"
 #import "UIViewAdditions.h"
 #import "BaseViewController+Navigation.h"
+#import "ExpertDetailHearView.h"
+#import "BusinessCardCell.h"
 @interface ExpertDetailViewController ()
 
 @property (nonatomic,strong) UIView *navigaView;
 
 @end
 
-@implementation ExpertDetailViewController
+@implementation ExpertDetailViewController{
+
+    NSString *_identify1;
+
+}
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeBottom;
-    self.view.backgroundColor = [UIColor yellowColor];
+    self.view.backgroundColor = [UIColor  whiteColor];
     
     [self initNavigationView];
     [self initTableView];
@@ -36,12 +42,21 @@
     
 
 }
+
 - (void)initTableView{
     
     _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
     
+    //注册第一种单元格
+    UINib *nib1 = [UINib nibWithNibName:@"BusinessCardCell" bundle:nil];
+    
+    _identify1 = @"BusinessCardCell";
+    [_tableView registerNib:nib1 forCellReuseIdentifier:_identify1];
+    
+
     [self.view insertSubview:_tableView atIndex:0];
     
     //添加子视图
@@ -56,13 +71,11 @@
     _navigaView.backgroundColor = [UIColor whiteColor];
     _navigaView.alpha = 1.0f;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, 200, kNavigationBarHeight)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, kScreenSizeWidth, kNavigationBarHeight)];
     titleLabel.text = @"专家详情";
     titleLabel.font = kTextFont18;
     titleLabel.textColor =[UIColor colorWithHexString:@"#333333"];
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.center = _navigaView.center;
-    
     
     //2.导航栏返回按钮
     
@@ -91,7 +104,7 @@
 #pragma mark---数据源
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 2;
+    return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
@@ -99,6 +112,11 @@
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.section == 0) {
+        BusinessCardCell *cell = [tableView dequeueReusableCellWithIdentifier:_identify1 forIndexPath:indexPath];
+        return cell;
+    }
 
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     
@@ -106,6 +124,11 @@
 
 }
 #pragma mark----UITableView的代理方法
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+
+
+    return 250;
+}
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section ==0) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 12)];
@@ -126,9 +149,15 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor redColor];
+    ExpertDetailHearView *view = [[ExpertDetailHearView alloc] init];
+    //view.backgroundColor = [UIColor redColor];
+    if (section ==0) {
+        view.imageString = @"home_expert_detail_expert_card";
+        view.titleString = @"专家名片";
+    }else {
+        view.imageString = @"home_expert_detail_answer";
+        view.titleString = @"专家回答过的问题";
+    }
     
     return view;
 }

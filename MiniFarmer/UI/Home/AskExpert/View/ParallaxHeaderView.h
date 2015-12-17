@@ -12,9 +12,9 @@
 
 
 @interface ParallaxHeaderView : UIView
-@property (nonatomic,strong)  UILabel *headerTitleLabel;
-@property (nonatomic,strong) UIImage *headerImage;
-@property (nonatomic,strong) UIView *view;
+@property (nonatomic,strong)  UILabel *headerTitleLabel;//主题
+@property (nonatomic,strong) UIImage *headerImage;//头部图片
+
 
 
 //设置背景视图的大小和背景图 ，返回一个背景图

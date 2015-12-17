@@ -14,5 +14,8 @@
 
 @property(nonatomic,strong)UILabel *title;
 
+@property(nonatomic,copy)NSString *titleString;
+
+@property(nonatomic,copy)NSString *imageString;
 
 @end

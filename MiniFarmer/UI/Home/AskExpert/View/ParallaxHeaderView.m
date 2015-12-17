@@ -11,11 +11,18 @@
 
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
+#import "UIViewAdditions.h"
 
 @interface ParallaxHeaderView ()
-@property (strong, nonatomic)  UIScrollView *imageScrollView;
-@property (strong, nonatomic)  UIImageView *imageView;
-@property (nonatomic,strong)  UIImageView *bluredImageView;
+@property (strong, nonatomic)  UIScrollView *imageScrollView;//滚动视图
+@property (strong, nonatomic)  UIImageView *imageView;//图片视图
+@property (nonatomic,strong)  UIImageView *bluredImageView;//毛玻璃视图
+
+//定义视图
+@property (nonatomic,strong)UIButton *leftButton;
+@property (nonatomic,strong)UIButton *rigthButton;
+@property (nonatomic,strong)UIButton *backButton;
+
 @end
 
 #define kDefaultHeaderFrame CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)
@@ -53,7 +60,6 @@ static CGFloat kLabelPaddingDist = 8.0f;
         self.imageScrollView.frame = frame;
         self.bluredImageView.alpha =   1 / kDefaultHeaderFrame.size.height * offset.y * 2;
         self.clipsToBounds = YES;
-       // self.view.alpha =  0 + 1 / kDefaultHeaderFrame.size.height * offset.y * 2 ;
     }
     else
     {
@@ -63,10 +69,9 @@ static CGFloat kLabelPaddingDist = 8.0f;
         rect.origin.y -= delta;
         rect.size.height += delta;
         self.imageScrollView.frame = rect;
-        //self.view.hidden = NO;
         self.clipsToBounds = NO;
         self.headerTitleLabel.alpha = 1 - (delta) * 1 / kMaxTitleAlphaOffset;
-        self.view.alpha =(delta) * 1 / kMaxTitleAlphaOffset-1;
+        
     }
 }
 
@@ -74,8 +79,10 @@ static CGFloat kLabelPaddingDist = 8.0f;
 #pragma mark Private
 
 - (void)initialSetup
-{
+{   self.backgroundColor = [UIColor whiteColor];
+    
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
+    //1.滚动视图
     self.imageScrollView = scrollView;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:scrollView.bounds];
     imageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -88,6 +95,7 @@ static CGFloat kLabelPaddingDist = 8.0f;
     labelRect.origin.x = labelRect.origin.y = kLabelPaddingDist;
     labelRect.size.width = labelRect.size.width - 2 * kLabelPaddingDist;
     labelRect.size.height = labelRect.size.height - 2 * kLabelPaddingDist;
+    //2.标题视图
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:labelRect];
     headerLabel.textAlignment = NSTextAlignmentCenter;
     headerLabel.numberOfLines = 0;
@@ -97,16 +105,8 @@ static CGFloat kLabelPaddingDist = 8.0f;
     headerLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:23];
     self.headerTitleLabel = headerLabel;
     [self.imageScrollView addSubview:self.headerTitleLabel];
-    /*
-    self.view = [[UIView alloc] init];
-    self.view.bounds = CGRectMake(0, 50, self.imageScrollView.bounds.size.width,60 );
-    self.view.backgroundColor = [UIColor redColor];
-    self.view.hidden = YES;
-    self.view.alpha = 1.0f;
-    [self.imageScrollView addSubview:self.view];
-     */
-    
-    
+
+    //3.毛玻璃视图
     self.bluredImageView = [[UIImageView alloc] initWithFrame:self.imageView.frame];
     self.bluredImageView.autoresizingMask = self.imageView.autoresizingMask;
     self.bluredImageView.alpha = 0.0f;
@@ -114,9 +114,63 @@ static CGFloat kLabelPaddingDist = 8.0f;
     
     [self addSubview:self.imageScrollView];
     
-    [self refreshBlurViewForNewImage];
+    //4.两个操作按钮
+    
+    CGFloat width = (kScreenSizeWidth-12-12-15)/2;
+    double   time = (double)82/336;
+    CGRect subRect;
+    subRect.size.width = width;
+    subRect.size.height = width*time;
+    subRect.origin.x = 12;
+    subRect.origin.y = self.bounds.size.height-width*time-12;
+    //左边
+    self.leftButton = [self button];
+    [self.leftButton setTitle:@"向专家提问" forState:UIControlStateNormal];
+    UIImage *image = [UIImage imageNamed:@"home_expert_ask_expert"];
+    image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [self.leftButton setBackgroundImage:image forState:UIControlStateNormal];
+    self.leftButton.frame = subRect;
+    [self addSubview:self.leftButton];
+    
+    //右边
+    subRect.origin.x = 12+15+width;
+    self.rigthButton = [self button];
+    [self.rigthButton setBackgroundImage:[UIImage imageNamed:@"home_expert_attention"] forState:UIControlStateNormal];
+    [self.rigthButton setTitle:@"加关注" forState:UIControlStateNormal];
+     self.rigthButton.backgroundColor = [UIColor redColor];
+     self.rigthButton.frame = subRect;
+    [self  addSubview:self.rigthButton];
+    //5.返回按钮
+    UIButton *backbutton =[UIButton buttonWithType:UIButtonTypeCustom];
+    [backbutton setImage:[UIImage imageNamed:@"home_expert_detail_back_btn"] forState:UIControlStateNormal];
+    [backbutton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.backButton = backbutton;
+    self.backButton.frame = CGRectMake(0, kStatusBarHeight, kNavigationBarHeight, kNavigationBarHeight);
+    
+    [self.imageScrollView addSubview:self.backButton];
+    
+    
+    
+    
+
+    
+    
+    
+    
+        [self refreshBlurViewForNewImage];
+}
+#pragma mark---子视图的初始化
+- (UIButton *)button{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
+    button.titleLabel.font = kTextFont16;
+
+    [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+
+    return button;
 }
 
+//头视图的图片
 - (void)setHeaderImage:(UIImage *)headerImage
 {
     _headerImage = headerImage;
@@ -141,8 +195,16 @@ static CGFloat kLabelPaddingDist = 8.0f;
     self.bluredImageView.image = screenShot;
 }
 
+#pragma mark---按钮的点击事件
+- (void)buttonAction:(UIButton *)button{
+
+
+
+}
+- (void)backAction:(UIButton *)button{
+
+    [self.viewController.navigationController popViewControllerAnimated:YES];
+
+}
 @end
 
-// 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com 
