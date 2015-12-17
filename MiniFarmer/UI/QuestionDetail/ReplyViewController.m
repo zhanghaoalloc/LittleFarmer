@@ -106,6 +106,7 @@
     return _model.relist.count;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     return 1;
 
 }

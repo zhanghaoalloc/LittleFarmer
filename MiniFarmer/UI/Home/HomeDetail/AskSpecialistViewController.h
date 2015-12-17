@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface AskSpecialistViewController : BaseViewController
+@interface AskSpecialistViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

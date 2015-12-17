@@ -150,6 +150,7 @@
             [[MiniAppEngine shareMiniAppEngine] saveUserLoginNumber:self.usernameTF.text];
             [[MiniAppEngine shareMiniAppEngine] saveLogin];
             [[MiniAppEngine shareMiniAppEngine] saveInfos];
+            
             strongSelf.loginBackBlock();
             
             [strongSelf dismissViewControllerAnimated:YES completion:nil];

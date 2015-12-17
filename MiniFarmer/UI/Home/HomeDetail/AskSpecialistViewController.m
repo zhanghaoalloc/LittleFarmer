@@ -9,18 +9,43 @@
 #import "AskSpecialistViewController.h"
 #import "BaseViewController+Navigation.h"
 #import "SeachView.h"
+#import "UIViewAdditions.h"
+#import "ListExpertView.h"
+#import "ExpertListTableView.h"
+#import "ExpertModel.h"
 
 @interface AskSpecialistViewController ()
 
-@property (nonatomic ,strong) SeachView *searchView;
-@property (nonatomic, strong) UIButton *specialistTypeBT;
-@property (nonatomic, strong) UIButton *intelligentSortingBT;
+@property (nonatomic,strong) SeachView *searchView;
+
+@property (nonatomic,strong)UIView *leftView;
+@property (nonatomic,strong)UILabel *leftLabel;
+@property (nonatomic,strong)UIImageView *leftImage;
+
+@property (nonatomic, strong)UIView *rigthView;
+@property (nonatomic, strong)UILabel *rigthLabel;
+@property (nonatomic, strong)UIImageView *rigthImage;
+
+@property (nonatomic, strong)ListExpertView *leftList;
+@property (nonatomic, strong)ListExpertView *rigthList;
+
+@property(nonatomic,strong)NSArray *rigthdata;
+@property(nonatomic,strong)NSArray *leftdata;
+
+@property(nonatomic,strong)ExpertListTableView *expertTableView;
+
+@property(nonatomic,strong)NSMutableArray *data;
+
+
+
 
 @end
 
-@implementation AskSpecialistViewController
+@implementation AskSpecialistViewController{
 
+    NSString *_identify;
 
+}
 #pragma mark - life cycle
 - (void)viewDidLoad
 {
@@ -29,11 +54,31 @@
     
     self.view.backgroundColor =[UIColor colorWithHexString:@"#ffffff"];
     [self setNavigationBarIsHidden:NO];
+    
+    _data = [NSMutableArray array];
+    
    
     //初始化导航栏
     [self setNavigation];
     
+    //获取列表的数据
+    [self loadListData];
+    //创建专家信息的tableView
+    [self initexpertTableView];
+    
+    
+    
     [self initsubviews];
+    
+    
+    
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    
+    
+    
     
 }
 - (void)setNavigation{
@@ -58,33 +103,46 @@
     //3.导航栏底部分割线
     [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:0.5];
 }
+- (void)loadListData{
+    self.rigthdata = @[@"距离",@"关注度",@"智能排序"];
+
+    
+    __weak AskSpecialistViewController *wself = self;
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=wwzj&m=get_zjlx_list"parameters:nil prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        wself.leftdata = [responseObject objectForKey:@"list"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //回到主线程刷新UI
+           // [wself.leftList reloadData];
+            [wself initlistTableView];
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
+        });
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+    
+    
+    
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+- (void)initexpertTableView{
+    
+    if(_expertTableView == nil){
+        _expertTableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44)) style:UITableViewStylePlain];
+        NSDictionary *dic = @{
+                              @"id":@"0",
+                              @"pagesize":@"10"
+                              };
+        
+        [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic withMethod:SHHttpRequestGet];
+        [self.view addSubview:_expertTableView];
+    }
+    
+    
 }
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
-
 #pragma mark - clickevent
 - (void)back:(UIButton *)btn
 {
@@ -94,43 +152,200 @@
 
 
 #pragma mark - 添加子视图 以及添加约束方法
+- (void)initlistTableView{
+   //左边
+    _leftList = [[ListExpertView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth/2,kScreenSizeHeight/2) style:UITableViewStylePlain];
+    _leftList.isrigth = NO;
+    _leftList.hidden = YES;
+    _leftList.data = _leftdata;
+    
+    __weak AskSpecialistViewController *wself = self;
+    _leftList.block = ^(NSString *str,NSString *lxbh){
+        
+        wself.leftLabel.text = str;
+        
+        [wself addConstraints];
+        
+        NSDictionary *dic = @{
+                              @"zjlx":lxbh,
+                              @"id":@"0",
+                              @"pageSize":@"10"
+
+                              };
+        
+        [wself requestData:@"?c=wwzj&m=getzjlist4lx" withDictionary:dic withMethod:SHHttpRequestGet];
+        
+    };
+    [self.view addSubview:_leftList];
+    //右边
+    _rigthList = [[ListExpertView alloc] initWithFrame:CGRectMake(kScreenSizeWidth/2,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth/2, 200)style:UITableViewStylePlain];
+    _rigthList.isrigth = YES;
+    _rigthList.hidden= YES;
+    
+    _rigthList.block =^(NSString *str,NSString *number){
+        wself.rigthLabel.text = str;
+        [wself addConstraints];
+        
+        NSDictionary *dic = @{
+                             @"pxlx":number,
+                             @"id":@"0",
+                             @"pagesize":@"10",
+                             @"zjlx":@"0000"
+                             };
+        [wself requestData:@"?c=wwzj&m=getzjlist4znpx" withDictionary:dic withMethod:SHHttpRequestGet];
+    
+    };
+    
+    _rigthList.data = _rigthdata;
+    
+    [self.view addSubview:_rigthList];
+    
+
+}
 - (void)initsubviews
 {
-    [self.view addSubview:self.specialistTypeBT];
-    [self.view addSubview:self.intelligentSortingBT];
+    if (_leftView == nil) {
+        //左边视图
+        _leftView = [[UIView alloc] initWithFrame:CGRectMake(0,kStatusBarHeight+ kNavigationBarHeight , kScreenSizeWidth/2, 44)];
+        _leftImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"home_expert_Sequence"]];
+         [_leftView addSubview:_leftImage];
+        
+        _leftLabel = [[UILabel alloc] init];
+        _leftLabel.numberOfLines = 1;
+        _leftLabel.text = @"专家类型";
+        _leftLabel.textColor = [UIColor colorWithHexString:@"#33333"];
+        _leftLabel.font = kTextFont16;
+        [_leftView addSubview:_leftLabel];
+        _leftView.backgroundColor = [UIColor colorWithHexString:@"#f8f8f8"];
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
+        line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+        [_leftView addSubview:line];
+        //添加点击事件
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftViewAction)];
+        [_leftView addGestureRecognizer:tap];
+        
     
-    CGFloat  weigth = kScreenSizeWidth/2;
-    
-    
-    
-    
-}
-
-#pragma mark - 初始化方法
-- (UIButton *)specialistTypeBT
-{
-    if (!_specialistTypeBT)
-    {
-        _specialistTypeBT = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_specialistTypeBT setTitle:@"专家类型" forState:UIControlStateNormal];
-        [_specialistTypeBT setBTFont:kTextFont(16)];
-        [_specialistTypeBT setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+        [self.view addSubview:_leftView];
     }
-    return _specialistTypeBT;
-}
-
-- (UIButton *)intelligentSortingBT
-{
-    if (!_intelligentSortingBT)
-    {
-        _intelligentSortingBT = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_intelligentSortingBT setBTFont:kTextFont(16)];
-        [_intelligentSortingBT setTitle:@"智能排序" forState:UIControlStateNormal];
-        [_intelligentSortingBT setTitleColor:[UIColor colorWithHexString:@"#333333"] forState:UIControlStateNormal];
+    if (_rigthView == nil){
+        //右边视图
+        _rigthView = [[UIView alloc] initWithFrame:CGRectMake(kScreenSizeWidth/2,kStatusBarHeight+ kNavigationBarHeight, kScreenSizeWidth/2, 44)];
+        
+        _rigthImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_expert_type"]];
+        [_rigthView addSubview:_rigthImage];
+        
+        _rigthLabel = [[UILabel alloc] init];
+        _rigthLabel.numberOfLines = 1;
+        _rigthLabel.text = @"智能排序";
+        _rigthLabel.textColor = [UIColor colorWithHexString:@"#33333"];
+        _rigthLabel.font = kTextFont16;
+        [_rigthView addSubview:_rigthLabel];
+        
+        _rigthView.backgroundColor = [UIColor colorWithHexString:@"f8f8f8"];
+        
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
+        line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+        [_rigthView addSubview:line];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rigthViewAction)];
+        [_rigthView addGestureRecognizer:tap];
+        
+        
+        [self.view addSubview:_rigthView];
     }
-    return _intelligentSortingBT;
+    
+    //添加约束
+    [self addConstraints];
+}
+- (void)addConstraints{
+    
+    //左边的label
+    NSString *leftStr = _leftLabel.text;
+   
+    CGSize leftsize = [leftStr sizeWithFont:kTextFont16 constrainedToSize:CGSizeMake(MAXFLOAT,21)];
+    
+   
+    [_leftLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.top.equalTo(_leftView.mas_top).offset(12);
+        make.centerX.equalTo(_leftView.mas_centerX);
+    }];
+    
+    
+    [_leftImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(21, 21));
+        make.top.equalTo(_leftLabel.mas_top);
+        make.right.equalTo(_leftLabel.mas_left).offset(-12);
+    }];
+    
+    NSString *rigthStr = _rigthLabel.text;
+    
+    CGSize rigthsize = [rigthStr sizeWithFont:kTextFont16 constrainedToSize:CGSizeMake(MAXFLOAT,21)];
+    [_rigthLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.top.equalTo(_rigthView.mas_top).offset(12);
+        make.centerX.equalTo(_rigthView.mas_centerX);
+    }];
+    
+    [_rigthImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(21, 21));
+        make.top.equalTo(_rigthLabel.mas_top);
+        make.right.equalTo(_rigthLabel.mas_left).offset(-12);
+    }];
+    
+    
+   
+       ;}
+#pragma mark -
+- (void)leftViewAction{
+    
+    _leftList.hidden = !_leftList.hidden;
+    
+    if (_leftList.hidden ==  NO) {
+        _rigthList.hidden = YES;
+    }
+
+
+}
+- (void)rigthViewAction{
+    _rigthList.hidden =! _rigthList.hidden;
+    
+    if (_rigthList.hidden ==NO) {
+        _leftList.hidden = YES;
+    }
+  
+
 }
 
+#pragma mark----数据处理
+-(void)requestData:(NSString *)url withDictionary:(NSDictionary *)dic withMethod:(NSInteger)type{
+    
+    [self.data removeAllObjects];
+
+    __weak AskSpecialistViewController *wself = self;
+    
+    [[SHHttpClient defaultClient] requestWithMethod:type subUrl:url parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSNumber *code = [responseObject objectForKey:@"code"];
+        if ([code integerValue]==1) {//成功
+            NSArray *array = [responseObject objectForKey:@"list"];
+            
+            for (NSDictionary *dic in array) {
+                ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
+                [self.data addObject:model];
+            }
+            //回到主线程刷新UI
+            dispatch_async(dispatch_get_main_queue(), ^{
+    
+                wself.expertTableView.data = wself.data.mutableCopy;
+                
+            });
+        }
+    
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+
+}
 
 
 @end

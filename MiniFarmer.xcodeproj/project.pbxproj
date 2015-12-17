@@ -56,6 +56,15 @@
 		1B6BE1771C04580500D69A2D /* SortView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE1761C04580500D69A2D /* SortView.m */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1791C04582200D69A2D /* SortView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B6BE1781C04582200D69A2D /* SortView.xib */; settings = {ASSET_TAGS = (); }; };
 		1B6BE17D1C04699D00D69A2D /* StudyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE17C1C04699D00D69A2D /* StudyViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1B7C5DEA1C20FC6C004251BB /* ListExpertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DE91C20FC6C004251BB /* ListExpertView.m */; settings = {ASSET_TAGS = (); }; };
+		1B7C5DF21C214446004251BB /* ExpertListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF11C214446004251BB /* ExpertListTableView.m */; settings = {ASSET_TAGS = (); }; };
+		1B7C5DF61C214A54004251BB /* ExpertListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF41C214A54004251BB /* ExpertListCell.m */; settings = {ASSET_TAGS = (); }; };
+		1B7C5DF71C214A54004251BB /* ExpertListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF51C214A54004251BB /* ExpertListCell.xib */; settings = {ASSET_TAGS = (); }; };
+		1B7C5DFA1C215C76004251BB /* ExpertModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B7C5DF91C215C76004251BB /* ExpertModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B883BA41C22402600B95426 /* ExpertDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA31C22402600B95426 /* ExpertDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1B883BA71C229C1200B95426 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA61C229C1200B95426 /* UIImage+ImageEffects.m */; settings = {ASSET_TAGS = (); }; };
+		1B883BAA1C229C7300B95426 /* ParallaxHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BA91C229C7300B95426 /* ParallaxHeaderView.m */; settings = {ASSET_TAGS = (); }; };
+		1B883BAD1C22B69700B95426 /* ExpertDetailHearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B883BAC1C22B69700B95426 /* ExpertDetailHearView.m */; settings = {ASSET_TAGS = (); }; };
 		1B97F4E31C0824A700A58D03 /* MyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4E21C0824A700A58D03 /* MyModel.m */; settings = {ASSET_TAGS = (); }; };
 		1B97F4E91C08252A00A58D03 /* StudyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4E81C08252A00A58D03 /* StudyModel.m */; settings = {ASSET_TAGS = (); }; };
 		1B97F4EC1C083B3300A58D03 /* DiseaPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4EB1C083B3300A58D03 /* DiseaPicViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -400,6 +409,23 @@
 		1B6BE1781C04582200D69A2D /* SortView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SortView.xib; sourceTree = "<group>"; };
 		1B6BE17B1C04699D00D69A2D /* StudyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyViewController.h; sourceTree = "<group>"; };
 		1B6BE17C1C04699D00D69A2D /* StudyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyViewController.m; sourceTree = "<group>"; };
+		1B7C5DE81C20FC6C004251BB /* ListExpertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListExpertView.h; sourceTree = "<group>"; };
+		1B7C5DE91C20FC6C004251BB /* ListExpertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListExpertView.m; sourceTree = "<group>"; };
+		1B7C5DF01C214446004251BB /* ExpertListTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertListTableView.h; sourceTree = "<group>"; };
+		1B7C5DF11C214446004251BB /* ExpertListTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertListTableView.m; sourceTree = "<group>"; };
+		1B7C5DF31C214A54004251BB /* ExpertListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertListCell.h; sourceTree = "<group>"; };
+		1B7C5DF41C214A54004251BB /* ExpertListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertListCell.m; sourceTree = "<group>"; };
+		1B7C5DF51C214A54004251BB /* ExpertListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpertListCell.xib; sourceTree = "<group>"; };
+		1B7C5DF81C215C76004251BB /* ExpertModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertModel.h; sourceTree = "<group>"; };
+		1B7C5DF91C215C76004251BB /* ExpertModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertModel.m; sourceTree = "<group>"; };
+		1B883BA21C22402600B95426 /* ExpertDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertDetailViewController.h; sourceTree = "<group>"; };
+		1B883BA31C22402600B95426 /* ExpertDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertDetailViewController.m; sourceTree = "<group>"; };
+		1B883BA51C229C1200B95426 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		1B883BA61C229C1200B95426 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		1B883BA81C229C7300B95426 /* ParallaxHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParallaxHeaderView.h; sourceTree = "<group>"; };
+		1B883BA91C229C7300B95426 /* ParallaxHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParallaxHeaderView.m; sourceTree = "<group>"; };
+		1B883BAB1C22B69700B95426 /* ExpertDetailHearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertDetailHearView.h; sourceTree = "<group>"; };
+		1B883BAC1C22B69700B95426 /* ExpertDetailHearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertDetailHearView.m; sourceTree = "<group>"; };
 		1B97F4E11C0824A700A58D03 /* MyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyModel.h; sourceTree = "<group>"; };
 		1B97F4E21C0824A700A58D03 /* MyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyModel.m; sourceTree = "<group>"; };
 		1B97F4E71C08252A00A58D03 /* StudyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyModel.h; sourceTree = "<group>"; };
@@ -915,8 +941,8 @@
 		1B173C681C200780000854FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */,
-				31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */,
+				1B7C5DF81C215C76004251BB /* ExpertModel.h */,
+				1B7C5DF91C215C76004251BB /* ExpertModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -924,6 +950,17 @@
 		1B173C691C200780000854FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1B883BA81C229C7300B95426 /* ParallaxHeaderView.h */,
+				1B883BA91C229C7300B95426 /* ParallaxHeaderView.m */,
+				1B7C5DE81C20FC6C004251BB /* ListExpertView.h */,
+				1B7C5DE91C20FC6C004251BB /* ListExpertView.m */,
+				1B7C5DF01C214446004251BB /* ExpertListTableView.h */,
+				1B7C5DF11C214446004251BB /* ExpertListTableView.m */,
+				1B7C5DF31C214A54004251BB /* ExpertListCell.h */,
+				1B7C5DF41C214A54004251BB /* ExpertListCell.m */,
+				1B7C5DF51C214A54004251BB /* ExpertListCell.xib */,
+				1B883BAB1C22B69700B95426 /* ExpertDetailHearView.h */,
+				1B883BAC1C22B69700B95426 /* ExpertDetailHearView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -931,6 +968,10 @@
 		1B173C6A1C200780000854FC /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				31A0DBE01C089F980017D1F0 /* AskSpecialistViewController.h */,
+				31A0DBE11C089F980017D1F0 /* AskSpecialistViewController.m */,
+				1B883BA21C22402600B95426 /* ExpertDetailViewController.h */,
+				1B883BA31C22402600B95426 /* ExpertDetailViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2143,6 +2184,8 @@
 		FCCA8FA81BDD255E00B1CCF4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				1B883BA51C229C1200B95426 /* UIImage+ImageEffects.h */,
+				1B883BA61C229C1200B95426 /* UIImage+ImageEffects.m */,
 				31A0DBBE1C0899780017D1F0 /* NSString+CustomAttributeString.h */,
 				31A0DBBF1C0899780017D1F0 /* NSString+CustomAttributeString.m */,
 				31A0DBC01C0899780017D1F0 /* UIButton+Font.h */,
@@ -2280,6 +2323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B1BDF621C146C61005F4274 /* UMSCommentInputController.xib in Resources */,
+				1B7C5DF71C214A54004251BB /* ExpertListCell.xib in Resources */,
 				1BEC27B61C0B4CBE0046F96A /* DiseaseCell.xib in Resources */,
 				1BD3EC931C1E9A34001C2421 /* MineAskQuestionCell.xib in Resources */,
 				1BD3EC9C1C1E9A34001C2421 /* MyFoucsExpertView.xib in Resources */,
@@ -2342,6 +2386,7 @@
 				FCC752971BC4E01500DE4B27 /* JSONModelError.m in Sources */,
 				FCCA8FAE1BDD255E00B1CCF4 /* UIColor+Expanded.m in Sources */,
 				1BD3ECAA1C1E9A34001C2421 /* MineBaseViewController.m in Sources */,
+				1B7C5DF21C214446004251BB /* ExpertListTableView.m in Sources */,
 				1BD3ECC21C1E9A34001C2421 /* SettingViewController.m in Sources */,
 				1BD3ECB11C1E9A34001C2421 /* MineRecipeViewController.m in Sources */,
 				1B97F4E91C08252A00A58D03 /* StudyModel.m in Sources */,
@@ -2383,10 +2428,12 @@
 				FCC7528E1BC4E01500DE4B27 /* AFNetworkReachabilityManager.m in Sources */,
 				31EC678D1BF0E4A700B8E1BC /* MWCaptionView.m in Sources */,
 				31EC66411BECF43700B8E1BC /* JudgeTextIsRight.m in Sources */,
+				1B883BA41C22402600B95426 /* ExpertDetailViewController.m in Sources */,
 				1B6BE1711C04393A00D69A2D /* MessageViewController.m in Sources */,
 				1BD3ECAC1C1E9A34001C2421 /* MineExpertInfoViewController.m in Sources */,
 				1B6BE1601C03F4E400D69A2D /* SeachView.m in Sources */,
 				1BD3ECB81C1E9A34001C2421 /* MineFocusFriendModel.m in Sources */,
+				1B883BAA1C229C7300B95426 /* ParallaxHeaderView.m in Sources */,
 				1BEC27691C0AFF460046F96A /* ShareView.m in Sources */,
 				1BD3EC971C1E9A34001C2421 /* MineInfosCell.m in Sources */,
 				31EC66341BECEBE100B8E1BC /* YHSMSCodeButton.m in Sources */,
@@ -2425,6 +2472,7 @@
 				1B23957D1C0FEAA70096CE50 /* PhotoScrollView.m in Sources */,
 				31EC66591BF04ABB00B8E1BC /* GCPlaceholderTextView.m in Sources */,
 				31EC66321BECEBE100B8E1BC /* LoginViewController.m in Sources */,
+				1B7C5DEA1C20FC6C004251BB /* ListExpertView.m in Sources */,
 				FCC630BB1BF4D70000A2B08C /* QuestionDetailViewController.m in Sources */,
 				1B97F4EC1C083B3300A58D03 /* DiseaPicViewController.m in Sources */,
 				31EC67981BF0E4A700B8E1BC /* PSTCollectionViewCell.m in Sources */,
@@ -2453,6 +2501,7 @@
 				31EC67961BF0E4A700B8E1BC /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				FCC752961BC4E01500DE4B27 /* JSONModelClassProperty.m in Sources */,
 				FCC626771BCA7A0E00943F99 /* HomeViewController.m in Sources */,
+				1B883BA71C229C1200B95426 /* UIImage+ImageEffects.m in Sources */,
 				FCC7529B1BC4E01500DE4B27 /* JSONModel+networking.m in Sources */,
 				FCC752B81BC4E01500DE4B27 /* MJRefreshConst.m in Sources */,
 				1BD3ECB21C1E9A34001C2421 /* MineReponseTableViewController.m in Sources */,
@@ -2486,6 +2535,7 @@
 				FCC752C61BC4E01500DE4B27 /* UIImage+GIF.m in Sources */,
 				31EC679D1BF0E4A700B8E1BC /* PSTCollectionViewLayout.m in Sources */,
 				FCC626761BCA7A0E00943F99 /* AskViewController.m in Sources */,
+				1B883BAD1C22B69700B95426 /* ExpertDetailHearView.m in Sources */,
 				31EC663E1BECECC400B8E1BC /* MiniAppEngine.m in Sources */,
 				31D4FDC91BF3A8DA0081F64F /* UIButton+MTButtonCheckMarkAnimation.m in Sources */,
 				31EC66441BECF52200B8E1BC /* UIView+Toast.m in Sources */,
@@ -2532,6 +2582,7 @@
 				FCC752A51BC4E01500DE4B27 /* NSArray+MASAdditions.m in Sources */,
 				31EC663A1BECEC6F00B8E1BC /* UIScrollView+LGKeyboard.m in Sources */,
 				31DBC8201BF77029007EDCD0 /* UILabel+CustomAttributeLabel.m in Sources */,
+				1B7C5DF61C214A54004251BB /* ExpertListCell.m in Sources */,
 				1BD3ECC51C1E9A34001C2421 /* YHSegmentView.m in Sources */,
 				1B23957A1C0FEAA70096CE50 /* PhotoViewController.m in Sources */,
 				31FDE3EA1BFB1F2100AA199F /* UITextField+CustomTextField.m in Sources */,
@@ -2543,6 +2594,7 @@
 				1BD3EC9B1C1E9A34001C2421 /* MyFoucsExpertView.m in Sources */,
 				1BD3EC9A1C1E9A34001C2421 /* MineSaveQuestionCell.m in Sources */,
 				1BD3ECC41C1E9A34001C2421 /* UIView+FrameCategory.m in Sources */,
+				1B7C5DFA1C215C76004251BB /* ExpertModel.m in Sources */,
 				FCC752AD1BC4E01500DE4B27 /* MJRefreshHeader.m in Sources */,
 				31EC66501BEF974B00B8E1BC /* ResetPasswordViewController.m in Sources */,
 				1BD3ECA51C1E9A34001C2421 /* SettinSpaceCell.m in Sources */,
