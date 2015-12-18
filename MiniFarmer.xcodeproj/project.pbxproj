@@ -72,6 +72,8 @@
 		1B97F4EC1C083B3300A58D03 /* DiseaPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4EB1C083B3300A58D03 /* DiseaPicViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B97F4F21C084C5000A58D03 /* TwoclassMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4F11C084C5000A58D03 /* TwoclassMode.m */; settings = {ASSET_TAGS = (); }; };
 		1B97F4FB1C085A0000A58D03 /* DiseaDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B97F4FA1C085A0000A58D03 /* DiseaDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1BC322FA1C23D7060000C3CF /* ExpertDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC322F91C23D7060000C3CF /* ExpertDetailModel.m */; settings = {ASSET_TAGS = (); }; };
+		1BC322FD1C2400A00000C3CF /* MyAnswerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC322FC1C2400A00000C3CF /* MyAnswerCell.m */; settings = {ASSET_TAGS = (); }; };
 		1BC52DBC1C15394C007A49DE /* QuAnswerHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC52DB91C15394C007A49DE /* QuAnswerHeaderView.m */; settings = {ASSET_TAGS = (); }; };
 		1BC52DBD1C15394C007A49DE /* QuAnswerReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC52DBB1C15394C007A49DE /* QuAnswerReplyCell.m */; settings = {ASSET_TAGS = (); }; };
 		1BCA80351C0BD0F5001E1285 /* DrugDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BCA80341C0BD0F5001E1285 /* DrugDetailView.m */; settings = {ASSET_TAGS = (); }; };
@@ -441,6 +443,10 @@
 		1B97F4F11C084C5000A58D03 /* TwoclassMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwoclassMode.m; sourceTree = "<group>"; };
 		1B97F4F91C085A0000A58D03 /* DiseaDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiseaDetailViewController.h; sourceTree = "<group>"; };
 		1B97F4FA1C085A0000A58D03 /* DiseaDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiseaDetailViewController.m; sourceTree = "<group>"; };
+		1BC322F81C23D7060000C3CF /* ExpertDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertDetailModel.h; sourceTree = "<group>"; };
+		1BC322F91C23D7060000C3CF /* ExpertDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertDetailModel.m; sourceTree = "<group>"; };
+		1BC322FB1C2400A00000C3CF /* MyAnswerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAnswerCell.h; sourceTree = "<group>"; };
+		1BC322FC1C2400A00000C3CF /* MyAnswerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAnswerCell.m; sourceTree = "<group>"; };
 		1BC52DB81C15394C007A49DE /* QuAnswerHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuAnswerHeaderView.h; sourceTree = "<group>"; };
 		1BC52DB91C15394C007A49DE /* QuAnswerHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuAnswerHeaderView.m; sourceTree = "<group>"; };
 		1BC52DBA1C15394C007A49DE /* QuAnswerReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuAnswerReplyCell.h; sourceTree = "<group>"; };
@@ -948,6 +954,8 @@
 			children = (
 				1B7C5DF81C215C76004251BB /* ExpertModel.h */,
 				1B7C5DF91C215C76004251BB /* ExpertModel.m */,
+				1BC322F81C23D7060000C3CF /* ExpertDetailModel.h */,
+				1BC322F91C23D7060000C3CF /* ExpertDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -966,6 +974,8 @@
 				1B7C5DF51C214A54004251BB /* ExpertListCell.xib */,
 				1B883BAB1C22B69700B95426 /* ExpertDetailHearView.h */,
 				1B883BAC1C22B69700B95426 /* ExpertDetailHearView.m */,
+				1BC322FB1C2400A00000C3CF /* MyAnswerCell.h */,
+				1BC322FC1C2400A00000C3CF /* MyAnswerCell.m */,
 				1B804B051C22EAAE00E52199 /* BusinessCardCell.h */,
 				1B804B061C22EAAE00E52199 /* BusinessCardCell.m */,
 				1B804B081C22EC6800E52199 /* BusinessCardCell.xib */,
@@ -2396,6 +2406,7 @@
 				FCCA8FAE1BDD255E00B1CCF4 /* UIColor+Expanded.m in Sources */,
 				1BD3ECAA1C1E9A34001C2421 /* MineBaseViewController.m in Sources */,
 				1B7C5DF21C214446004251BB /* ExpertListTableView.m in Sources */,
+				1BC322FA1C23D7060000C3CF /* ExpertDetailModel.m in Sources */,
 				1BD3ECC21C1E9A34001C2421 /* SettingViewController.m in Sources */,
 				1BD3ECB11C1E9A34001C2421 /* MineRecipeViewController.m in Sources */,
 				1B97F4E91C08252A00A58D03 /* StudyModel.m in Sources */,
@@ -2458,6 +2469,7 @@
 				31D4FDCC1BF3A9550081F64F /* MTPickerInfo.m in Sources */,
 				1BD3ECA11C1E9A34001C2421 /* SettingAbountCell.m in Sources */,
 				FCC752C91BC4E01500DE4B27 /* UIImageView+HighlightedWebCache.m in Sources */,
+				1BC322FD1C2400A00000C3CF /* MyAnswerCell.m in Sources */,
 				1BD3ECC81C1E9A34001C2421 /* HeaderLoginView.m in Sources */,
 				FCC752B41BC4E01500DE4B27 /* MJRefreshGifHeader.m in Sources */,
 				31EC67AD1BF0E63C00B8E1BC /* XDPhotoSelect.m in Sources */,

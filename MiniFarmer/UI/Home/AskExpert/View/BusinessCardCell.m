@@ -11,13 +11,39 @@
 @implementation BusinessCardCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    _invite.font = kTextFont14;
+    _invite.textColor = [UIColor colorWithHexString:@"#333333"];
+    
+    _age.font = kTextFont14;
+    _age.textColor = [UIColor colorWithHexString:@"#333333"];
+    
+    _location.font = kTextFont14;
+    _location.textColor = [UIColor colorWithHexString:@"#333333"];
+    
+    _good.font = kTextFont14;
+    _good.textColor = [UIColor colorWithHexString:@"#333333"];
+    
+    _introduce.font = kTextFont14;
+    _introduce.textColor = [UIColor colorWithHexString:@"#333333"];
+
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setModel:(ExpertDetailModel *)model{
+    _model = model;
+    
+    _invite.text = _model.icode;
+    _age.text = _model.zjnl;
+    _location.text = _model.location;
+    _good.text = _model.sczwms;
+    _introduce.text = _model.zzzw;
 
-    // Configure the view for the selected state
 }
+- (void)setExpermodel:(ExpertModel *)expermodel{
+    _expermodel = expermodel;
+    _introduce.text = _expermodel.zjjs;
+
+
+}
+
 
 @end

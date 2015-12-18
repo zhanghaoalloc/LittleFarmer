@@ -12,15 +12,26 @@
 #import "BaseViewController+Navigation.h"
 #import "ExpertDetailHearView.h"
 #import "BusinessCardCell.h"
+#import "UserInfo.h"
+#import "ExpertDetailModel.h"
+#import "QuestionInfo.h"
+#import "QuestionCellSource.h"
+#import "MyAnswerCell.h"
+
+
 @interface ExpertDetailViewController ()
 
 @property (nonatomic,strong) UIView *navigaView;
+
+@property(nonatomic,strong) ExpertDetailModel *model;
 
 @end
 
 @implementation ExpertDetailViewController{
 
     NSString *_identify1;
+    NSString *_identify2;
+    NSMutableArray *_sourceArr;
 
 }
 
@@ -30,17 +41,15 @@
     
     self.edgesForExtendedLayout = UIRectEdgeBottom;
     self.view.backgroundColor = [UIColor  whiteColor];
-    
+    [self commonInit];
     [self initNavigationView];
-    [self initTableView];
-
-    
-    
-    
-    
-    
     
 
+}
+- (void)commonInit
+{
+    _sourceArr = [NSMutableArray arrayWithCapacity:1];
+    
 }
 
 - (void)initTableView{
@@ -52,15 +61,21 @@
     
     //注册第一种单元格
     UINib *nib1 = [UINib nibWithNibName:@"BusinessCardCell" bundle:nil];
-    
     _identify1 = @"BusinessCardCell";
     [_tableView registerNib:nib1 forCellReuseIdentifier:_identify1];
+    
+    //注册第二种单元格
+    _identify2 = @"MyAnswerCell";
+    [_tableView registerClass:[MyAnswerCell class] forCellReuseIdentifier:_identify2];
+    
+    
     
 
     [self.view insertSubview:_tableView atIndex:0];
     
     //添加子视图
     ParallaxHeaderView *headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(kScreenSizeWidth, 300)];
+    headerView.model = _model;
     headerView.headerImage = [UIImage imageNamed:@"home_expert_detail_header_bg"];
     _tableView.tableHeaderView = headerView;
     
@@ -103,8 +118,14 @@
 }
 #pragma mark---数据源
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    if (section == 0) {
+        return 1;
+    }else{
+    
+        return _sourceArr.count;
+    }
 
-    return 1;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
@@ -115,19 +136,29 @@
     
     if (indexPath.section == 0) {
         BusinessCardCell *cell = [tableView dequeueReusableCellWithIdentifier:_identify1 forIndexPath:indexPath];
+        cell.model = self.model;
+        cell.expermodel = self.expertmodel;
         return cell;
     }
-
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    
+    MyAnswerCell *cell = [tableView dequeueReusableCellWithIdentifier:_identify2 forIndexPath:indexPath];
+    [cell refreshWithQuestionCellSource:(QuestionCellSource *)_sourceArr[indexPath.row]];
+    
+    
     
     return cell;
 
 }
 #pragma mark----UITableView的代理方法
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
+    QuestionCellSource *curSource = [_sourceArr objectAtIndex:indexPath.row];
+    
+    
+    return curSource.cellTotalHeight;
 
-    return 250;
+    
+
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     if (section ==0) {
@@ -194,6 +225,94 @@
         
         }
     }
+}
+#pragma mark ---数据处理
+- (void)setZjid:(NSString *)zjid{
+   
+    _zjid = zjid;
+    
+    [self requesteData:_zjid];
+    
+    NSDictionary *dic = @{
+                          @"userid":_zjid,
+                          @"id":@"0",
+                          @"pagesize":@"10"
+                          };
+    [self requestequestionData:dic];
+
+    
+}
+//获取专家的信息
+- (void)requesteData:(NSString *)zjid{
+    NSString *local_userid = [UserInfo shareUserInfo].userId;
+    
+    if (local_userid == nil) {
+        local_userid = @"0";
+    }
+    
+    NSDictionary *dic = @{
+                          @"local_userid":local_userid,
+                          @"userid":zjid
+                          };
+    __weak ExpertDetailViewController *wself = self;
+    
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSNumber *code = [responseObject objectForKey:@"code"];
+        if ([code integerValue]==1) {//成功
+        
+         wself.model = [[ExpertDetailModel alloc] initContentWithDic:responseObject];
+        
+        };//回到主线程刷新UI
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self initTableView];
+        });
+
+
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+
+}
+- (void)requestequestionData:(NSDictionary *)dic{
+    
+    
+    __weak ExpertDetailViewController *wself = self;
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=tw&m=gethdtw4userid" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *dicResult = responseObject;
+            BOOL code = [[dicResult objectForKey:@"code"] boolValue];
+            NSString *msg = [dicResult objectForKey:@"msg"];
+            DLOG(@"code = %d,msg = %@",code,msg);
+            if (!code) {
+                //显示加载错误提示
+                return;
+            }else{
+                //加载数据成功
+                NSMutableArray *curQuestions = [QuestionInfo arrayOfModelsFromDictionaries:[dicResult objectForKey:@"list"]];
+                for (int i =0; i<curQuestions.count; i++) {
+                    QuestionInfo *info = [curQuestions objectAtIndex:i];
+                    QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:info];
+                    [_sourceArr addObject:item];
+                }
+                
+                //回到主线程刷新UI
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [wself.tableView reloadData];
+                    
+                });
+                
+            }
+        }
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    
+   
 }
 
 

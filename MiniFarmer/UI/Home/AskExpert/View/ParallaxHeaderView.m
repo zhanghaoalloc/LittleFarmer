@@ -12,16 +12,32 @@
 #import "ParallaxHeaderView.h"
 #import "UIImage+ImageEffects.h"
 #import "UIViewAdditions.h"
-
+#import "UIView+FrameCategory.h"
 @interface ParallaxHeaderView ()
 @property (strong, nonatomic)  UIScrollView *imageScrollView;//滚动视图
 @property (strong, nonatomic)  UIImageView *imageView;//图片视图
 @property (nonatomic,strong)  UIImageView *bluredImageView;//毛玻璃视图
 
 //定义视图
-@property (nonatomic,strong)UIButton *leftButton;
-@property (nonatomic,strong)UIButton *rigthButton;
-@property (nonatomic,strong)UIButton *backButton;
+@property (nonatomic,strong)UIButton *leftButton;//问专家按钮
+@property (nonatomic,strong)UIButton *rigthButton;//加关注按钮
+@property (nonatomic,strong)UIButton *backButton;//导航栏返回按钮
+
+//头像
+@property (nonatomic,strong)UIView *iconView;
+@property (nonatomic,strong)UIImageView *iconImage;
+@property (nonatomic,strong)UIImageView *expertTypeImage;
+
+//专家类型,
+@property (nonatomic,strong)UIView *expertTypeView;
+@property (nonatomic,strong)UILabel *expertName;
+@property (nonatomic,strong)UILabel *expertType;
+
+//被采纳数，和粉丝数
+@property (nonatomic,strong)UILabel *adopCount;
+@property (nonatomic,strong)UILabel *fansCount;
+
+
 
 @end
 
@@ -137,7 +153,6 @@ static CGFloat kLabelPaddingDist = 8.0f;
     self.rigthButton = [self button];
     [self.rigthButton setBackgroundImage:[UIImage imageNamed:@"home_expert_attention"] forState:UIControlStateNormal];
     [self.rigthButton setTitle:@"加关注" forState:UIControlStateNormal];
-     self.rigthButton.backgroundColor = [UIColor redColor];
      self.rigthButton.frame = subRect;
     [self  addSubview:self.rigthButton];
     //5.返回按钮
@@ -148,18 +163,56 @@ static CGFloat kLabelPaddingDist = 8.0f;
     self.backButton.frame = CGRectMake(0, kStatusBarHeight, kNavigationBarHeight, kNavigationBarHeight);
     
     [self.imageScrollView addSubview:self.backButton];
+    //6.图像视图
+    [self initIconView];
+    //7.名字和专家类型
+    [self initExpertType];
+    //8 采纳和粉丝数显示按钮
+    UILabel *adopLabel = [self showLabel];
+    adopLabel.text = @"被采纳";
+    [adopLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.leftButton.mas_top).offset(-17);
+        make.right.equalTo(self.leftButton.mas_right);
+        make.left.equalTo(self.leftButton.mas_left);
+        make.height.equalTo(@18);
+    }];
     
+    UILabel *fansLabel = [self showLabel];
+    fansLabel.text = @"粉丝";
+    [fansLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.rigthButton.mas_top).offset(-17);
+        make.right.equalTo(self.rigthButton.mas_right);
+        make.left.equalTo(self.rigthButton.mas_left);
+        make.height.equalTo(@18);
+    }];
+    //9:采纳数和粉丝数
+    self.adopCount =[self countLael];
+    self.adopCount.text = @"33";
     
+    self.fansCount = [self countLael];
+    self.fansCount.text = @"1024";
     
+    [self.adopCount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(adopLabel.mas_top).offset(-10);
+        make.right.equalTo(self.leftButton.mas_right);
+        make.left.equalTo(self.leftButton.mas_left);
+        make.height.equalTo(@18);
+
+    }];
+    
+    [self.fansCount mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(fansLabel.mas_top).offset(-10);
+        make.right.equalTo(self.rigthButton.mas_right);
+        make.left.equalTo(self.rigthButton.mas_left);
+        make.height.equalTo(@18);
+    }];
     
 
     
-    
-    
-    
-        [self refreshBlurViewForNewImage];
+    [self refreshBlurViewForNewImage];
 }
 #pragma mark---子视图的初始化
+//问专家，和添加关注按钮
 - (UIButton *)button{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitleColor:[UIColor colorWithHexString:@"#ffffff"] forState:UIControlStateNormal];
@@ -169,7 +222,51 @@ static CGFloat kLabelPaddingDist = 8.0f;
 
     return button;
 }
+//头像视图的添加
+- (void)initIconView{
+    if (self.iconView == nil) {
+        self.iconView = [[UIView alloc] init];
+        self.iconView.backgroundColor  =[UIColor colorWithHexString:@"#ffffff"];
+        
+        self.iconView.alpha = 0.6;
+        [self addSubview:self.iconView];
+        
+       self.iconImage = [[UIImageView alloc] init];
+        self.iconImage.backgroundColor = [UIColor redColor];
+        [self addSubview: self.iconImage];
+        
+        self.expertTypeImage = [[UIImageView alloc] init];
+        [self  addSubview:self.expertTypeImage ];
+        
+    }
+    CGRect subRect ;
+    subRect.origin.x = (kScreenSizeWidth-76)/2;
+    subRect.origin.y = kStatusBarHeight +20;
+    subRect.size.height = subRect.size.width = 76;
+    self.iconView.frame = subRect;
+    self.iconView.layer.cornerRadius = 76/2;
+    self.iconView.layer.masksToBounds = YES;
+    
+    
+    subRect.origin.x = (kScreenSizeWidth-70)/2;
+    subRect.origin.y =  kStatusBarHeight +20+3;
+    subRect.size.height = subRect.size.width = 70;
+    self.iconImage.frame = subRect;
+    self.iconImage.layer.cornerRadius = 70/2;
+    self.iconImage.layer.masksToBounds = YES;
+    
+    
+    subRect.origin.y = kStatusBarHeight +20 +76-14.5;
+    subRect.origin.x = (kScreenSizeWidth-72)/2;
+    subRect.size.width = 72;
+    subRect.size.height = 29;
 
+    self.expertTypeImage.frame =subRect;
+    
+    
+    
+    
+}
 //头视图的图片
 - (void)setHeaderImage:(UIImage *)headerImage
 {
@@ -177,7 +274,61 @@ static CGFloat kLabelPaddingDist = 8.0f;
     self.imageView.image = headerImage;
     [self refreshBlurViewForNewImage];
 }
+//采纳和粉丝的显示label
+- (UILabel *)showLabel{
 
+    UILabel * label = [UILabel new];
+    label.font = [UIFont systemFontOfSize:11];
+    label.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    label.alpha = 0.6;
+    label.textAlignment = NSTextAlignmentCenter;
+    
+    [self addSubview:label];
+    return label;
+}
+- (UILabel *)countLael{
+    UILabel *label = [[UILabel alloc] init];
+    label.font = kTextFont18;
+    label.textColor = [UIColor colorWithHexString:@"#ffffff"];
+    label.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:label];
+    return label;
+}
+
+//专家类型
+- (void)initExpertType{
+    if (self.expertTypeView == nil) {
+        self.expertTypeView = [[UIView alloc] init];
+        self.expertTypeView.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.expertTypeView];
+        
+        self.expertName = [UILabel new];
+        self.expertName.font = kTextFont18;
+        self.expertName.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.expertName.textAlignment = NSTextAlignmentLeft;
+        [self addSubview:self.expertName];
+       
+        self.expertType = [UILabel new];
+        self.expertType.font = kTextFont18;
+        self.expertType.textColor = [UIColor colorWithHexString:@"#ffffff"];
+        self.expertType.alpha = 0.6;
+        self.expertType.textAlignment = NSTextAlignmentRight;
+        [self addSubview:self.expertType];
+        
+    }
+    [_expertName mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_expertTypeView.mas_top);
+        make.bottom.equalTo(_expertTypeView.mas_bottom);
+        make.left.equalTo(_expertTypeView.mas_left);
+        
+    }];
+    [_expertType mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_expertTypeView.mas_top);
+        make.bottom.equalTo(_expertTypeView.mas_bottom);
+        make.right.equalTo(_expertTypeView.mas_right);
+        
+    }];
+}
 - (UIImage *)screenShotOfView:(UIView *)view
 {
     UIGraphicsBeginImageContextWithOptions(kDefaultHeaderFrame.size, YES, 0.0);
@@ -206,5 +357,70 @@ static CGFloat kLabelPaddingDist = 8.0f;
     [self.viewController.navigationController popViewControllerAnimated:YES];
 
 }
+#pragma mark---数据处理
+- (void)setModel:(ExpertDetailModel *)model{
+    _model = model;
+    
+    //头像
+    NSString *iconimage = _model.usertx;
+    [_iconImage sd_setImageWithURL:[NSURL URLWithString:[APPHelper safeString:iconimage]]];
+    NSNumber *grade = _model.grade;
+    [_expertTypeImage setImage:[self expertSignImage:grade]];
+    
+    _expertName.text = _model.xm;
+    _expertType.text = _model.zjlxms;
+    [self resetExpertInfomationView];
+    
+    _adopCount.text = _model.hfcns;
+    
+    NSNumber *fansCount = _model.friends;
+    NSInteger count = [fansCount integerValue];
+    
+    _fansCount.text =[NSString stringWithFormat:@"%ld",count];
+    
+    
+    //[self reloadInputViews];
+
+}
+//返回专家的称号标志视图
+- (UIImage *)expertSignImage:(NSNumber *)grade{
+    
+    NSInteger  i = [grade integerValue];
+    NSString *imageName;
+    if (i==0) {
+      imageName = @"zhuanjia";
+    }else if(i==1){
+       imageName = @"renzhengzhuanjia";
+    }else if (i==2){
+       imageName = @"fujiaoshou";
+    
+    }else if(i==3){
+       imageName = @"jiaoshou";
+    }else if(i==4){
+    
+       imageName = @"yuanshi";
+    }
+
+    UIImage *image = [UIImage imageNamed:imageName];
+    
+    return image;
+
+}
+//重新设置专家信息的视图
+- (void)resetExpertInfomationView{
+    CGRect subRect;
+    NSString *name = _expertName.text;
+    NSString *type = _expertType.text;
+    CGSize namesize = [name sizeWithFont:kTextFont18 constrainedToSize:CGSizeMake(MAXFLOAT,21)];
+    CGSize typesize = [type sizeWithFont:kTextFont18 constrainedToSize:CGSizeMake(MAXFLOAT,21)];
+    CGFloat width = namesize.width+15+typesize.width;
+    subRect.size.width =width;
+    subRect.size.height = namesize.height;
+    subRect.origin.y =CGRectGetMaxY(self.iconView.frame)+28;
+    subRect.origin.x =(kScreenSizeWidth-width)/2;
+    
+    self.expertTypeView.frame = subRect;
+}
+
 @end
 

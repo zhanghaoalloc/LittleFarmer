@@ -91,8 +91,6 @@
     mjHeader.lastUpdatedTimeLabel.hidden = YES;
     //[mjHeader setTitle:@"" forState:MJRefreshStateIdle];
     
-    
-    
     _homeTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         if (_sourceArr.count == 0) {
             return ;

@@ -7,10 +7,15 @@
 //
 
 #import "BaseViewController.h"
+#import "ExpertModel.h"
+
 
 @interface ExpertDetailViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 
 @property(nonatomic ,strong)UITableView *tableView;
+@property(nonatomic ,strong)NSString *zjid;
+
+@property(nonatomic,strong)ExpertModel *expertmodel;
 
 
 @end

@@ -8,12 +8,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-
+#import "ExpertDetailModel.h"
 
 @interface ParallaxHeaderView : UIView
 @property (nonatomic,strong)  UILabel *headerTitleLabel;//主题
 @property (nonatomic,strong) UIImage *headerImage;//头部图片
+@property (nonatomic,strong) ExpertDetailModel *model;
 
 
 

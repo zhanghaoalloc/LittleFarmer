@@ -7,7 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ExpertDetailModel.h"
+#import "ExpertModel.h"
 
-@interface BusinessCardCell : UITableViewCell
+@interface BusinessCardCell : UITableViewCell{
+
+
+
+    __weak IBOutlet UILabel *_invite;
+
+    __weak IBOutlet UILabel *_age;
+    
+    __weak IBOutlet UILabel *_location;
+
+    __weak IBOutlet UILabel *_good;
+    
+
+    __weak IBOutlet UILabel *_introduce;
+}
+
+@property(nonatomic,strong)ExpertDetailModel *model;
+@property(nonatomic,strong)ExpertModel *expermodel;
 
 @end

@@ -73,7 +73,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cW-cJ-1Nv">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cW-cJ-1Nv">
                         <rect key="frame" x="94" y="142" width="298" height="83.5"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -152,6 +152,13 @@
                 </variation>
             </tableViewCellContentView>
             <animations/>
+            <connections>
+                <outlet property="_age" destination="xTI-p8-x5q" id="xi4-qO-Lwe"/>
+                <outlet property="_good" destination="z2P-HJ-eU0" id="4cd-0m-c7t"/>
+                <outlet property="_introduce" destination="3cW-cJ-1Nv" id="jzu-aE-2BF"/>
+                <outlet property="_invite" destination="eN3-Xy-mka" id="Crj-1n-upP"/>
+                <outlet property="_location" destination="GLl-to-HiK" id="Px1-9f-e6A"/>
+            </connections>
             <point key="canvasLocation" x="167" y="233"/>
         </tableViewCell>
     </objects>
