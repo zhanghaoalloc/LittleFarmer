@@ -20,6 +20,8 @@
 #import "ReplyViewController.h"
 #import "LoginViewController.h"
 #import "LoginModel.h"
+#import "AppDelegate.h"
+
 
 
 
@@ -71,12 +73,19 @@
     
     [self addSubviews];
     
+    
 
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+    
+    
     NSString *userId;
     if ([[MiniAppEngine shareMiniAppEngine] isLogin]) {
         userId = [[MiniAppEngine shareMiniAppEngine] userId];
@@ -87,6 +96,7 @@
     [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#a3a3a3"] heigth:0.5];
     [self requestQuDataWithUserId:userId wtid:_curWtid];
     }
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {

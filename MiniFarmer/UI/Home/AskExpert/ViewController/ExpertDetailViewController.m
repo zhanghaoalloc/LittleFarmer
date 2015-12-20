@@ -17,6 +17,7 @@
 #import "QuestionInfo.h"
 #import "QuestionCellSource.h"
 #import "MyAnswerCell.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 
 
 @interface ExpertDetailViewController ()
@@ -32,6 +33,7 @@
     NSString *_identify1;
     NSString *_identify2;
     NSMutableArray *_sourceArr;
+    BOOL _isgz ; //当前专家是否被当前浏览用户关注
 
 }
 
@@ -43,6 +45,11 @@
     self.view.backgroundColor = [UIColor  whiteColor];
     [self commonInit];
     [self initNavigationView];
+    
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
 
 }
@@ -151,13 +158,16 @@
 }
 #pragma mark----UITableView的代理方法
 - (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
+    if (indexPath.section == 0) {
+       CGFloat heigth = [BusinessCardCell countTotalHeigth:self.expertmodel];
+      return heigth;
+    }
+    
+    
+    
     QuestionCellSource *curSource = [_sourceArr objectAtIndex:indexPath.row];
-    
-    
-    return curSource.cellTotalHeight;
-
-    
+    return curSource.cellTotalHeight-20;
 
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -193,6 +203,8 @@
     return view;
 }
 
+
+//组头尾视图的关系
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
     return 40;
@@ -248,13 +260,29 @@
     
     if (local_userid == nil) {
         local_userid = @"0";
+        _isgz = NO;
     }
+    
+    NSDictionary * dic1 = @{
+                            @"userid":local_userid,
+                            @"zjid":zjid
+                            };
+    
+    __weak ExpertDetailViewController *wself = self;
+    //获取当前专家是否被关注
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=user&m=gzzj" parameters:dic1 prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
     
     NSDictionary *dic = @{
                           @"local_userid":local_userid,
                           @"userid":zjid
                           };
-    __weak ExpertDetailViewController *wself = self;
+
+    
+    
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -266,16 +294,15 @@
         };//回到主线程刷新UI
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self initTableView];
+            [wself initTableView];
+           
         });
-
-
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
 
 }
+//获取专家回答过的问题信息
 - (void)requestequestionData:(NSDictionary *)dic{
     
     
@@ -298,16 +325,13 @@
                     QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:info];
                     [_sourceArr addObject:item];
                 }
-                
                 //回到主线程刷新UI
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [wself.tableView reloadData];
-                    
+
                 });
-                
             }
         }
-        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];

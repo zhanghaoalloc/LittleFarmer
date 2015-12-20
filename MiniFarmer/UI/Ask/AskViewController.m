@@ -52,6 +52,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.arrayPhotos = [NSMutableArray array];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.photoSelect = [[XDPhotoSelect alloc] initWithController:self delegate:self];
     [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(dismissAskVC:)];
@@ -91,13 +92,15 @@
 #pragma mark - event
 //切换控制器到主页
 - (void)dismissAskVC:(UIButton *)btn
-{
+{   [self.navigationController popViewControllerAnimated:YES];
     [self changeSelectedVC:0];
 }
 
 - (void)sendAsk:(UIButton *)btn
 {
-    
+    if (_zjid == nil) {
+        _zjid = @"0";
+    }
     
     //判断问题描述是否为空
     if (!self.askTextView.text.length)
@@ -114,7 +117,7 @@
     @{/*@"c":@"tw",@"m":@"savetw",*/
       @"userid":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]],
       @"mobile":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userLoginNumber]],
-      @"zjid":@"0",
+      @"zjid":_zjid,
       @"zwmc":self.askCropNameView.text,
       @"wtms":self.askTextView.text};
     
@@ -148,8 +151,6 @@
 
    }
 - (void)sendPicture{
-    
-
     
     for (int i = 0;i<self.arrayPhotos.count-1; i++) {
         

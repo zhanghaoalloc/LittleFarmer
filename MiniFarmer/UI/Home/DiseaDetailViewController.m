@@ -46,6 +46,11 @@
     //self.edgesForExtendedLayout = UIRectEdgeAll;
                                  
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
+   [appDele hideTabbar];
+}
 - (void)_createSubView{
     [self.view showLoadingWihtText:@"加载中"];
    //1.创建头视图上面的导航条

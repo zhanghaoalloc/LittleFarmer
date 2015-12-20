@@ -11,6 +11,7 @@
 		1B0DB3F21C1924E400116B36 /* ReplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0DB3F11C1924E400116B36 /* ReplyViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B0DB3F51C192C8000116B36 /* AnswerInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B0DB3F41C192C8000116B36 /* AnswerInputView.m */; settings = {ASSET_TAGS = (); }; };
 		1B0DB3F71C192D6300116B36 /* AnswerInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B0DB3F61C192D6300116B36 /* AnswerInputView.xib */; settings = {ASSET_TAGS = (); }; };
+		1B1902601C27046800E7AD16 /* ExpertSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B19025F1C27046800E7AD16 /* ExpertSearchViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B1BDF5F1C146C61005F4274 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1B1BDF451C146C61005F4274 /* UMSocialLocalizable.strings */; settings = {ASSET_TAGS = (); }; };
 		1B1BDF601C146C61005F4274 /* libUMSocial_Sdk_4.4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B1BDF531C146C61005F4274 /* libUMSocial_Sdk_4.4.a */; settings = {ASSET_TAGS = (); }; };
 		1B1BDF611C146C61005F4274 /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B1BDF551C146C61005F4274 /* UMSCommentDetailController.xib */; settings = {ASSET_TAGS = (); }; };
@@ -334,6 +335,8 @@
 		1B0DB3F31C192C8000116B36 /* AnswerInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerInputView.h; sourceTree = "<group>"; };
 		1B0DB3F41C192C8000116B36 /* AnswerInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerInputView.m; sourceTree = "<group>"; };
 		1B0DB3F61C192D6300116B36 /* AnswerInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerInputView.xib; sourceTree = "<group>"; };
+		1B19025E1C27046800E7AD16 /* ExpertSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpertSearchViewController.h; sourceTree = "<group>"; };
+		1B19025F1C27046800E7AD16 /* ExpertSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpertSearchViewController.m; sourceTree = "<group>"; };
 		1B1BDF461C146C61005F4274 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		1B1BDF481C146C61005F4274 /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		1B1BDF491C146C61005F4274 /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -1216,6 +1219,8 @@
 				1B6BE1731C04467F00D69A2D /* SearchViewController.m */,
 				1B23956D1C0FE3F00096CE50 /* QusetionSearchViewController.h */,
 				1B23956E1C0FE3F00096CE50 /* QusetionSearchViewController.m */,
+				1B19025E1C27046800E7AD16 /* ExpertSearchViewController.h */,
+				1B19025F1C27046800E7AD16 /* ExpertSearchViewController.m */,
 			);
 			name = Viewtronller;
 			sourceTree = "<group>";
@@ -2521,6 +2526,7 @@
 				FCC752AA1BC4E01500DE4B27 /* MJRefreshBackFooter.m in Sources */,
 				31EC67961BF0E4A700B8E1BC /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				FCC752961BC4E01500DE4B27 /* JSONModelClassProperty.m in Sources */,
+				1B1902601C27046800E7AD16 /* ExpertSearchViewController.m in Sources */,
 				FCC626771BCA7A0E00943F99 /* HomeViewController.m in Sources */,
 				1B883BA71C229C1200B95426 /* UIImage+ImageEffects.m in Sources */,
 				FCC7529B1BC4E01500DE4B27 /* JSONModel+networking.m in Sources */,

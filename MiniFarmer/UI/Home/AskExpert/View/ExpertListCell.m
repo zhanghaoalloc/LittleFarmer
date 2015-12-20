@@ -9,6 +9,8 @@
 #import "ExpertListCell.h"
 #import "UIImageView+WebCache.h"
 #import "UIViewAdditions.h"
+#import "AskViewController.h"
+#import "UIViewAdditions.h"
 
 @implementation ExpertListCell
 
@@ -32,7 +34,7 @@
     
     //问题
     [_questionbutton setBackgroundImage:[UIImage imageNamed:@"home_expert_ask_btn"] forState:UIControlStateNormal];
-    [_questionbutton setTitle:@"提交" forState:UIControlStateNormal];
+    [_questionbutton setTitle:@"提问" forState:UIControlStateNormal];
     [_questionbutton setTitleColor:[UIColor colorWithHexString:@"488bff"] forState:UIControlStateNormal];
     [_questionbutton addTarget:self action:@selector(questionAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -55,7 +57,10 @@
 }
 - (void)questionAction:(UIButton *)button{
     
-        
+    AskViewController *askVC = [[AskViewController alloc] init];
+    askVC.zjid = _model.zjid;
+    askVC.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.viewController.navigationController pushViewController:askVC animated:YES];
     
     
 }

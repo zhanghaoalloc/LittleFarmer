@@ -87,7 +87,7 @@
     _searchView.frame = CGRectMake(35,kStatusBarHeight , kScreenSizeWidth-35,kNavigationBarHeigth);
     _searchView.imageNmae = @"home_btn_message_nm";
     _searchView.isSearch = NO;
-    _searchView.index = 3;
+    _searchView.index = 4;
     
     [self.view addSubview:_searchView];
     

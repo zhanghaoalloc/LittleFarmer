@@ -13,6 +13,7 @@
 #import "QusetionSearchViewController.h"
 #import "DiseaPicViewController.h"
 #import "BaseViewController+Navigation.h"
+#import "ExpertSearchViewController.h"
 
 
 @interface SearchViewController ()
@@ -237,6 +238,10 @@
         self.tabBarController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:qusetionVC animated:YES];
     }
+    if (_sortView.currentIndex == 4) {
+        ExpertSearchViewController *expertSearchVC = [[ExpertSearchViewController alloc] init];
+        [self.navigationController pushViewController:expertSearchVC animated:YES];
+    }
     
    
 }
@@ -287,6 +292,11 @@
         qusetionVC.isSearch = YES;
         self.tabBarController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:qusetionVC animated:YES];
+        
+    }
+    if (index == 4) {
+        ExpertSearchViewController *expertSearchVC = [[ExpertSearchViewController alloc] init];
+        [self.navigationController pushViewController:expertSearchVC animated:YES];
         
     }
     

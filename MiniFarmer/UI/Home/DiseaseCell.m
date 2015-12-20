@@ -23,8 +23,6 @@
 }
 
 - (CGFloat)countHeigthForLabel:(UILabel *)label Labelwidth:(CGFloat )witdh LineSpacing:(CGFloat)spacing{
-    
-    
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:label.text];
     NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
     [paragrahStyle setLineSpacing:spacing];
@@ -42,7 +40,6 @@
     CGFloat linespaceHeigth = labsize.height/20*10;
     
     CGFloat  heigth = texetheigth+linespaceHeigth;
-    
     
     return heigth;
 }

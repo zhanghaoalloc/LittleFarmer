@@ -48,11 +48,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _tabBarView.hidden = NO;
-    
-   
-
-   // _tabBarView.transform = CGAffineTransformIdentity;
   
 }
 

@@ -13,4 +13,6 @@
 
 - (void)changeSelectedVC:(NSInteger)selectedIndex;
 
+@property(nonatomic,copy)NSString *zjid;
+
 @end

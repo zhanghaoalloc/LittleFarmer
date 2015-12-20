@@ -59,6 +59,18 @@
     
 
 }
+#pragma mark ----- Tabbar Control
+//显示底部Tabbar
+- (void)showTabbar{
+    RootTabBarViewController *tabbarVC = (RootTabBarViewController *)self.window.rootViewController;
+    tabbarVC.tabBarView.hidden = NO;
+}
+
+//隐藏底部Tabbar
+- (void)hideTabbar{
+    RootTabBarViewController *tabbarVC = (RootTabBarViewController *)self.window.rootViewController;
+    tabbarVC.tabBarView.hidden = YES;
+}
 
 
 

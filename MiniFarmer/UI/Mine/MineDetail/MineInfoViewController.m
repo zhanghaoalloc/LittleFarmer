@@ -102,9 +102,6 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-
 #pragma mark - subviews
 - (UITableView *)infoTableView
 {

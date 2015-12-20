@@ -29,4 +29,5 @@
 @property(nonatomic,strong)ExpertDetailModel *model;
 @property(nonatomic,strong)ExpertModel *expermodel;
 
++ (CGFloat)countTotalHeigth:(ExpertModel *)heigthModel;
 @end

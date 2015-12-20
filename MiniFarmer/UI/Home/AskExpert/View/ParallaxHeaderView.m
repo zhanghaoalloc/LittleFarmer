@@ -13,6 +13,7 @@
 #import "UIImage+ImageEffects.h"
 #import "UIViewAdditions.h"
 #import "UIView+FrameCategory.h"
+#import "AskViewController.h"
 @interface ParallaxHeaderView ()
 @property (strong, nonatomic)  UIScrollView *imageScrollView;//滚动视图
 @property (strong, nonatomic)  UIImageView *imageView;//图片视图
@@ -145,6 +146,7 @@ static CGFloat kLabelPaddingDist = 8.0f;
     UIImage *image = [UIImage imageNamed:@"home_expert_ask_expert"];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     [self.leftButton setBackgroundImage:image forState:UIControlStateNormal];
+    self.leftButton.tag = 1;
     self.leftButton.frame = subRect;
     [self addSubview:self.leftButton];
     
@@ -153,6 +155,8 @@ static CGFloat kLabelPaddingDist = 8.0f;
     self.rigthButton = [self button];
     [self.rigthButton setBackgroundImage:[UIImage imageNamed:@"home_expert_attention"] forState:UIControlStateNormal];
     [self.rigthButton setTitle:@"加关注" forState:UIControlStateNormal];
+    [self.rigthButton setTitle:@"已关注" forState:UIControlStateSelected];
+    self.rigthButton.tag = 2;
      self.rigthButton.frame = subRect;
     [self  addSubview:self.rigthButton];
     //5.返回按钮
@@ -348,8 +352,18 @@ static CGFloat kLabelPaddingDist = 8.0f;
 
 #pragma mark---按钮的点击事件
 - (void)buttonAction:(UIButton *)button{
-
-
+    
+    if (button.tag == 1) {//向专家提问
+        AskViewController *askVC = [[AskViewController alloc] init];
+        askVC.zjid = _model.zjid;
+        askVC.tabBarController.hidesBottomBarWhenPushed = YES;
+        [self.viewController.navigationController pushViewController:askVC animated:YES];
+    }else if (button.tag == 2){//关注该专家
+        
+    
+    
+    }
+   
 
 }
 - (void)backAction:(UIButton *)button{
@@ -371,13 +385,22 @@ static CGFloat kLabelPaddingDist = 8.0f;
     _expertType.text = _model.zjlxms;
     [self resetExpertInfomationView];
     
-    _adopCount.text = _model.hfcns;
+    if (_model.hfcns == nil) {
+        _adopCount.text = @"0";
+    }else{
     
-    NSNumber *fansCount = _model.friends;
-    NSInteger count = [fansCount integerValue];
+     _adopCount.text = _model.hfcns;
+    }
+    if (_model.friends == nil) {
+        _fansCount.text = @"0";
+    }else{
+        NSNumber *fansCount = _model.friends;
+        NSInteger count = [fansCount integerValue];
+        
+        _fansCount.text =[NSString stringWithFormat:@"%ld",count];
     
-    _fansCount.text =[NSString stringWithFormat:@"%ld",count];
-    
+    }
+   
     
     //[self reloadInputViews];
 
