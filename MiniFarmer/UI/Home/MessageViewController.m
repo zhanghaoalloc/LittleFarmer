@@ -20,7 +20,6 @@
     [self initTitleLabel:@"我的消息"];
     
     
-    
     UIImageView *imageV = [[UIImageView alloc] initWithFrame:self.view.bounds];
     NSURL *url = [NSURL URLWithString:@"http://www.enbs.com.cn/apps_test/uploads/twimg/2015/12/11/14497968194469.jpg"];
     
@@ -31,8 +30,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    
+
     [self setNavigationBarIsHidden:NO];
 
     //tabview.hidden = YES;

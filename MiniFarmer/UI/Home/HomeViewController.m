@@ -83,6 +83,7 @@
     _seachView.index = 1;
     [self.view addSubview:_seachView];
     
+    //下拉刷新
     MJRefreshNormalHeader *mjHeader= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         DLOG(@"home refresh!");
         [self requestHomeDataWithId:@"0"];
@@ -91,6 +92,7 @@
     mjHeader.lastUpdatedTimeLabel.hidden = YES;
     //[mjHeader setTitle:@"" forState:MJRefreshStateIdle];
     
+    //上拉加载更多
     _homeTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         if (_sourceArr.count == 0) {
             return ;
@@ -105,8 +107,6 @@
 
 - (void)headViewInit
 {
-    
-    
     _headView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, CGRectGetWidth(self.view.bounds),255)];
     //_headView.backgroundColor = [UIColor yellowColor];
     CGFloat bannerHeight = 155;
@@ -137,8 +137,7 @@
         make.size.mas_equalTo(buyBtn);
     }];
     [studyBtn addTarget:self action:@selector(studyAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+
     HomeMenuButton *askBtn = [self menuButtonWithTitle:@"问专家" normalImgName:@"home_btn_ask_nm"];
     [askBtn addTarget:self action:@selector(tapAskBtn:) forControlEvents:UIControlEventTouchUpInside];
     [funView addSubview:askBtn];
@@ -174,11 +173,10 @@
 - (void)requestHomeDataWithId:(NSString *)lastId
 {
     NSDictionary *dicPar =@{
-//                            @"c":@"tw",
-//                            @"m":@"gettwlist",
                             @"id":lastId,
                             @"pagesize":kPageSize,
                             };
+    
     __weak HomeViewController *wself = self;
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
@@ -210,13 +208,11 @@
                 if ([lastId isEqualToString:@"0"]) {
                     [_sourceArr removeAllObjects];
                 }
-                
                 for (int i =0; i<curQuestions.count; i++) {
                     QuestionInfo *info = [curQuestions objectAtIndex:i];
                     QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:info];
                     [_sourceArr addObject:item];
                 }
-                
                 [wself.homeTableView reloadData];
             }
         }

@@ -13,6 +13,7 @@
 #import "MineInfosCell.h"
 #import "MinePhotoCell.h"
 #import "MineChangeInfoViewController.h"
+#import "MineChangeTXController.h"
 
 @interface MineInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -35,6 +36,12 @@
     [self.view addSubview:self.infoTableView];
 
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,7 +60,7 @@
     
     UserMenuItem *item1= [[UserMenuItem alloc] init];
     item1.type = TypeContent;
-    item1.title = @"姓名";
+    item1.title = @"昵称";
     item1.subTitle = self.info.xm;
     item1.filename = @"xm";
     [self.infos addObject:item1];
@@ -125,6 +132,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UserMenuItem *item = [self.infos objectAtIndex:indexPath.row];
+    //类型是改变图片的
     if (item.type == TypeChangePhoto)
     {
         MinePhotoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"minePhotoCell"];
@@ -141,6 +149,9 @@
         if (!cell)
         {
             cell = [[MineInfosCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"mineinfosCell"];
+        }
+        if (indexPath.row==2||indexPath.row == 3) {
+            cell.imageIshidden = YES;
         }
         [cell refreshDataWithModel:item];
         return cell;
@@ -172,15 +183,41 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger index = indexPath.row;
+    if (index==2||index == 3) {
+        return;
+    }
     __weak MineInfoViewController *weakself = self;
     UserMenuItem *item = [self.infos objectAtIndex:indexPath.row];
-    MineChangeInfoViewController *changeVC = [[MineChangeInfoViewController alloc] init];
-    changeVC.item = item;
-    changeVC.changeInfoSuceess = ^(UserMenuItem *item){
-        MineInfosCell *cell = [weakself.infoTableView cellForRowAtIndexPath:indexPath];
-        [cell refreshDataWithModel:item];
-    };
-    [self.navigationController pushViewController:changeVC animated:YES];
+    if (indexPath.row == 0) {//跳转到修改头像的控制器
+        UserMenuItem *item = [self.infos objectAtIndex:indexPath.row];
+        MineChangeTXController *changeTXVC = [[MineChangeTXController alloc] init];
+        changeTXVC.url = item.imageString;
+        
+        
+        [self.navigationController pushViewController:changeTXVC animated:YES];
+        
+        
+        
+    }else{
+        MineChangeInfoViewController *changeVC = [[MineChangeInfoViewController alloc] init];
+        [changeVC initTitleLabel:item.title];
+        changeVC.item = item;
+        changeVC.index = indexPath.row;
+        
+        changeVC.changeInfoSuceess = ^(UserMenuItem *item){
+            
+            MineInfosCell *cell = [weakself.infoTableView cellForRowAtIndexPath:indexPath];
+            
+            [cell refreshDataWithModel:item];
+        };
+        [self.navigationController pushViewController:changeVC animated:YES];
+    
+    }
+    
+    
+    //
+    
 }
 
 @end

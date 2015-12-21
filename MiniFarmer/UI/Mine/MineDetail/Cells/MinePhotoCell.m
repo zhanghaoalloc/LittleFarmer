@@ -30,6 +30,7 @@
         
         self.photoBT = [UIButton buttonWithType:UIButtonTypeCustom];
         self.photoBT.layer.cornerRadius = 22;
+        self.photoBT.layer.masksToBounds = YES;
         
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.photoBT];
@@ -58,8 +59,24 @@
 - (void)refreshDataWithModel:(id)model
 {
     UserMenuItem *item = (UserMenuItem *)model;
+    
     self.titleLabel.text = item.title;
-    [self.photoBT sd_setImageWithURL:[NSURL URLWithString:item.imageString] forState:UIControlStateNormal placeholderImage:nil];
+    //头像
+    NSString *iconimage = item.imageString;
+    
+    NSURL *iconURL;
+    
+    if ([iconimage rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        
+        iconURL = [NSURL URLWithString:[APPHelper safeString:iconimage]];
+        
+    }else{
+        NSString *str = [kPictureURL stringByAppendingString:iconimage];
+        iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
+
+    [self.photoBT sd_setImageWithURL:iconURL forState:UIControlStateNormal placeholderImage:nil];
 }
 
 @end

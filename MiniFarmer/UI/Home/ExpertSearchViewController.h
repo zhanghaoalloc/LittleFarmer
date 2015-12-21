@@ -12,5 +12,6 @@
 @interface ExpertSearchViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,strong)ExpertListTableView *tableView;
+@property(nonatomic,copy)NSString *keyWord;
 
 @end

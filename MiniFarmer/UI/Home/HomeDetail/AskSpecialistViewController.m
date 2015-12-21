@@ -13,6 +13,8 @@
 #import "ListExpertView.h"
 #import "ExpertListTableView.h"
 #import "ExpertModel.h"
+#import "MJRefresh.h"
+
 
 @interface AskSpecialistViewController ()
 
@@ -67,7 +69,6 @@
     [self initexpertTableView];
     
     
-    
     [self initsubviews];
     
     
@@ -117,7 +118,6 @@
            // [wself.leftList reloadData];
             [wself initlistTableView];
 
-
         });
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -128,19 +128,49 @@
     
     
 }
+//初始化UITableView
 - (void)initexpertTableView{
     
-    if(_expertTableView == nil){
-        _expertTableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44)) style:UITableViewStylePlain];
-        NSDictionary *dic = @{
+
+    _expertTableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44)) style:UITableViewStylePlain];
+   
+    NSDictionary *dic = @{
+                          @"id":@"0",
+                          @"pagesize":@"10"
+                          };
+    
+    [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic withMethod:SHHttpRequestGet];
+    //上拉刷新
+    MJRefreshNormalHeader *mjHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        NSDictionary *dic1 = @{
                               @"id":@"0",
                               @"pagesize":@"10"
                               };
-        
-        [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic withMethod:SHHttpRequestGet];
-        [self.view addSubview:_expertTableView];
-    }
+       // [self requestQuDataWithUserId:userid wtid:_curWtid];
+        [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic1
+               withMethod:SHHttpRequestGet];
+    }];
+    _expertTableView.header = mjHeader;
     
+    
+    //上拉加载更多
+    _expertTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        if (self.data == 0) {
+            return ;
+        }
+        DLOG(@"home load more!");
+        
+       ExpertModel *model = [self.data lastObject];
+        
+        NSDictionary *dic2 = @{
+                               @"id":model.zjid,
+                               @"pagesize":@"10"
+                               };
+        
+        [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic2 withMethod:SHHttpRequestGet];
+    }];
+
+    [self.view addSubview:_expertTableView];
     
 }
 #pragma mark - clickevent

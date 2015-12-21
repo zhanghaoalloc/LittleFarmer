@@ -11,6 +11,7 @@
 #import "ExpertModel.h"
 #import "UIViewAdditions.h"
 #import "ExpertDetailViewController.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 
 @implementation ExpertListTableView{
 
@@ -52,6 +53,11 @@
 }
 #pragma mark----协议方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    CGFloat heigt = [tableView fd_heightForCellWithIdentifier:_identify configuration:^(ExpertListCell * cell) {
+        
+        cell.model =self.data[indexPath.row];
+    }];
 
 
     return 150;
@@ -69,24 +75,32 @@
     
     [self.viewController.navigationController pushViewController:expertVC animated:YES];
 
-
-
-
 }
 #pragma mark---数据处理
-- (void)setData:(NSArray *)data{
+- (void)setData:(NSMutableArray *)data{
     _data = data;
     CGRect frame = self.frame;
     CGFloat heigth = _data.count*150;
+    
     if (heigth<frame.size.height) {
         frame.size.height = heigth;
         self.frame = frame;
     }else{
-        frame.size.height =  kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44);
+        if (_isSearch== YES) {
+            frame.size.height =  kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight);
+            
+        }else{
+            frame.size.height =  kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44);
+        }
+       
         self.frame = frame;
-        
     }
+    
     [self reloadData];
+}
+- (void)setIsSearch:(BOOL)isSearch{
+    _isSearch = isSearch;
+
 }
 
 @end

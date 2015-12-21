@@ -240,6 +240,8 @@
     }
     if (_sortView.currentIndex == 4) {
         ExpertSearchViewController *expertSearchVC = [[ExpertSearchViewController alloc] init];
+        expertSearchVC.keyWord =str;
+        self.tabBarController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:expertSearchVC animated:YES];
     }
     
@@ -296,6 +298,8 @@
     }
     if (index == 4) {
         ExpertSearchViewController *expertSearchVC = [[ExpertSearchViewController alloc] init];
+        expertSearchVC.keyWord = textField.text;
+        self.tabBarController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:expertSearchVC animated:YES];
         
     }

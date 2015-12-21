@@ -360,7 +360,7 @@ static CGFloat kLabelPaddingDist = 8.0f;
         [self.viewController.navigationController pushViewController:askVC animated:YES];
     }else if (button.tag == 2){//关注该专家
         
-    
+        
     
     }
    
@@ -377,7 +377,23 @@ static CGFloat kLabelPaddingDist = 8.0f;
     
     //头像
     NSString *iconimage = _model.usertx;
-    [_iconImage sd_setImageWithURL:[NSURL URLWithString:[APPHelper safeString:iconimage]]];
+
+    NSURL *iconURL;
+    
+    if ([iconimage rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        
+        iconURL = [NSURL URLWithString:[APPHelper safeString:iconimage]];
+        
+    }else{
+        NSString *str = [kPictureURL stringByAppendingString:iconimage];
+        iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
+    
+    [_iconImage sd_setImageWithURL:iconURL];
+    
+    
+    
     NSNumber *grade = _model.grade;
     [_expertTypeImage setImage:[self expertSignImage:grade]];
     
@@ -410,18 +426,21 @@ static CGFloat kLabelPaddingDist = 8.0f;
     
     NSInteger  i = [grade integerValue];
     NSString *imageName;
-    if (i==0) {
+    if (i==1) {
       imageName = @"zhuanjia";
-    }else if(i==1){
+    }else if(i==2){
        imageName = @"renzhengzhuanjia";
-    }else if (i==2){
+    }else if (i==3){
        imageName = @"fujiaoshou";
     
-    }else if(i==3){
-       imageName = @"jiaoshou";
     }else if(i==4){
+       imageName = @"jiaoshou";
+    }else if(i==5){
     
        imageName = @"yuanshi";
+    }else{
+    
+        imageName = @"0";
     }
 
     UIImage *image = [UIImage imageNamed:imageName];

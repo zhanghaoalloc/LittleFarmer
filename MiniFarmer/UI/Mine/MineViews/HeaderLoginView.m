@@ -146,6 +146,7 @@
     {
         _headerIconBT = [UIButton buttonWithType:UIButtonTypeCustom];
         _headerIconBT.layer.cornerRadius = 38;
+        _headerIconBT.layer.masksToBounds = YES;
         [_headerIconBT addTarget:self action:@selector(tapHeaderLoginPhotoBT:) forControlEvents:UIControlEventTouchUpInside];
 //        _headerIconBT.layer.borderWidth = 3;
     }
@@ -296,31 +297,62 @@
 {
     //更新用户的信息
     MineInfos *infos = (MineInfos *)model;
-    [self.headerIconBT sd_setBackgroundImageWithURL:[NSURL URLWithString:infos.usertx] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_notlogin_pic"]];
-    [self.speiclistTypeBT setBackgroundImage:[UIImage imageNamed:@"fujiaoshou"] forState:UIControlStateNormal];
     
-//    nameLabel];
-//    [self addSubview:self.nongRenMoneyLabel];
-//    [self addSubview:self.nongRenMoneyCountLabel];
-//    [self addSubview:self.acceptCountLabel];
-//    [self addSubview:self.acceptLabel];
-//    [self addSubview:self.invitedCodeCountlLabel];
-//    [self addSubview:self.invitedCod
+    NSString *iconStr = infos.usertx;
+    NSURL *iconURL;
     
+    if ([iconStr rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        iconURL = [NSURL URLWithString:[APPHelper safeString:iconStr]];
+        
+    }else{
+        NSString *str = [kPictureURL stringByAppendingString:iconStr];
+        iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
+    
+    
+    [self.headerIconBT sd_setBackgroundImageWithURL:iconURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_notlogin_pic"]];
+    
+    NSString *grade = infos.grade;
+       
+    [self.speiclistTypeBT setBackgroundImage:[self expertSignImage:grade] forState:UIControlStateNormal];
     
     [self.nameLabel setText:infos.xm];
     [self.nongRenMoneyLabel setText:@"农人币"];
-    [self.nongRenMoneyCountLabel setText:@"1000"];
+    self.nongRenMoneyCountLabel.text = infos.point;
+    
+    
     
     [self.acceptLabel setText:@"采纳数"];
-    [self.acceptCountLabel setText:@"200"];
+    self.acceptCountLabel.text = infos.hfcns;
     
     [self.invitedCodelLabel setText:@"邀请码"];
     [self.invitedCodeCountlLabel setText:infos.icode.length ? infos.icode : @"无"];
+
+}
+- (UIImage *)expertSignImage:(NSString *)grade{
+    
+    NSInteger  i = [grade integerValue];
+    NSString *imageName;
+    if (i==0) {
+        imageName = @"zhuanjia";
+    }else if(i==1){
+        imageName = @"renzhengzhuanjia";
+    }else if (i==2){
+        imageName = @"fujiaoshou";
+        
+    }else if(i==3){
+        imageName = @"jiaoshou";
+    }else if(i==4){
+        
+        imageName = @"yuanshi";
+    }
+    
+    UIImage *image = [UIImage imageNamed:imageName];
+    
+    return image;
     
 }
-
-
 - (void)tapHeaderLoginPhotoBT:(UIButton *)btn
 {
     self.tapPhotoBT();

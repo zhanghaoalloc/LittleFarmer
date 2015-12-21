@@ -122,7 +122,6 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k6W-1x-hL5">
                     <rect key="frame" x="4" y="16" width="159" height="84"/>
                     <animations/>
-                    <color key="backgroundColor" red="1" green="0.37555315319999999" blue="0.36030991839999998" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="McP-Rx-m7o"/>
                     </constraints>

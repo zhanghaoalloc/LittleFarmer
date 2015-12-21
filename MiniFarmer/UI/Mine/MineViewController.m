@@ -31,10 +31,10 @@
 
 @interface MineViewController ()<UITableViewDelegate,UITableViewDataSource,MineSegmentCellDelegate>
 {
-    UITableView     *_tableView;
-    
     NSMutableArray *sourceArray;
 }
+@property(nonatomic,strong)UITableView *tableView;
+@property(nonatomic,strong) MineInfos *headerInfos;
 
 @end
 
@@ -62,6 +62,10 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    //获取个人中心的内容
+    [self requestCenterUserInfos];
+    [self initSubviews];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -76,20 +80,31 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+//获取个人信息的详情的方法
 - (void)requestPersonInfos
 {
     __weak MineViewController *weakSelf = self;
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
-    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_user_info" parameters:@{@"userid":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]],@"local_userid":@""} prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+    NSString *userid = [APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]];
+    
+    
+    NSDictionary *dic =@{
+                         @"userid":userid
+                         };
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
         [self.view dismissLoading];
+        
         MineInfos *infos = [[MineInfos alloc] initWithDictionary:responseObject error:nil];
         [(HeaderLoginView *)(_tableView.tableHeaderView) refreshUIWithModel:infos];
         [(HeaderLoginView *)(_tableView.tableHeaderView) setTapPhotoBT:^(){
         
             MineInfoViewController *infoVC = [[MineInfoViewController alloc] init];
+            
             infoVC.info = infos;
+            
             [weakSelf.navigationController pushViewController:infoVC animated:YES];
             
         }];
@@ -98,8 +113,30 @@
         [self.view showWeakPromptViewWithMessage:@"请求个人信息失败"];
     }];
 }
+//获取用户信息（个人中心）
+- (void)requestCenterUserInfos{
+    NSString *userid = [APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]];
+
+    NSDictionary *dic =@{
+                         @"userid":userid
+                         };
+    
+    __weak MineViewController *wself = self;
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        
+        MineInfos *infos = [[MineInfos alloc] initWithDictionary:responseObject error:nil];
+        
+        
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
 
 
+
+
+}
 
 - (void)commonInit
 {
@@ -176,6 +213,9 @@
         //初始化已经登录的
         HeaderLoginView *loginView = [[HeaderLoginView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeWidth * 476.0 / 750)];
         
+        [loginView refreshUIWithModel:self.headerInfos];
+        
+        
 //        [self.view addSubview:loginView];
         
         headerView = loginView;
@@ -186,15 +226,19 @@
         notLoginView.frame = CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeWidth * 476.0 / 750);
 //        [self.view addSubview:notLoginView];
         __weak MineViewController *weakself = self;
+       
+        //登陆所调用的block方法
         notLoginView.tapLoginBT = ^()
         {
             LoginViewController *loginVC = [[LoginViewController alloc] init];
             loginVC.loginBackBlock = ^(){
+                
             };
+            [weakself.tableView reloadData];
             UINavigationController *naVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
             [weakself presentViewController:naVC animated:YES completion:nil];
         };
-        
+        //注册所调用的block方法
         notLoginView.tapRegistBT = ^()
         {
             RegisterViewController *registVC = [[RegisterViewController alloc] init];
@@ -207,14 +251,17 @@
         
         headerView = notLoginView;
     }
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight);
-    _tableView.tableHeaderView = headerView;
-    _tableView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_tableView];
+    if (_tableView == nil) {
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight);
+        _tableView.showsVerticalScrollIndicator = NO;
+        [self.view addSubview:_tableView];
+    }
+     _tableView.tableHeaderView = headerView;
+    
 }
 
 

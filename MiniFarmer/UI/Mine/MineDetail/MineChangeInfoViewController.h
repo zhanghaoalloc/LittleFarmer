@@ -11,10 +11,12 @@
 
 typedef void (^ChangeInfoSuceess) (UserMenuItem *item);
 
-@interface MineChangeInfoViewController : MineBaseViewController
+@interface MineChangeInfoViewController : MineBaseViewController<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UserMenuItem *item;
 @property (nonatomic, copy) ChangeInfoSuceess changeInfoSuceess;
+
+@property (nonatomic ,assign)NSInteger index;
 
 
 @end

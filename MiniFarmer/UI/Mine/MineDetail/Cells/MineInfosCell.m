@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIImageView *guideImageView;
 
+
 @end
 
 @implementation MineInfosCell
@@ -66,6 +67,13 @@
     UserMenuItem *item = (UserMenuItem *)model;
     self.nameLabel.text = item.title;
     self.contentLabel.text = item.subTitle;
+
+}
+- (void)setImageIshidden:(BOOL)imageIshidden{
+
+    _imageIshidden = imageIshidden;
+    
+    self.guideImageView.hidden = _imageIshidden;
 
 }
 

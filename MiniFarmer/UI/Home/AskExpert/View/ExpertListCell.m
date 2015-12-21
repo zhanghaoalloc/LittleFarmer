@@ -44,9 +44,19 @@
 - (void)setModel:(ExpertModel *)model{
     _model = model;
     
+    NSString *iconStr = model.usertx;
+    NSURL *iconURL;
     
-    NSString *iconStr = _model.usertx;
-    [_icon sd_setImageWithURL:[NSURL URLWithString:iconStr]];
+    if ([iconStr rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+       iconURL = [NSURL URLWithString:[APPHelper safeString:iconStr]];
+        
+    }else{
+     NSString *str = [kPictureURL stringByAppendingString:iconStr];
+     iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
+
+    [_icon sd_setImageWithURL:iconURL];
    
     _name.text = _model.xm;
     _type.text = _model.zjlxms;

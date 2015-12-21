@@ -144,6 +144,7 @@
 		1BD3ECCA1C1E9A34001C2421 /* HeaderNotLoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BD3EC881C1E9A34001C2421 /* HeaderNotLoginView.xib */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECCB1C1E9A34001C2421 /* MineSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC8A1C1E9A34001C2421 /* MineSegmentView.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECCC1C1E9A34001C2421 /* MineSegmentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BD3EC8B1C1E9A34001C2421 /* MineSegmentView.xib */; settings = {ASSET_TAGS = (); }; };
+		1BDCCDFD1C2852B70000A3DF /* MineChangeTXController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BDCCDFC1C2852B70000A3DF /* MineChangeTXController.m */; settings = {ASSET_TAGS = (); }; };
 		1BEC27691C0AFF460046F96A /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEC27681C0AFF460046F96A /* ShareView.m */; settings = {ASSET_TAGS = (); }; };
 		1BEC276B1C0AFF540046F96A /* ShareView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BEC276A1C0AFF540046F96A /* ShareView.xib */; settings = {ASSET_TAGS = (); }; };
 		1BEC27AF1C0B34050046F96A /* StudyHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BEC27AE1C0B34050046F96A /* StudyHeaderView.m */; settings = {ASSET_TAGS = (); }; };
@@ -580,6 +581,8 @@
 		1BD3EC891C1E9A34001C2421 /* MineSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineSegmentView.h; sourceTree = "<group>"; };
 		1BD3EC8A1C1E9A34001C2421 /* MineSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineSegmentView.m; sourceTree = "<group>"; };
 		1BD3EC8B1C1E9A34001C2421 /* MineSegmentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MineSegmentView.xib; sourceTree = "<group>"; };
+		1BDCCDFB1C2852B70000A3DF /* MineChangeTXController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineChangeTXController.h; sourceTree = "<group>"; };
+		1BDCCDFC1C2852B70000A3DF /* MineChangeTXController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineChangeTXController.m; sourceTree = "<group>"; };
 		1BEC27671C0AFF460046F96A /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		1BEC27681C0AFF460046F96A /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		1BEC276A1C0AFF540046F96A /* ShareView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareView.xib; sourceTree = "<group>"; };
@@ -1306,6 +1309,8 @@
 				1BD3EC451C1E9A34001C2421 /* MineBaseViewController.m */,
 				1BD3EC461C1E9A34001C2421 /* MineChangeInfoViewController.h */,
 				1BD3EC471C1E9A34001C2421 /* MineChangeInfoViewController.m */,
+				1BDCCDFB1C2852B70000A3DF /* MineChangeTXController.h */,
+				1BDCCDFC1C2852B70000A3DF /* MineChangeTXController.m */,
 				1BD3EC481C1E9A34001C2421 /* MineExpertInfoViewController.h */,
 				1BD3EC491C1E9A34001C2421 /* MineExpertInfoViewController.m */,
 				1BD3EC4A1C1E9A34001C2421 /* MIneExpertViewController.h */,
@@ -2449,6 +2454,7 @@
 				FCC752BF1BC4E01500DE4B27 /* SDWebImageCompat.m in Sources */,
 				1BD3ECAF1C1E9A34001C2421 /* MineFocusViewController.m in Sources */,
 				FCC752C11BC4E01500DE4B27 /* SDWebImageDownloader.m in Sources */,
+				1BDCCDFD1C2852B70000A3DF /* MineChangeTXController.m in Sources */,
 				FCC752BD1BC4E01500DE4B27 /* NSData+ImageContentType.m in Sources */,
 				FCC7528E1BC4E01500DE4B27 /* AFNetworkReachabilityManager.m in Sources */,
 				31EC678D1BF0E4A700B8E1BC /* MWCaptionView.m in Sources */,

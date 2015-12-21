@@ -71,8 +71,6 @@
     //[self.view insertSubview:_tableView atIndex:0];
     [self.view addSubview:_tableView];
    
-    
-    
 
     //注册单元格
     identfy = @"diseacell";

@@ -10,4 +10,7 @@
 
 @interface MineInfosCell : MineBaseTableViewCell
 
+@property(nonatomic,assign)BOOL imageIshidden;
+
+
 @end

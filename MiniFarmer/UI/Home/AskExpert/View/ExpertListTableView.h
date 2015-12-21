@@ -11,6 +11,7 @@
 @interface ExpertListTableView : UITableView<UITableViewDataSource,UITableViewDelegate>
 
 
-@property(nonatomic,strong)NSArray *data;
+@property(nonatomic,strong)NSMutableArray *data;
+@property(nonatomic,assign)BOOL isSearch;
 
 @end

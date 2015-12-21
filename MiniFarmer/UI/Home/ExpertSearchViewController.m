@@ -9,10 +9,12 @@
 #import "ExpertSearchViewController.h"
 #import "SeachView.h"
 #import "BaseViewController+Navigation.h"
+#import "ExpertModel.h"
 
 
 @interface ExpertSearchViewController ()
 @property (nonatomic,strong) SeachView *searchView;
+@property (nonatomic,strong) NSMutableArray *data;
 
 
 @end
@@ -22,7 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+   
     self.edgesForExtendedLayout = UIRectEdgeAll;
+    
+    self.data = [NSMutableArray array];
     //初始化导航栏
     [self setNavigation];
     
@@ -30,6 +35,12 @@
     
     
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [appDelegate hideTabbar];
 }
 - (void)setNavigation{
     //1.搜索栏
@@ -51,7 +62,9 @@
     
     [self.view addSubview:backButton];
     //3.导航栏底部分割线
-    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:0.5];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight-0.5, kScreenSizeWidth,0.5 )];
+    line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    [_searchView addSubview:line];
 }
 - (void)back:(UIButton *)button{
     
@@ -62,24 +75,57 @@
 //创建子视图
 - (void)_createSubView{
     _tableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight)) style:UITableViewStylePlain];
+    _tableView.isSearch = YES;
+    [self.view addSubview:_tableView];
+}
+- (void)setKeyWord:(NSString *)keyWord{
+    _keyWord = keyWord;
+    
+    [self requestData];
+
+
+}
+- (void)requestData{
+    
+    NSDictionary *dic = @{
+                          @"pagesize":@"10",
+                          @"wd":_keyWord,
+                          @"id":@"0"
+                          };
+    
+    __weak ExpertSearchViewController *wself = self;
+    
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=search&m=zj" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSNumber *code = [responseObject objectForKey:@"code"];
+        if ([code integerValue]==1) {//成功
+            NSArray *array = [responseObject objectForKey:@"list"];
+            
+            for (NSDictionary *dic in array) {
+                ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
+                [self.data addObject:model];
+            }
+            
+            //回到主线程刷新UI
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                wself.tableView.data = wself.data.mutableCopy;
+                
+            });
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        
+    }];
+    
+
+
+
+
 
 }
 
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

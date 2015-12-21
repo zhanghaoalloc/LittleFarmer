@@ -310,6 +310,7 @@
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=tw&m=gethdtw4userid" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            
             NSDictionary *dicResult = responseObject;
             BOOL code = [[dicResult objectForKey:@"code"] boolValue];
             NSString *msg = [dicResult objectForKey:@"msg"];

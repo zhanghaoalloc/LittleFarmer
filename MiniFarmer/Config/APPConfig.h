@@ -11,16 +11,20 @@
 
 
 //服务器地址及加密密钥
-//测试地址
+//正式地址
+
 #if 1
-#define kCommServerUrl  @"http://www.enbs.com.cn/apps_test/index.php"
+#define kCommServerUrl  @"http://www.enbs.com.cn/apps_2/index.php"
+#define kCommApiKey     @"457077ad3a4e86ff53fc5555"
+
+ 
+#else
+//测试环境
+#define kCommServerUrl  @"http://www.enbs.com.cn/apps_text/index.php"
 #define kCommApiKey     @"26f9a2878862d3bb27165020c6b4e7f0"
 
-#else
-//正式环境
-//#define kCommServerUrl  @"http://www.enbs.com.cn/apps_2/index.php"
-//#define kCommApiKey     @"457077ad3a4e86ff53fc5555"
 #endif
+
 #define kPictureURL      @"http://www.enbs.com.cn/apps_test/uploads/"
 
 // 1, 系统函数
