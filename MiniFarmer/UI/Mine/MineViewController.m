@@ -17,7 +17,7 @@
 #import "MineFocusViewController.h"
 #import "MineInfoViewController.h"
 #import "MineInfoViewController.h"
-#import "MineExpertInfoViewController.h"
+
 #import "HeaderLoginView.h"
 #import "HeaderNotLoginView.h"
 #import "MineCell.h"
@@ -62,10 +62,14 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate showTabbar];
+
     //获取个人中心的内容
     [self requestCenterUserInfos];
-    [self initSubviews];
+   
     [self.tableView reloadData];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -124,10 +128,7 @@
     __weak MineViewController *wself = self;
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
-        
         MineInfos *infos = [[MineInfos alloc] initWithDictionary:responseObject error:nil];
-        
-        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

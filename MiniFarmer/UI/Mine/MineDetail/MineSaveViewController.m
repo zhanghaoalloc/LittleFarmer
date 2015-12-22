@@ -40,6 +40,11 @@
     [self addVC];
     
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+}
 
 - (void)addVC
 {
@@ -95,14 +100,14 @@
     {
         _segmentView = [[YHSegmentView alloc] init];
         _segmentView.backgroundColor = [UIColor whiteColor];
-        _segmentView.itemToLeft = 64;
-        _segmentView.directionLineHeigth = 4;
-        _segmentView.itemsDispace = 110;
-        _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#ff6633"];
+        _segmentView.itemToLeft =(kScreenSizeWidth-32*2)/3 ;
+        _segmentView.directionLineHeigth = 1;
+        _segmentView.itemsDispace =(kScreenSizeWidth-32*2)/3 ;
+        _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.textNormalColor = [UIColor colorWithHexString:@"#666666"];
-        _segmentView.directionLineColor = [UIColor colorWithHexString:@"#ff6633"];
+        _segmentView.directionLineColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.bottomLineHeigth = 1;
-        _segmentView.bottomLineColor = [UIColor colorWithHexString:@"#e4e4e4"];
+        _segmentView.bottomLineColor = [UIColor colorWithHexString:@"#eeeeee"];
         _segmentView.delegate = self;
     }
     return _segmentView;

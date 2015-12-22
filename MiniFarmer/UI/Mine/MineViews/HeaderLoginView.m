@@ -312,9 +312,13 @@
     
     
     [self.headerIconBT sd_setBackgroundImageWithURL:iconURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"mine_notlogin_pic"]];
+
     
-    NSString *grade = infos.grade;
-       
+    NSString *grade = infos.zjid;
+    if (grade == 0) {
+        self.speiclistTypeBT.hidden = YES;
+        
+    }
     [self.speiclistTypeBT setBackgroundImage:[self expertSignImage:grade] forState:UIControlStateNormal];
     
     [self.nameLabel setText:infos.xm];

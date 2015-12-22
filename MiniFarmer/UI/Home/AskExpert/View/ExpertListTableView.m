@@ -65,16 +65,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ExpertDetailViewController *expertVC = [[ExpertDetailViewController alloc] init];
+    
     ExpertModel *model = self.data[indexPath.row];
+    
     expertVC.zjid = model.userid;
+    
     expertVC.expertmodel = model;
     
-    
-    
+
     self.viewController.tabBarController.hidesBottomBarWhenPushed = YES;
     
     [self.viewController.navigationController pushViewController:expertVC animated:YES];
-
 }
 #pragma mark---数据处理
 - (void)setData:(NSMutableArray *)data{

@@ -67,6 +67,8 @@
 		1B3D4BE11C28E27B00F46AA0 /* FabuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BCD1C28E27B00F46AA0 /* FabuViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B3D4BE21C28E27B00F46AA0 /* MethodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BCF1C28E27B00F46AA0 /* MethodDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B3D4BE31C28E27B00F46AA0 /* MethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BD11C28E27B00F46AA0 /* MethodViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE61C28EA7C00F46AA0 /* MineJobTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BE51C28EA7C00F46AA0 /* MineJobTableView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE91C2942D100F46AA0 /* PlantListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BE81C2942D100F46AA0 /* PlantListModel.m */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1601C03F4E400D69A2D /* SeachView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE15F1C03F4E400D69A2D /* SeachView.m */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1621C03F53900D69A2D /* SeachView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B6BE1611C03F53900D69A2D /* SeachView.xib */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1651C04304B00D69A2D /* UIView+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE1641C04304B00D69A2D /* UIView+UIViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -129,7 +131,6 @@
 		1BD3ECA91C1E9A34001C2421 /* MineAskQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC431C1E9A34001C2421 /* MineAskQuestionViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECAA1C1E9A34001C2421 /* MineBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC451C1E9A34001C2421 /* MineBaseViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECAB1C1E9A34001C2421 /* MineChangeInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC471C1E9A34001C2421 /* MineChangeInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
-		1BD3ECAC1C1E9A34001C2421 /* MineExpertInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC491C1E9A34001C2421 /* MineExpertInfoViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECAD1C1E9A34001C2421 /* MIneExpertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC4B1C1E9A34001C2421 /* MIneExpertViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECAE1C1E9A34001C2421 /* MineFocusFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC4D1C1E9A34001C2421 /* MineFocusFriendViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1BD3ECAF1C1E9A34001C2421 /* MineFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BD3EC4F1C1E9A34001C2421 /* MineFocusViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -452,6 +453,10 @@
 		1B3D4BCF1C28E27B00F46AA0 /* MethodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodDetailViewController.m; sourceTree = "<group>"; };
 		1B3D4BD01C28E27B00F46AA0 /* MethodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodViewController.h; sourceTree = "<group>"; };
 		1B3D4BD11C28E27B00F46AA0 /* MethodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodViewController.m; sourceTree = "<group>"; };
+		1B3D4BE41C28EA7C00F46AA0 /* MineJobTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineJobTableView.h; sourceTree = "<group>"; };
+		1B3D4BE51C28EA7C00F46AA0 /* MineJobTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineJobTableView.m; sourceTree = "<group>"; };
+		1B3D4BE71C2942D100F46AA0 /* PlantListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlantListModel.h; sourceTree = "<group>"; };
+		1B3D4BE81C2942D100F46AA0 /* PlantListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlantListModel.m; sourceTree = "<group>"; };
 		1B6BE15E1C03F4E400D69A2D /* SeachView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeachView.h; sourceTree = "<group>"; };
 		1B6BE15F1C03F4E400D69A2D /* SeachView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeachView.m; sourceTree = "<group>"; };
 		1B6BE1611C03F53900D69A2D /* SeachView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeachView.xib; sourceTree = "<group>"; };
@@ -566,8 +571,6 @@
 		1BD3EC451C1E9A34001C2421 /* MineBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineBaseViewController.m; sourceTree = "<group>"; };
 		1BD3EC461C1E9A34001C2421 /* MineChangeInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineChangeInfoViewController.h; sourceTree = "<group>"; };
 		1BD3EC471C1E9A34001C2421 /* MineChangeInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineChangeInfoViewController.m; sourceTree = "<group>"; };
-		1BD3EC481C1E9A34001C2421 /* MineExpertInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineExpertInfoViewController.h; sourceTree = "<group>"; };
-		1BD3EC491C1E9A34001C2421 /* MineExpertInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineExpertInfoViewController.m; sourceTree = "<group>"; };
 		1BD3EC4A1C1E9A34001C2421 /* MIneExpertViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIneExpertViewController.h; sourceTree = "<group>"; };
 		1BD3EC4B1C1E9A34001C2421 /* MIneExpertViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIneExpertViewController.m; sourceTree = "<group>"; };
 		1BD3EC4C1C1E9A34001C2421 /* MineFocusFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineFocusFriendViewController.h; sourceTree = "<group>"; };
@@ -1422,8 +1425,6 @@
 				1BD3EC471C1E9A34001C2421 /* MineChangeInfoViewController.m */,
 				1BDCCDFB1C2852B70000A3DF /* MineChangeTXController.h */,
 				1BDCCDFC1C2852B70000A3DF /* MineChangeTXController.m */,
-				1BD3EC481C1E9A34001C2421 /* MineExpertInfoViewController.h */,
-				1BD3EC491C1E9A34001C2421 /* MineExpertInfoViewController.m */,
 				1BD3EC4A1C1E9A34001C2421 /* MIneExpertViewController.h */,
 				1BD3EC4B1C1E9A34001C2421 /* MIneExpertViewController.m */,
 				1BD3EC4C1C1E9A34001C2421 /* MineFocusFriendViewController.h */,
@@ -1533,6 +1534,8 @@
 				1BD3EC7B1C1E9A34001C2421 /* UIView+FrameCategory.m */,
 				1BD3EC7C1C1E9A34001C2421 /* YHSegmentView.h */,
 				1BD3EC7D1C1E9A34001C2421 /* YHSegmentView.m */,
+				1B3D4BE41C28EA7C00F46AA0 /* MineJobTableView.h */,
+				1B3D4BE51C28EA7C00F46AA0 /* MineJobTableView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -1542,6 +1545,8 @@
 			children = (
 				1BD3EC7F1C1E9A34001C2421 /* UserMenuItem.h */,
 				1BD3EC801C1E9A34001C2421 /* UserMenuItem.m */,
+				1B3D4BE71C2942D100F46AA0 /* PlantListModel.h */,
+				1B3D4BE81C2942D100F46AA0 /* PlantListModel.m */,
 			);
 			path = MineModel;
 			sourceTree = "<group>";
@@ -2548,6 +2553,7 @@
 				313E98131C058B6100DC7B4F /* (null) in Sources */,
 				FCC90DB01BD3AE5B00D341DD /* QuestionCell.m in Sources */,
 				313E98061C01F99C00DC7B4F /* (null) in Sources */,
+				1B3D4BE91C2942D100F46AA0 /* PlantListModel.m in Sources */,
 				1BD3ECBA1C1E9A34001C2421 /* MineSaveQuestionModel.m in Sources */,
 				31EC679C1BF0E4A700B8E1BC /* PSTCollectionViewItemKey.m in Sources */,
 				FCC74FF61BD27DAF008446ED /* QuestionInfo.m in Sources */,
@@ -2582,7 +2588,6 @@
 				31EC66411BECF43700B8E1BC /* JudgeTextIsRight.m in Sources */,
 				1B883BA41C22402600B95426 /* ExpertDetailViewController.m in Sources */,
 				1B6BE1711C04393A00D69A2D /* MessageViewController.m in Sources */,
-				1BD3ECAC1C1E9A34001C2421 /* MineExpertInfoViewController.m in Sources */,
 				1B6BE1601C03F4E400D69A2D /* SeachView.m in Sources */,
 				1B3D4BDF1C28E27B00F46AA0 /* TableViewCell.m in Sources */,
 				1BD3ECB81C1E9A34001C2421 /* MineFocusFriendModel.m in Sources */,
@@ -2769,6 +2774,7 @@
 				FCC752B51BC4E01500DE4B27 /* MJRefreshNormalHeader.m in Sources */,
 				1B6BE17D1C04699D00D69A2D /* StudyViewController.m in Sources */,
 				1B1DCED51C1595BA00DB54BD /* MyanswerViewController.m in Sources */,
+				1B3D4BE61C28EA7C00F46AA0 /* MineJobTableView.m in Sources */,
 				FCC752C41BC4E01500DE4B27 /* SDWebImagePrefetcher.m in Sources */,
 				1BD3ECBB1C1E9A34001C2421 /* MineSaveTechnology.m in Sources */,
 				FCC752921BC4E01500DE4B27 /* AFURLResponseSerialization.m in Sources */,

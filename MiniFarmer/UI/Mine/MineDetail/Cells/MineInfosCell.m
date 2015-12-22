@@ -64,9 +64,11 @@
 
 - (void)refreshDataWithModel:(id)model
 {
+    
     UserMenuItem *item = (UserMenuItem *)model;
     self.nameLabel.text = item.title;
     self.contentLabel.text = item.subTitle;
+    
 
 }
 - (void)setImageIshidden:(BOOL)imageIshidden{

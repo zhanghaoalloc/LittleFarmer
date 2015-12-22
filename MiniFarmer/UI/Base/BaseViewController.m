@@ -84,14 +84,17 @@
 
 - (void)initTitleLabel:(NSString *)title
 {
-    self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-    _navTitleLabel.center = CGPointMake(self.view.width/2, 42);
-    _navTitleLabel.textAlignment = NSTextAlignmentCenter;
-    //[_navTitleLabel setTextColor:[UIColor colorWithHexString:@"#8990A2"]];
-    _navTitleLabel.text = title;
-    [_navTitleLabel setFont:[UIFont systemFontOfSize:18]];
-    _navTitleLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_navTitleLabel];
+    if (self.navTitleLabel == nil) {
+        self.navTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+        _navTitleLabel.center = CGPointMake(self.view.width/2, 42);
+        _navTitleLabel.textAlignment = NSTextAlignmentCenter;
+        //[_navTitleLabel setTextColor:[UIColor colorWithHexString:@"#8990A2"]];
+        _navTitleLabel.text = title;
+        [_navTitleLabel setFont:[UIFont systemFontOfSize:18]];
+        _navTitleLabel.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_navTitleLabel];
+
+    }
 }
 
 //创建导航栏底图(包含状态栏部分)

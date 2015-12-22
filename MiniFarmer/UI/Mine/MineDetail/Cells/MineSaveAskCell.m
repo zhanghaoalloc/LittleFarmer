@@ -51,7 +51,9 @@
         
         [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.nameLabel.mas_left);
-            make.top.equalTo(self.nameLabel.mas_top).offset(12);
+            
+            make.right.equalTo(self.contentView.mas_right).offset(-12);
+            make.top.equalTo(self.nameLabel.mas_bottom).offset(12);
         }];
     }
     return self;
@@ -59,14 +61,35 @@
 
 + (CGFloat)cellHeightWihtModel:(id)model
 {
-    return 81 + kLineWidth;
+    
+    return 100 + kLineWidth;
 }
 
 - (void)refreshDataWithModel:(id)model
 {
+    
     MineSaveTechnologyList *list = (MineSaveTechnologyList *)model;
-    [self.photoBT sd_setImageWithURL:[NSURL URLWithString:list.libzp] forState:UIControlStateNormal placeholderImage:nil];
+    NSString *iconStr =list.lbzp;
+    NSURL *iconURL;
+    
+    if ([iconStr rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        iconURL = [NSURL URLWithString:[APPHelper safeString:iconStr]];
+        
+    }else{
+        NSString *str = [kPictureURL stringByAppendingString:iconStr];
+        iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
+
+    [self.photoBT sd_setImageWithURL:iconURL forState:
+        UIControlStateNormal placeholderImage:nil];
     self.nameLabel.text = list.title;
+    
+    /*CGSize labsize = [label.text sizeWithFont:kTextFont16 constrainedToSize:size lineBreakMode:label.lineBreakMode];*/
+   
+    
+    
+    
     self.contentLabel.text = list.fbwh;
     
 }

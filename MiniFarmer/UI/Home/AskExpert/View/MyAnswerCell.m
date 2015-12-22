@@ -63,9 +63,6 @@
         _contentLabel.textColor = [UIColor blackColor];
         _contentLabel.numberOfLines = 0;
         
-        //
-        
-        
         [self pictureViewInit];
         
         //底部view

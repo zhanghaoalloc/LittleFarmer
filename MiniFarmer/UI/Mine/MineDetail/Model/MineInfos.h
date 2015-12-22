@@ -27,7 +27,9 @@
 @property (nonatomic, copy) NSString<Optional> *sczwms;
 @property (nonatomic, copy) NSString<Optional> *zjnl;
 @property (nonatomic, copy) NSString<Optional> *zjjs;
+@property (nonatomic, copy) NSString<Optional> *zzmj;
 @property (nonatomic, copy) NSString<Optional> *location;
+
 
 
 

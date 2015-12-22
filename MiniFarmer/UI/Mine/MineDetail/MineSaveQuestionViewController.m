@@ -36,25 +36,39 @@
 {
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
+    
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
-    NSDictionary *dic = @{@"userid":[APPHelper safeString:userId]};
-    //TODO:这里需要做修改 没有找到接口在哪里 subUrl需要做修改
+    NSDictionary *dic = @{
+                          @"userid":userId
+                          };
+    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
-                                             subUrl:nil
-                                         parameters:dic
-                                     prepareExecute:nil
-                                            success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                //解析数据
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-                                                [self handleSucessWithResult:lastId lastId:responseObject];
-                                                
-                                            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-                                                
-                                                [self handleFailure];
-                                            }];
+    subUrl:@"?c=tw&m=get_wtcollection" parameters:dic prepareExecute:nil
+    success:^(NSURLSessionDataTask *task, id responseObject)
+    {
+        
+    //解析数据
+    [self.view dismissLoading];
+        
+    
+    
+    
+        
+    
+        
+    [self cancelCurrentLoadAnimation];
+        
+    [self handleSucessWithResult:lastId lastId:responseObject];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+
+    
+    [self.view dismissLoading];
+        
+    [self cancelCurrentLoadAnimation];
+    
+    [self handleFailure];
+    }];
 }
 
 

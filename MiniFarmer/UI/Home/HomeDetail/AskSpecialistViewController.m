@@ -93,7 +93,6 @@
     [self.view addSubview:_searchView];
     
     //2.导航栏返回按钮
-    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(0,kStatusBarHeight,44, 44)];
     [backButton setBackgroundImage:[UIImage imageNamed:@"home_navigation_back_btn"] forState:UIControlStateNormal];

@@ -17,6 +17,6 @@
 #import "CommonViewController.h"
 @interface MIneExpertViewController : CommonViewController
 
-//@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end

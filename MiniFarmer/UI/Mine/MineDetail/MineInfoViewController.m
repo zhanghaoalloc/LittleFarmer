@@ -82,7 +82,9 @@
     UserMenuItem *item4= [[UserMenuItem alloc] init];
     item4.type = TypeContent;
     item4.title = @"职业";
-    item4.filename = @"zc";
+    item4.filename = @"jsylx";
+    item4.subTitle = self.info.jsylx;
+    
 //    item4.subTitle = self.info.zc;
     [self.infos addObject:item4];
     
@@ -96,8 +98,9 @@
     UserMenuItem *item6= [[UserMenuItem alloc] init];
     item6.type = TypeContent;
     item6.title = @"种植面积";
-//    item6.filename = @"zzmj";
-//    item.subTitle = self.info.zzmj;
+    item6.filename = @"zzmj";
+    
+    item6.subTitle = self.info.zzmj;
     [self.infos addObject:item6];
 }
 
@@ -116,7 +119,6 @@
         _infoTableView.delegate = self;
         _infoTableView.dataSource = self;
         _infoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
     }
     return _infoTableView;
 }
@@ -196,7 +198,9 @@
         MineChangeInfoViewController *changeVC = [[MineChangeInfoViewController alloc] init];
         [changeVC initTitleLabel:item.title];
         changeVC.item = item;
+        
         changeVC.index = indexPath.row;
+        
         changeVC.changeInfoSuceess = ^(UserMenuItem *item){
             
             MineInfosCell *cell = [weakself.infoTableView cellForRowAtIndexPath:indexPath];

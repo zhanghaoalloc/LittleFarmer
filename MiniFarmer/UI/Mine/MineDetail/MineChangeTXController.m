@@ -8,8 +8,33 @@
 
 #import "MineChangeTXController.h"
 #import "BaseViewController+Navigation.h"
+#import "ZmImageView.h"
+#import "UserInfo.h"
+
+
+//获取图片路径的类
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AssetsLibrary/ALAsset.h>
+#import <AssetsLibrary/ALAssetsGroup.h>
+#import <AssetsLibrary/ALAssetRepresentation.h>
 
 @interface MineChangeTXController ()
+
+
+
+@property(nonatomic,strong)UIButton *changeButton;
+@property(nonatomic,strong)UIView *bottomView;
+
+
+@property(nonatomic,copy)NSString *imageName;
+@property(nonatomic,strong)ZmImageView *selectImgView;
+@property(nonatomic,copy)NSString *path;
+@property(nonatomic,strong)NSData *imgData;
+
+
+
+
+
 
 
 
@@ -18,6 +43,9 @@
 @implementation MineChangeTXController{
 
     UIImageView *_imageView;
+    NSURL *pictureURL;
+    NSString *imagePath;
+    
 
 }
 - (instancetype)init{
@@ -47,34 +75,71 @@
     [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
     
 
-    UIButton *changeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [changeButton setFrame:CGRectMake(kScreenSizeWidth-64, kStatusBarHeight, 44, 44)];
-    [changeButton setTitle:@"更换" forState:UIControlStateNormal];
-    [changeButton setTitleColor:[UIColor colorWithHexString:@"#3872f4"] forState:UIControlStateNormal];
-    [self.view addSubview:changeButton];
-    [changeButton addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventTouchUpInside];
+    _changeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_changeButton setFrame:CGRectMake(kScreenSizeWidth-64, kStatusBarHeight, 44, 44)];
+    [_changeButton setTitle:@"更换" forState:UIControlStateNormal];
+    [_changeButton setTitleColor:[UIColor colorWithHexString:@"#3872f4"] forState:UIControlStateNormal];
+    [self.view addSubview:_changeButton];
+    _changeButton.tag = 1;
+    [_changeButton addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventTouchUpInside];
     
     UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight-0.5, kScreenSizeWidth, 0.5)];
     line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     [self.view addSubview:line];
-    
     [self.view addSubview:backButton];
-
+    
+    //初始化发送按钮
+    UIButton *sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    sendButton.frame = CGRectMake(kScreenSizeWidth-64,0,44, 44);
+    [sendButton setTitle:@"使用" forState:UIControlStateNormal];
+    [sendButton setTitleColor:[UIColor colorWithHexString:@"#3872f4"] forState:UIControlStateNormal];
+    [sendButton addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventTouchUpInside];
+    sendButton.tag = 2;
+    
+    _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSizeHeight-kBottomTabBarHeight,kScreenSizeWidth , kBottomTabBarHeight)];
+    _bottomView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    _bottomView.hidden = YES;
+    [self.view addSubview:_bottomView];
+    
+    
+    [_bottomView addSubview:sendButton];
+    
+    
+    
 }
 - (void)backAction:(UIButton *)button{
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 - (void)changeAction:(UIButton *)button{
+    if (button.tag == 1) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"相册", nil];
+        
+        [actionSheet showInView:self.view];
+    }else{//发送网络请求
+        NSString *userid = [UserInfo shareUserInfo].userId;
+        
+        NSDictionary *dic = @{
+                              @"userid":userid
+                              
+                              };
+        NSDictionary *filedata = @{
+                                   @"upfile":_imgData
+                                   };
+        __weak MineChangeTXController *wself = self;
+        [SHHttpClient uploadURL:@"?c=user&m=edit_usertx" params:dic fileData:filedata completion:^(id result, NSError *error) {
+            if (error == nil) {
+                [wself.view showWeakPromptViewWithMessage:@"更改成功"];
+                [wself backAction:nil];
+            }
+            
+        }];
+    }
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"相册", nil];
-    
-    [actionSheet showInView:self.view];
-    
-
+   
 }
 
-#pragma mark----UIActionSheetDelegate
+
 #pragma ----mark UIActionSheetDelegate的协议方法
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
@@ -88,22 +153,20 @@
     }
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
     imagePicker.sourceType = sourceType;
-    imagePicker.delegate = self;
+   imagePicker.delegate = self;
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     
     NSLog(@"%@",info);
-    /*
-    
     //2.取得选中的照片
     UIImage *img = info[UIImagePickerControllerOriginalImage];
     
     //获取选中的URL
-  //  pictureURL = info[UIImagePickerControllerReferenceURL];
+   pictureURL = info[UIImagePickerControllerReferenceURL];
     
     //获取图片的名字
- //   ALAssetsLibraryAssetForURLResultBlock  resultblock = ^(ALAsset *myasset)
+   ALAssetsLibraryAssetForURLResultBlock  resultblock = ^(ALAsset *myasset)
     {
         ALAssetRepresentation *representation = [myasset defaultRepresentation];
         self.imageName = [representation filename];//self.imageName是属性
@@ -124,17 +187,15 @@
         _imgData = UIImageJPEGRepresentation(img,0.5);
         
     }];
-    //3.显示选中的照片
-    if (_selectImgView == nil) {
-        _selectImgView = [[ZmImageView alloc] initWithFrame:CGRectMake(0, 0, _imagesView.height, _imagesView.height)];
-        [_imagesView addSubview:_selectImgView];
-        //设置代理对象
-        _selectImgView.delegate = self;
-    }
-    _selectImgView.image = img;
-    [_arrayPhotos addObject:img];
-     
-     */
+    
+    [_imageView setImage:img];
+    _scrollView.backgroundColor = [UIColor blackColor];
+    _bottomView.hidden = NO;
+    //[self.view reloadInputViews];
+    //_scrollView.alpha = 0.5;
+    
+    
+    
     
 }
 
@@ -153,12 +214,12 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     //
     _scrollView.delegate = self;
-    [self.view addSubview:_scrollView];
+    [self.view insertSubview:_scrollView atIndex:0];
+    
     _imageView = [[UIImageView alloc] initWithFrame:_scrollView.bounds];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     [_scrollView addSubview:_imageView];
-    
-    
+
     //双击手势
     UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction2:)];
     tap2.numberOfTapsRequired = 2;   // 点击的次数
@@ -168,13 +229,12 @@
     UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction1:)];
     [_scrollView addGestureRecognizer:tap1];
     
-   
     //当tap2手势触发的时候，让tap1失效
     [tap1 requireGestureRecognizerToFail:tap2];
     
 }
+
 - (void)tapAction2:(UITapGestureRecognizer *)tap{
-    
     
     if (_scrollView.zoomScale > 1) {  //大于1,说明已经放大了
         [_scrollView setZoomScale:1 animated:YES];
@@ -191,25 +251,22 @@
 #pragma mark---数据处理
 - (void)setUrl:(NSString *)url{
     _url = url;
-    
-    
+
     NSURL *iconURL;
-    
     if ([_url rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
         //有前缀
-        
         iconURL = [NSURL URLWithString:[APPHelper safeString:_url]];
         
     }else{
         NSString *str = [kPictureURL stringByAppendingString:_url];
         iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
     }
-    
-    
-    
+
     [_imageView sd_setImageWithURL:iconURL];
 
-
+}
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+    return _imageView;
 }
 
 

@@ -150,7 +150,7 @@
         _segmentView.itemsDispace = (kScreenSizeWidth-(32 *6))/7;
         _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.backgroundColor = [UIColor whiteColor];
-        _segmentView.textNormalColor = [UIColor colorWithHexString:@"666666"];
+        _segmentView.textNormalColor = [UIColor colorWithHexString:@"#666666"];
         _segmentView.directionLineColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.bottomLineHeigth = 1;
         _segmentView.bottomLineColor = [UIColor colorWithHexString:@"#eeeeee"];

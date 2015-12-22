@@ -46,6 +46,7 @@
     [self commonInit];
     [self initNavigationView];
     
+    
 
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -281,9 +282,6 @@
                           @"userid":zjid
                           };
 
-    
-    
-    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSNumber *code = [responseObject objectForKey:@"code"];

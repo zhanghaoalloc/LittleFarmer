@@ -9,6 +9,9 @@
 #import "MIneExpertViewController.h"
 #import "MineFoucsExpertCell.h"
 #import "AskViewController.h"
+#import "ExpertModel.h"
+#import "ExpertListCell.h"
+#import "ExpertDetailViewController.h"
 
 @interface MIneExpertViewController ()
 
@@ -16,14 +19,37 @@
 
 @end
 
-@implementation MIneExpertViewController
+@implementation MIneExpertViewController{
+
+    NSString *_identify;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.view addSubview:self.tableView];
+    self.mineFocusExpertDataSource = [NSMutableArray array];
+    
+    [self _createSubView];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+    
     
 }
-
+- (void)_createSubView{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeigth-kNavigationBarHeight-42) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    
+    _identify = @"ExpertCell";
+    
+    UINib *nib = [UINib nibWithNibName:@"ExpertListCell" bundle:nil];
+    
+    [_tableView registerNib:nib forCellReuseIdentifier:_identify];
+    
+}
 - (void)reloadData
 {
     if (!self.mineFocusExpertDataSource.count)
@@ -36,41 +62,43 @@
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
-    NSDictionary *dic = @{@"userid":[APPHelper safeString:userId]};
+    NSDictionary *dic =@{
+                         @"userid":[APPHelper safeString:userId]
+                         
+                         };
+    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
-                                             subUrl:@"?c=user&m=get_mygzzj_list"
-                                         parameters:dic
-                                     prepareExecute:nil
-                                            success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                //解析数据
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-                                                [self handleSucessWithResult:lastId lastId:responseObject];
-                                                
-                                            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-
-                                                [self handleFailure];
-                                            }];
+    subUrl:@"?c=user&m=get_mygzzj_list"parameters:dic prepareExecute:nil
+    success:^(NSURLSessionDataTask *task, id responseObject){
+   
+    //解析数据
+    [self.view dismissLoading];
+    [self cancelCurrentLoadAnimation];
+    [self handleSucessWithResult:responseObject lastId:lastId];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    [self.view dismissLoading];
+    [self cancelCurrentLoadAnimation];
+    [self handleFailure];
+    
+    }];
 }
 
 
 - (void)handleSucessWithResult:(id)responseObject lastId:(NSString *)lastId
-{
-    MineExpertModel *model = [[MineExpertModel alloc] initWithDictionary:responseObject error:nil];
-    if (!self.mineFocusExpertDataSource)
-    {
-        self.mineFocusExpertDataSource = [NSMutableArray array];
+{     NSArray *array = [responseObject objectForKey:@"list"];
+    
+    for (NSDictionary *dic in array) {
+        ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
+        [self.mineFocusExpertDataSource addObject:model];
+        
     }
-    if (!lastId && model.list.count)
-    {
-        [self.mineFocusExpertDataSource removeAllObjects];
-    }
-    [self.mineFocusExpertDataSource addObjectsFromArray:model.list];
-    [self noMoreData:model.list.count < kPageSize.intValue];
-    [super reloadData];
-    if (!self.mineFocusExpertDataSource.count)
+    
+    [self.tableView reloadData];
+    
+    
+        if (!self.mineFocusExpertDataSource.count)
     {
         //这里显示无结果页
         [self.view showWeakPromptViewWithMessage:@"没有内容哦"];
@@ -87,31 +115,32 @@
     return self.mineFocusExpertDataSource.count;
 }
 
-- (MineFoucsExpertCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    __weak MIneExpertViewController *weakSelf = self;
-    static NSString *identifier = @"reuseCell";
-    MineFoucsExpertCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell)
-    {
-        cell = [[MineFoucsExpertCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.tapAskMineExpert = ^(){
-            AskViewController *askVC = [[AskViewController alloc] init];
-            [weakSelf.navigationController pushViewController:askVC animated:YES];
-        };
-    }
-    MineExpertList *list = [self.mineFocusExpertDataSource objectAtIndex:indexPath.row];
-    [cell refreshDataWithModel:list];
+    ExpertListCell *cell = [tableView dequeueReusableCellWithIdentifier:_identify forIndexPath:indexPath];
+    cell.model = self.mineFocusExpertDataSource[indexPath.row];
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+     ExpertDetailViewController *expertVC = [[ExpertDetailViewController alloc] init];
+    ExpertModel *model = self.mineFocusExpertDataSource[indexPath.row];
+    
+     expertVC.zjid = model.userid;
+     expertVC.expertmodel = model;
+    
+    [self.navigationController pushViewController:expertVC animated:YES];
+
+}
+
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [MineFoucsExpertCell cellHeightWihtModel:nil];
+    return 150;
 }
 
 #pragma mark - 加载和刷新
-
 - (void)loadMoreData
 {
     MineExpertList *lastModel = [self.mineFocusExpertDataSource lastObject];

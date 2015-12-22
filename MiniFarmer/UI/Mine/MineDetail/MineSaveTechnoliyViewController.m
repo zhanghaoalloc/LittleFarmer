@@ -38,29 +38,35 @@
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
-    NSDictionary *dic = @{@"userid":[APPHelper safeString:userId]};
+    NSDictionary *dic = @{
+                          @"userid":[APPHelper safeString:userId]
+                          
+                          };
+    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
-                                             subUrl:@"?c=wxjs&m=get_wxjscollection"
-                                         parameters:dic
-                                     prepareExecute:nil
-                                            success:^(NSURLSessionDataTask *task, id responseObject) {
-                                                //解析数据
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-                                                [self handleSucessWithResult:lastId lastId:responseObject];
-                                                
-                                            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-                                                [self.view dismissLoading];
-                                                [self cancelCurrentLoadAnimation];
-                                                
-                                                [self handleFailure];
-                                            }];
+    subUrl:@"?c=wxjs&m=get_wxjscollection"parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+    //解析数据
+    [self.view dismissLoading];
+        
+    
+    [self cancelCurrentLoadAnimation];
+    [self handleSucessWithResult:responseObject lastId:lastId];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+    [self.view dismissLoading];
+    [self cancelCurrentLoadAnimation];
+    
+    [self handleFailure];
+        
+    }];
 }
 
 
 - (void)handleSucessWithResult:(id)responseObject lastId:(NSString *)lastId
 {
     MineSaveTechnology *model = [[MineSaveTechnology alloc] initWithDictionary:responseObject error:nil];
+    
     if (!self.mineAskDataSource)
     {
         self.mineAskDataSource = [NSMutableArray array];
@@ -72,6 +78,7 @@
     [self.mineAskDataSource addObjectsFromArray:model.list];
     [self noMoreData:model.list.count < kPageSize.intValue];
     [super reloadData];
+    
     if (!self.mineAskDataSource.count)
     {
         //这里显示无结果页
@@ -83,8 +90,6 @@
 {
     [self.view showWeakPromptViewWithMessage:@"加载失败"];
 }
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //    return 100;
@@ -100,6 +105,7 @@
         cell = [[MineSaveAskCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     MineSaveTechnologyList *list = [self.mineAskDataSource objectAtIndex:indexPath.row];
+    
     [cell refreshDataWithModel:list];
     return cell;
 }
