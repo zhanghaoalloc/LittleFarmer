@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="comment" selectionStyle="default" indentationWidth="10" reuseIdentifier="comment" rowHeight="101" id="8b1-YU-2I7" customClass="TableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="322" height="101"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8b1-YU-2I7" id="jjX-Lq-vMh">
+                <rect key="frame" x="0.0" y="0.0" width="322" height="100.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bVW-Pf-sKR">
+                        <rect key="frame" x="12" y="12" width="32" height="32"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="8BL-vr-brP"/>
+                            <constraint firstAttribute="width" constant="32" id="g9g-S7-41L"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="用户名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mdy-Sx-A64">
+                        <rect key="frame" x="56" y="12" width="42" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="评论时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x68-Ce-MVh">
+                        <rect key="frame" x="56" y="29" width="48" height="19"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="评论内容" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KOW-jJ-Vk3">
+                        <rect key="frame" x="56" y="60" width="246" height="20.5"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="x68-Ce-MVh" firstAttribute="leading" secondItem="bVW-Pf-sKR" secondAttribute="trailing" constant="12" id="18z-EP-cSC"/>
+                    <constraint firstItem="Mdy-Sx-A64" firstAttribute="leading" secondItem="bVW-Pf-sKR" secondAttribute="trailing" constant="12" id="85z-Z0-afj"/>
+                    <constraint firstItem="bVW-Pf-sKR" firstAttribute="top" secondItem="jjX-Lq-vMh" secondAttribute="topMargin" constant="4" id="CX4-Kp-stM"/>
+                    <constraint firstItem="x68-Ce-MVh" firstAttribute="top" secondItem="Mdy-Sx-A64" secondAttribute="bottom" id="DfI-xN-Q4f"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="KOW-jJ-Vk3" secondAttribute="bottom" constant="12" id="GJl-mR-wdc"/>
+                    <constraint firstItem="KOW-jJ-Vk3" firstAttribute="top" secondItem="x68-Ce-MVh" secondAttribute="bottom" constant="12" id="NLr-gv-jMF"/>
+                    <constraint firstItem="KOW-jJ-Vk3" firstAttribute="leading" secondItem="jjX-Lq-vMh" secondAttribute="leadingMargin" constant="48" id="U20-vs-0mY"/>
+                    <constraint firstItem="Mdy-Sx-A64" firstAttribute="top" secondItem="jjX-Lq-vMh" secondAttribute="topMargin" constant="4" id="UzH-qy-8wA"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="KOW-jJ-Vk3" secondAttribute="trailing" constant="12" id="c2n-t6-wrA"/>
+                    <constraint firstItem="bVW-Pf-sKR" firstAttribute="leading" secondItem="jjX-Lq-vMh" secondAttribute="leadingMargin" constant="4" id="jFS-d4-k2D"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="comment" destination="KOW-jJ-Vk3" id="KhI-dG-Fx2"/>
+                <outlet property="time" destination="x68-Ce-MVh" id="ywN-re-q7y"/>
+                <outlet property="usertx" destination="bVW-Pf-sKR" id="lJT-4d-Luz"/>
+                <outlet property="xm" destination="Mdy-Sx-A64" id="Q2F-gc-MtP"/>
+            </connections>
+            <point key="canvasLocation" x="192" y="462.5"/>
+        </tableViewCell>
+    </objects>
+</document>

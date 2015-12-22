@@ -17,6 +17,7 @@
 #import "SeachView.h"
 #import "StudyViewController.h"
 #import "DiseaDetailViewController.h"
+#import "MethodViewController.h"
 
 #define kPageSize   @"10"   //一次请求数据数
 
@@ -149,6 +150,7 @@
     
     HomeMenuButton *methodBtn = [self menuButtonWithTitle:@"找配方" normalImgName:@"home_btn_method_nm"];
     [funView addSubview:methodBtn];
+    [methodBtn addTarget:self action:@selector(tapMethodBtn:) forControlEvents:UIControlEventTouchUpInside];
     [methodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(buyBtn);
         make.left.equalTo(askBtn.mas_right).offset(menuSpadding);
@@ -267,7 +269,7 @@
 
     [self.navigationController pushViewController:studyVC animated:YES];
 }
-
+//问专家
 #pragma mark - clickevent
 - (void)tapAskBtn:(UIButton *)btn
 {
@@ -277,5 +279,22 @@
     [self.navigationController pushViewController:askSVC animated:YES];
 
 }
+//找配方
+//点击按钮跳转到配方
+- (void)tapMethodBtn:(UIButton *)button{
+    
+    MethodViewController *methodVC = [[MethodViewController alloc] init];
+    
+    methodVC.view.backgroundColor = [UIColor whiteColor];
+    
+    
+    self.tabBarController.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:methodVC animated:YES];
+    
+    
+}
+
+
 
 @end

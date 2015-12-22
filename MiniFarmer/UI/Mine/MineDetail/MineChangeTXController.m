@@ -134,8 +134,7 @@
     _selectImgView.image = img;
     [_arrayPhotos addObject:img];
      
-     *
-     /
+     */
     
 }
 

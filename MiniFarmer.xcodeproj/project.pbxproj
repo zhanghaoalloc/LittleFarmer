@@ -49,6 +49,24 @@
 		1B337D7E1C06FDD600F2FE5B /* DiseaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B337D7D1C06FDD600F2FE5B /* DiseaseView.xib */; settings = {ASSET_TAGS = (); }; };
 		1B337D841C07031100F2FE5B /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B337D831C07031100F2FE5B /* UITableView+FDTemplateLayoutCell.m */; settings = {ASSET_TAGS = (); }; };
 		1B3A05E31C1DDBD3006F20B4 /* BaseTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A05E21C1DDBD3006F20B4 /* BaseTextView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD21C28E27B00F46AA0 /* MethodDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BB21C28E27B00F46AA0 /* MethodDetailModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD31C28E27B00F46AA0 /* MethodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BB41C28E27B00F46AA0 /* MethodModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD41C28E27B00F46AA0 /* PfcommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BB61C28E27B00F46AA0 /* PfcommentModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD51C28E27B00F46AA0 /* XgpfModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BB81C28E27B00F46AA0 /* XgpfModel.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD61C28E27B00F46AA0 /* commentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BBB1C28E27B00F46AA0 /* commentView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD71C28E27B00F46AA0 /* commentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D4BBC1C28E27B00F46AA0 /* commentView.xib */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD81C28E27B00F46AA0 /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BBE1C28E27B00F46AA0 /* DetailView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BD91C28E27B00F46AA0 /* DetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D4BBF1C28E27B00F46AA0 /* DetailView.xib */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDA1C28E27B00F46AA0 /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC11C28E27B00F46AA0 /* HeaderView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDB1C28E27B00F46AA0 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC21C28E27B00F46AA0 /* HeaderView.xib */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDC1C28E27B00F46AA0 /* MethodViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC41C28E27B00F46AA0 /* MethodViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDD1C28E27B00F46AA0 /* MethodViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC51C28E27B00F46AA0 /* MethodViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDE1C28E27B00F46AA0 /* PftitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC71C28E27B00F46AA0 /* PftitleView.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BDF1C28E27B00F46AA0 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BC91C28E27B00F46AA0 /* TableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE01C28E27B00F46AA0 /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B3D4BCA1C28E27B00F46AA0 /* TableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE11C28E27B00F46AA0 /* FabuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BCD1C28E27B00F46AA0 /* FabuViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE21C28E27B00F46AA0 /* MethodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BCF1C28E27B00F46AA0 /* MethodDetailViewController.m */; settings = {ASSET_TAGS = (); }; };
+		1B3D4BE31C28E27B00F46AA0 /* MethodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D4BD11C28E27B00F46AA0 /* MethodViewController.m */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1601C03F4E400D69A2D /* SeachView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE15F1C03F4E400D69A2D /* SeachView.m */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1621C03F53900D69A2D /* SeachView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B6BE1611C03F53900D69A2D /* SeachView.xib */; settings = {ASSET_TAGS = (); }; };
 		1B6BE1651C04304B00D69A2D /* UIView+UIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B6BE1641C04304B00D69A2D /* UIView+UIViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -403,6 +421,37 @@
 		1B337D831C07031100F2FE5B /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
 		1B3A05E11C1DDBD3006F20B4 /* BaseTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseTextView.h; sourceTree = "<group>"; };
 		1B3A05E21C1DDBD3006F20B4 /* BaseTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseTextView.m; sourceTree = "<group>"; };
+		1B3D4BB11C28E27B00F46AA0 /* MethodDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodDetailModel.h; sourceTree = "<group>"; };
+		1B3D4BB21C28E27B00F46AA0 /* MethodDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodDetailModel.m; sourceTree = "<group>"; };
+		1B3D4BB31C28E27B00F46AA0 /* MethodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodModel.h; sourceTree = "<group>"; };
+		1B3D4BB41C28E27B00F46AA0 /* MethodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodModel.m; sourceTree = "<group>"; };
+		1B3D4BB51C28E27B00F46AA0 /* PfcommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PfcommentModel.h; sourceTree = "<group>"; };
+		1B3D4BB61C28E27B00F46AA0 /* PfcommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PfcommentModel.m; sourceTree = "<group>"; };
+		1B3D4BB71C28E27B00F46AA0 /* XgpfModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XgpfModel.h; sourceTree = "<group>"; };
+		1B3D4BB81C28E27B00F46AA0 /* XgpfModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XgpfModel.m; sourceTree = "<group>"; };
+		1B3D4BBA1C28E27B00F46AA0 /* commentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentView.h; sourceTree = "<group>"; };
+		1B3D4BBB1C28E27B00F46AA0 /* commentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentView.m; sourceTree = "<group>"; };
+		1B3D4BBC1C28E27B00F46AA0 /* commentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = commentView.xib; sourceTree = "<group>"; };
+		1B3D4BBD1C28E27B00F46AA0 /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		1B3D4BBE1C28E27B00F46AA0 /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
+		1B3D4BBF1C28E27B00F46AA0 /* DetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailView.xib; sourceTree = "<group>"; };
+		1B3D4BC01C28E27B00F46AA0 /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
+		1B3D4BC11C28E27B00F46AA0 /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
+		1B3D4BC21C28E27B00F46AA0 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		1B3D4BC31C28E27B00F46AA0 /* MethodViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodViewCell.h; sourceTree = "<group>"; };
+		1B3D4BC41C28E27B00F46AA0 /* MethodViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodViewCell.m; sourceTree = "<group>"; };
+		1B3D4BC51C28E27B00F46AA0 /* MethodViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MethodViewCell.xib; sourceTree = "<group>"; };
+		1B3D4BC61C28E27B00F46AA0 /* PftitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PftitleView.h; sourceTree = "<group>"; };
+		1B3D4BC71C28E27B00F46AA0 /* PftitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PftitleView.m; sourceTree = "<group>"; };
+		1B3D4BC81C28E27B00F46AA0 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		1B3D4BC91C28E27B00F46AA0 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		1B3D4BCA1C28E27B00F46AA0 /* TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
+		1B3D4BCC1C28E27B00F46AA0 /* FabuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FabuViewController.h; sourceTree = "<group>"; };
+		1B3D4BCD1C28E27B00F46AA0 /* FabuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FabuViewController.m; sourceTree = "<group>"; };
+		1B3D4BCE1C28E27B00F46AA0 /* MethodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodDetailViewController.h; sourceTree = "<group>"; };
+		1B3D4BCF1C28E27B00F46AA0 /* MethodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodDetailViewController.m; sourceTree = "<group>"; };
+		1B3D4BD01C28E27B00F46AA0 /* MethodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MethodViewController.h; sourceTree = "<group>"; };
+		1B3D4BD11C28E27B00F46AA0 /* MethodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MethodViewController.m; sourceTree = "<group>"; };
 		1B6BE15E1C03F4E400D69A2D /* SeachView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeachView.h; sourceTree = "<group>"; };
 		1B6BE15F1C03F4E400D69A2D /* SeachView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeachView.m; sourceTree = "<group>"; };
 		1B6BE1611C03F53900D69A2D /* SeachView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeachView.xib; sourceTree = "<group>"; };
@@ -1183,6 +1232,68 @@
 			path = "UITableView+FDTemplateLayoutCell";
 			sourceTree = "<group>";
 		};
+		1B3D4BAF1C28E27B00F46AA0 /* Method */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D4BB01C28E27B00F46AA0 /* Model */,
+				1B3D4BB91C28E27B00F46AA0 /* View */,
+				1B3D4BCB1C28E27B00F46AA0 /* ViewController */,
+			);
+			path = Method;
+			sourceTree = "<group>";
+		};
+		1B3D4BB01C28E27B00F46AA0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D4BB11C28E27B00F46AA0 /* MethodDetailModel.h */,
+				1B3D4BB21C28E27B00F46AA0 /* MethodDetailModel.m */,
+				1B3D4BB31C28E27B00F46AA0 /* MethodModel.h */,
+				1B3D4BB41C28E27B00F46AA0 /* MethodModel.m */,
+				1B3D4BB51C28E27B00F46AA0 /* PfcommentModel.h */,
+				1B3D4BB61C28E27B00F46AA0 /* PfcommentModel.m */,
+				1B3D4BB71C28E27B00F46AA0 /* XgpfModel.h */,
+				1B3D4BB81C28E27B00F46AA0 /* XgpfModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1B3D4BB91C28E27B00F46AA0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D4BBA1C28E27B00F46AA0 /* commentView.h */,
+				1B3D4BBB1C28E27B00F46AA0 /* commentView.m */,
+				1B3D4BBC1C28E27B00F46AA0 /* commentView.xib */,
+				1B3D4BBD1C28E27B00F46AA0 /* DetailView.h */,
+				1B3D4BBE1C28E27B00F46AA0 /* DetailView.m */,
+				1B3D4BBF1C28E27B00F46AA0 /* DetailView.xib */,
+				1B3D4BC01C28E27B00F46AA0 /* HeaderView.h */,
+				1B3D4BC11C28E27B00F46AA0 /* HeaderView.m */,
+				1B3D4BC21C28E27B00F46AA0 /* HeaderView.xib */,
+				1B3D4BC31C28E27B00F46AA0 /* MethodViewCell.h */,
+				1B3D4BC41C28E27B00F46AA0 /* MethodViewCell.m */,
+				1B3D4BC51C28E27B00F46AA0 /* MethodViewCell.xib */,
+				1B3D4BC61C28E27B00F46AA0 /* PftitleView.h */,
+				1B3D4BC71C28E27B00F46AA0 /* PftitleView.m */,
+				1B3D4BC81C28E27B00F46AA0 /* TableViewCell.h */,
+				1B3D4BC91C28E27B00F46AA0 /* TableViewCell.m */,
+				1B3D4BCA1C28E27B00F46AA0 /* TableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1B3D4BCB1C28E27B00F46AA0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1B3D4BCC1C28E27B00F46AA0 /* FabuViewController.h */,
+				1B3D4BCD1C28E27B00F46AA0 /* FabuViewController.m */,
+				1B3D4BCE1C28E27B00F46AA0 /* MethodDetailViewController.h */,
+				1B3D4BCF1C28E27B00F46AA0 /* MethodDetailViewController.m */,
+				1B3D4BD01C28E27B00F46AA0 /* MethodViewController.h */,
+				1B3D4BD11C28E27B00F46AA0 /* MethodViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1B6BE15D1C03F49C00D69A2D /* SeachView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1722,6 +1833,7 @@
 		FCC6266D1BCA7A0E00943F99 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1B3D4BAF1C28E27B00F46AA0 /* Method */,
 				1B173C671C200780000854FC /* AskExpert */,
 				313E98101C058B2B00DC7B4F /* HomeDetail */,
 				FCC6266E1BCA7A0E00943F99 /* HomeViewController.h */,
@@ -2354,22 +2466,27 @@
 				1B7C5DF71C214A54004251BB /* ExpertListCell.xib in Resources */,
 				1BEC27B61C0B4CBE0046F96A /* DiseaseCell.xib in Resources */,
 				1BD3EC931C1E9A34001C2421 /* MineAskQuestionCell.xib in Resources */,
+				1B3D4BE01C28E27B00F46AA0 /* TableViewCell.xib in Resources */,
 				1BD3EC9C1C1E9A34001C2421 /* MyFoucsExpertView.xib in Resources */,
 				FCC7529E1BC4E01500DE4B27 /* Info.plist in Resources */,
 				1BD3ECA31C1E9A34001C2421 /* SettingAboutView.xib in Resources */,
 				1B1BDF641C146C61005F4274 /* UMShareEditViewController.xib in Resources */,
 				313E981C1C05957500DC7B4F /* (null) in Resources */,
+				1B3D4BD91C28E27B00F46AA0 /* DetailView.xib in Resources */,
+				1B3D4BD71C28E27B00F46AA0 /* commentView.xib in Resources */,
 				1BD3ECCC1C1E9A34001C2421 /* MineSegmentView.xib in Resources */,
 				1B1BDF691C146C61005F4274 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				1BD3EC911C1E9A34001C2421 /* AboutViewController.xib in Resources */,
 				1B0DB3F71C192D6300116B36 /* AnswerInputView.xib in Resources */,
 				1B1BDF671C146C61005F4274 /* UMSnsAccountViewController.xib in Resources */,
 				FCC884C11BC3EBB900A1200B /* Assets.xcassets in Resources */,
+				1B3D4BDD1C28E27B00F46AA0 /* MethodViewCell.xib in Resources */,
 				1BD3ECA01C1E9A34001C2421 /* MyRecipeView.xib in Resources */,
 				1B1BDF611C146C61005F4274 /* UMSCommentDetailController.xib in Resources */,
 				1B6BE1621C03F53900D69A2D /* SeachView.xib in Resources */,
 				1BD3ECA81C1E9A34001C2421 /* InvitedCodeViewController.xib in Resources */,
 				FCC752B71BC4E01500DE4B27 /* MJRefresh.bundle in Resources */,
+				1B3D4BDB1C28E27B00F46AA0 /* HeaderView.xib in Resources */,
 				1B1BDF631C146C61005F4274 /* UMSCommentInputControlleriPad.xib in Resources */,
 				31EC67A31BF0E4A700B8E1BC /* MWPhotoBrowser.bundle in Resources */,
 				1BD3ECCA1C1E9A34001C2421 /* HeaderNotLoginView.xib in Resources */,
@@ -2408,6 +2525,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3D4BDA1C28E27B00F46AA0 /* HeaderView.m in Sources */,
 				FCC752931BC4E01500DE4B27 /* AFURLSessionManager.m in Sources */,
 				FCC64BFB1BCFE4FE00BF56C4 /* SHJSONResponseSerializerData.m in Sources */,
 				31DBC82D1BF78BC0007EDCD0 /* InvitedCode.m in Sources */,
@@ -2418,6 +2536,7 @@
 				1B7C5DF21C214446004251BB /* ExpertListTableView.m in Sources */,
 				1BC322FA1C23D7060000C3CF /* ExpertDetailModel.m in Sources */,
 				1BD3ECC21C1E9A34001C2421 /* SettingViewController.m in Sources */,
+				1B3D4BD41C28E27B00F46AA0 /* PfcommentModel.m in Sources */,
 				1BD3ECB11C1E9A34001C2421 /* MineRecipeViewController.m in Sources */,
 				1B97F4E91C08252A00A58D03 /* StudyModel.m in Sources */,
 				FCC6F82F1BF8941400D95F7C /* (null) in Sources */,
@@ -2440,6 +2559,7 @@
 				1BD3EC8C1C1E9A34001C2421 /* MineCell.m in Sources */,
 				1B23957B1C0FEAA70096CE50 /* PhotoCollectionView.m in Sources */,
 				FCC7529F1BC4E01500DE4B27 /* MASCompositeConstraint.m in Sources */,
+				1B3D4BD31C28E27B00F46AA0 /* MethodModel.m in Sources */,
 				FCC752C21BC4E01500DE4B27 /* SDWebImageDownloaderOperation.m in Sources */,
 				FCC752CB1BC4E01500DE4B27 /* UIView+WebCacheOperation.m in Sources */,
 				FCC752C51BC4E01500DE4B27 /* UIButton+WebCache.m in Sources */,
@@ -2450,6 +2570,7 @@
 				FCC752A31BC4E01500DE4B27 /* MASViewAttribute.m in Sources */,
 				1B97F4E31C0824A700A58D03 /* MyModel.m in Sources */,
 				1BD3EC8E1C1E9A34001C2421 /* MineNothingCell.m in Sources */,
+				1B3D4BD51C28E27B00F46AA0 /* XgpfModel.m in Sources */,
 				FCC752BA1BC4E01500DE4B27 /* UIScrollView+MJRefresh.m in Sources */,
 				FCC752BF1BC4E01500DE4B27 /* SDWebImageCompat.m in Sources */,
 				1BD3ECAF1C1E9A34001C2421 /* MineFocusViewController.m in Sources */,
@@ -2463,6 +2584,7 @@
 				1B6BE1711C04393A00D69A2D /* MessageViewController.m in Sources */,
 				1BD3ECAC1C1E9A34001C2421 /* MineExpertInfoViewController.m in Sources */,
 				1B6BE1601C03F4E400D69A2D /* SeachView.m in Sources */,
+				1B3D4BDF1C28E27B00F46AA0 /* TableViewCell.m in Sources */,
 				1BD3ECB81C1E9A34001C2421 /* MineFocusFriendModel.m in Sources */,
 				1B883BAA1C229C7300B95426 /* ParallaxHeaderView.m in Sources */,
 				1BEC27691C0AFF460046F96A /* ShareView.m in Sources */,
@@ -2487,6 +2609,7 @@
 				FCCA8FB51BDD2F9E00B1CCF4 /* QuestionCellSource.m in Sources */,
 				FCCA178A1BEF116400BAE15C /* HomeMenuButton.m in Sources */,
 				FCC752901BC4E01500DE4B27 /* AFURLConnectionOperation.m in Sources */,
+				1B3D4BDE1C28E27B00F46AA0 /* PftitleView.m in Sources */,
 				FCC752951BC4E01500DE4B27 /* JSONModelArray.m in Sources */,
 				31EC679A1BF0E4A700B8E1BC /* PSTCollectionViewData.m in Sources */,
 				FCC752BC1BC4E01500DE4B27 /* MKAnnotationView+WebCache.m in Sources */,
@@ -2518,6 +2641,8 @@
 				1BD3EC941C1E9A34001C2421 /* MineAskQuestionImagesCell.m in Sources */,
 				FCC752C31BC4E01500DE4B27 /* SDWebImageManager.m in Sources */,
 				31EC679E1BF0E4A700B8E1BC /* PSTCollectionViewUpdateItem.m in Sources */,
+				1B3D4BD81C28E27B00F46AA0 /* DetailView.m in Sources */,
+				1B3D4BDC1C28E27B00F46AA0 /* MethodViewCell.m in Sources */,
 				31EC66331BECEBE100B8E1BC /* RegisterViewController.m in Sources */,
 				31EC66391BECEC6F00B8E1BC /* BaseViewController+Navigation.m in Sources */,
 				FCC752B21BC4E01500DE4B27 /* MJRefreshBackNormalFooter.m in Sources */,
@@ -2550,13 +2675,16 @@
 				31399E7A1BF56E470052A4EB /* ImagesView.m in Sources */,
 				1BD3ECC01C1E9A34001C2421 /* MyResponseViewController.m in Sources */,
 				FCC64BF91BCFE4FE00BF56C4 /* LeHttpService.m in Sources */,
+				1B3D4BE11C28E27B00F46AA0 /* FabuViewController.m in Sources */,
 				1BCA80351C0BD0F5001E1285 /* DrugDetailView.m in Sources */,
 				31EC67A11BF0E4A700B8E1BC /* PSTGridLayoutRow.m in Sources */,
 				FCC752AE1BC4E01500DE4B27 /* MJRefreshAutoGifFooter.m in Sources */,
 				1BD3ECC11C1E9A34001C2421 /* RecomentViewController.m in Sources */,
 				31D4FDC21BF3A5320081F64F /* MTAssetsPickerController.m in Sources */,
+				1B3D4BE31C28E27B00F46AA0 /* MethodViewController.m in Sources */,
 				313E980F1C044E4B00DC7B4F /* (null) in Sources */,
 				FCC752CA1BC4E01500DE4B27 /* UIImageView+WebCache.m in Sources */,
+				1B3D4BD21C28E27B00F46AA0 /* MethodDetailModel.m in Sources */,
 				FCC752991BC4E01500DE4B27 /* JSONAPI.m in Sources */,
 				FCC884B61BC3EBB900A1200B /* main.m in Sources */,
 				FCC7528C1BC4E01500DE4B27 /* AFHTTPRequestOperationManager.m in Sources */,
@@ -2617,6 +2745,7 @@
 				31EC663A1BECEC6F00B8E1BC /* UIScrollView+LGKeyboard.m in Sources */,
 				31DBC8201BF77029007EDCD0 /* UILabel+CustomAttributeLabel.m in Sources */,
 				1B7C5DF61C214A54004251BB /* ExpertListCell.m in Sources */,
+				1B3D4BD61C28E27B00F46AA0 /* commentView.m in Sources */,
 				1BD3ECC51C1E9A34001C2421 /* YHSegmentView.m in Sources */,
 				1B23957A1C0FEAA70096CE50 /* PhotoViewController.m in Sources */,
 				31FDE3EA1BFB1F2100AA199F /* UITextField+CustomTextField.m in Sources */,
@@ -2655,6 +2784,7 @@
 				1BD3EC8D1C1E9A34001C2421 /* MineFoucsExpertCell.m in Sources */,
 				1BD3ECBC1C1E9A34001C2421 /* MyAskQuestionModel.m in Sources */,
 				1BEC27B51C0B4CBE0046F96A /* DiseaseCell.m in Sources */,
+				1B3D4BE21C28E27B00F46AA0 /* MethodDetailViewController.m in Sources */,
 				FCC752A91BC4E01500DE4B27 /* MJRefreshAutoFooter.m in Sources */,
 				31EC67901BF0E4A700B8E1BC /* MWPhoto.m in Sources */,
 				FCC752B01BC4E01500DE4B27 /* MJRefreshAutoStateFooter.m in Sources */,

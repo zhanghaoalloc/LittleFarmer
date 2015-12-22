@@ -99,8 +99,6 @@
 //    item6.filename = @"zzmj";
 //    item.subTitle = self.info.zzmj;
     [self.infos addObject:item6];
-    
-    
 }
 
 #pragma mark - click
@@ -180,7 +178,6 @@
     }
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger index = indexPath.row;
@@ -190,21 +187,16 @@
     __weak MineInfoViewController *weakself = self;
     UserMenuItem *item = [self.infos objectAtIndex:indexPath.row];
     if (indexPath.row == 0) {//跳转到修改头像的控制器
+        
         UserMenuItem *item = [self.infos objectAtIndex:indexPath.row];
         MineChangeTXController *changeTXVC = [[MineChangeTXController alloc] init];
         changeTXVC.url = item.imageString;
-        
-        
         [self.navigationController pushViewController:changeTXVC animated:YES];
-        
-        
-        
     }else{
         MineChangeInfoViewController *changeVC = [[MineChangeInfoViewController alloc] init];
         [changeVC initTitleLabel:item.title];
         changeVC.item = item;
         changeVC.index = indexPath.row;
-        
         changeVC.changeInfoSuceess = ^(UserMenuItem *item){
             
             MineInfosCell *cell = [weakself.infoTableView cellForRowAtIndexPath:indexPath];
@@ -212,12 +204,7 @@
             [cell refreshDataWithModel:item];
         };
         [self.navigationController pushViewController:changeVC animated:YES];
-    
     }
-    
-    
-    //
-    
 }
 
 @end
