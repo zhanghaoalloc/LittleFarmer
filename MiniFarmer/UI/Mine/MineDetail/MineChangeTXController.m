@@ -108,7 +108,7 @@
     
 }
 - (void)backAction:(UIButton *)button{
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 - (void)changeAction:(UIButton *)button{
@@ -117,17 +117,23 @@
         
         [actionSheet showInView:self.view];
     }else{//发送网络请求
-        NSString *userid = [UserInfo shareUserInfo].userId;
+        NSDictionary *dic;
+        NSString *subURL;
         
-        NSDictionary *dic = @{
-                              @"userid":userid
-                              
-                              };
+
+        NSString *userid = [UserInfo shareUserInfo].userId;
+        subURL = @"?c=user&m=edit_usertx";
+            dic = @{
+                    @"userid":userid
+                    };
+            
         NSDictionary *filedata = @{
                                    @"upfile":_imgData
                                    };
+        
+        
         __weak MineChangeTXController *wself = self;
-        [SHHttpClient uploadURL:@"?c=user&m=edit_usertx" params:dic fileData:filedata completion:^(id result, NSError *error) {
+        [SHHttpClient uploadURL:subURL params:dic fileData:filedata completion:^(id result, NSError *error) {
             if (error == nil) {
                 [wself.view showWeakPromptViewWithMessage:@"更改成功"];
                 [wself backAction:nil];
@@ -136,7 +142,6 @@
         }];
     }
     
-   
 }
 
 
@@ -269,6 +274,15 @@
     return _imageView;
 }
 
+- (void)setZjid:(NSString *)zjid{
+    _zjid = zjid;
+    if (_zjid ==nil) {
+        self.changeButton.hidden = NO;
+    }else{
+    
+        self.changeButton.hidden = YES;
+    }
+}
 
 
 

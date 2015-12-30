@@ -315,12 +315,14 @@
 
     
     NSString *grade = infos.zjid;
-    if (grade == 0) {
+    if ([grade integerValue] == 0) {
         self.speiclistTypeBT.hidden = YES;
         
-    }
-    [self.speiclistTypeBT setBackgroundImage:[self expertSignImage:grade] forState:UIControlStateNormal];
+    }else {
+        self.speiclistTypeBT.hidden = NO;
     
+    }
+    [self.speiclistTypeBT setBackgroundImage:[self expertSignImage:infos.grade] forState:UIControlStateNormal];
     [self.nameLabel setText:infos.xm];
     [self.nongRenMoneyLabel setText:@"农人币"];
     self.nongRenMoneyCountLabel.text = infos.point;

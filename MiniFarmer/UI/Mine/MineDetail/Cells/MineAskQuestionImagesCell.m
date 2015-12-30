@@ -140,7 +140,6 @@
     for (int i = 0; i<self.imageButtons.count; i++)
     {
         UIButton *btn = [self.imageButtons objectAtIndex:i];
-        [btn setBackgroundColor:[UIColor redColor]];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.contentLabel.mas_bottom).offset(14);
             make.left.equalTo(self.backContentView).offset(12 + i *(dwidth + kItemsDispace));
@@ -189,11 +188,13 @@
 //    self.timeLabel.text = @"20天前";
 //    [self.imagesCountBT setTitle:@"共6张" forState:UIControlStateNormal];
 //    return;
+    
     [self.contentLabel setText:list.wtms];
     [self.messageCountLabel setText:list.hdcs];
     [self.timeLabel setText:[APPHelper describeTimeWithMSec:list.twsj]];
     [self.imagesCountBT setHidden:list.images.count < kCountOfRow];
-    NSString *title = [NSString stringWithFormat:@"共%d张",list.images.count];
+    NSString *title = [NSString stringWithFormat:@"共%ld张",list.images.count];
+    
     [self.imagesCountBT setTitle:title forState:UIControlStateNormal];
     
     [self setImagesToBtnWithModel:list];
@@ -205,10 +206,19 @@
     for (int i = 0; i<(self.imageButtons.count > list.images.count ? list.images.count : self.imageButtons.count); i++)
     {
         UIButton *btn = [self.imageButtons objectAtIndex:i];
-        [btn sd_setBackgroundImageWithURL:[NSURL URLWithString:list.images[i]] forState:UIControlStateNormal];
+        NSString *name =list.images[i];
+        NSURL *imgURL;
+        if ([name rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+            //有前缀
+            imgURL = [NSURL URLWithString:[APPHelper safeString:name]];
+        }else{
+            NSString *str = [KQusetionURL stringByAppendingString:name];
+            imgURL =[NSURL URLWithString:[APPHelper safeString:str]];
+        }
+        [btn sd_setBackgroundImageWithURL:imgURL forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"Sys_defalut"]];
         [btn setEnabled:YES];
     }
-    for (int j = self.imageButtons.count - 1; j >= list.images.count; j--)
+    for (NSInteger j = (self.imageButtons.count - 1); j >= list.images.count; j--)
     {
         UIButton *btn = [self.imageButtons objectAtIndex:j];
         [btn setBackgroundImage:nil forState:UIControlStateNormal];

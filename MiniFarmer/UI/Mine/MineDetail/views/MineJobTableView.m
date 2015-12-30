@@ -11,6 +11,7 @@
 @implementation MineJobTableView{
 
     NSString *_identify1;
+    NSArray *jobarry;
 }
 
 
@@ -24,7 +25,7 @@
 
 }
 - (void)_creatSubView{
-    self.data = @[@"种植大户",@"技术员",@"业务员",@"经销商",@"其他"];
+   
 
     self.delegate = self;
     self.dataSource = self;
@@ -78,7 +79,15 @@
     _item = item;
     [self reloadData];
 
-
+}
+- (void)setData:(NSArray *)data{
+    _data = data;
+    
+    CGRect frame = self.frame;
+    frame.size.height = _data.count*40;
+    self.frame = frame;
+    
+    [self reloadData];
 }
 
 

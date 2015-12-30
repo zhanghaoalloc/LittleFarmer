@@ -10,6 +10,8 @@
 #import "AnswersButton.h"
 #import "PhotoViewController.h"
 #import "UIViewAdditions.h"
+#import "MyanswerViewController.h"
+#import "UIImageView+WebCache.h"
 
 
 #define kLeftSpace  12
@@ -38,6 +40,7 @@
     UILabel *_locationLabel;
     AnswersButton *_ansBtn;
     AnswersButton *_myAnsBtn;
+    UIView *_line;
 }
 
 @property (nonatomic,strong)QuestionCellSource *qSource;
@@ -52,7 +55,6 @@
         self.contentView.backgroundColor = RGBCOLOR(238, 238, 238);
         self.selectionStyle =UITableViewCellSelectionStyleNone;
 
-        
         _outputView = [UIView new];
         [self.contentView addSubview:_outputView];
         _outputView.backgroundColor = [UIColor whiteColor];
@@ -227,7 +229,6 @@
     
     PhotoViewController *photoVC = [[PhotoViewController alloc] init];
     
-    photoVC.indexPath =[NSIndexPath indexPathForItem:button.tag inSection:0];
     self.viewController.tabBarController.hidesBottomBarWhenPushed = YES;
     QuestionInfo *info = _qSource.qInfo;
     photoVC.imageUrls =info.images.mutableCopy;
@@ -243,6 +244,12 @@
     //_bottomView.backgroundColor = [UIColor blueColor];
     
     _userIcon = [UIImageView new];
+    //给_userIocn添加一个手势
+    _userIcon.userInteractionEnabled =YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconAction)];
+    [_userIcon addGestureRecognizer:tap];
+    
+    
     [_bottomView addSubview:_userIcon];
     
     //用户名
@@ -263,6 +270,8 @@
     [_myAnsBtn.titleLabel setFont:kTextFont14];
     [_myAnsBtn setTitleColor:kLightBlueColor forState:UIControlStateNormal];
     [_myAnsBtn setImage:[UIImage imageNamed:@"home_btn_myanswer_nm"] forState:UIControlStateNormal];
+    [_myAnsBtn addTarget:self action:@selector(answerbtn:) forControlEvents:UIControlEventTouchUpInside];
+    
     //[_myAnsBtn setBackgroundColor:[UIColor yellowColor]];
     [_myAnsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(_bottomView.mas_right);
@@ -293,6 +302,17 @@
         make.centerY.equalTo(_nameLabel);
         make.size.mas_equalTo(CGSizeMake(40, kBottemViewHeight));
     }];
+    
+    _line = [UIView new];
+    _line.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+    [_bottomView addSubview:_line];
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView);
+        make.right.equalTo(self.contentView);
+        make.height.equalTo(@0.5);
+        make.bottom.equalTo(_bottomView.mas_bottom);
+    }];
+    
 }
 
 - (void)updateBottemView
@@ -315,11 +335,13 @@
     }];
 
     //TODO:头像
+    
     [_userIcon mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_bottomView).offset(9);
         make.left.equalTo(_bottomView);
         make.size.mas_equalTo(CGSizeMake(15, 15));
     }];
+    
     
     _nameLabel.text = _qSource.qInfo.xm;
     [_nameLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -356,11 +378,41 @@
 {
     _qSource = source;
     QuestionInfo *info = _qSource.qInfo;
+    NSString *str = info.usertx;
+    NSURL *iconURL = [NSURL URLWithString:[APPHelper safeString:str]];
+    if([str rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        iconURL = [NSURL URLWithString:str];
+        
+    }else{
+        NSString *str1 = [kPictureURL stringByAppendingString:str];
+        
+        iconURL =[NSURL URLWithString:str1];
+    }
+    [_userIcon sd_setImageWithURL:iconURL placeholderImage:nil];
+    _userIcon.layer.cornerRadius = 7.5;
+    _userIcon.layer.masksToBounds = YES;
     
     _contentLabel.text = info.wtms;
     _plantNameLabel.text = info.zwmc;
     _dateLable.text = [APPHelper describeTimeWithMSec:info.twsj];
+    
+
     [self updateViewConstraint];
 }
 
+#pragma mark---控件的点击事件
+- (void)answerbtn:(UIButton *)button{
+    
+    MyanswerViewController *myanswerVC = [[MyanswerViewController alloc] init];
+    myanswerVC.info = _qSource.qInfo;
+    myanswerVC.wtid = _qSource.qInfo.qid;
+    
+    [self.viewController.navigationController pushViewController:myanswerVC animated:YES];
+}
+- (void)iconAction{
+
+
+
+}
 @end

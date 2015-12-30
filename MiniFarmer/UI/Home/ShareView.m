@@ -14,9 +14,6 @@
 #import "RootTabBarViewController.h"
 #import "UMSocial.h"
 
-
-
-
 @implementation ShareView
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -39,8 +36,8 @@
 
     
     [_gohome setImage:[UIImage imageNamed:@"home_study_gohome_btn"] forState:UIControlStateNormal];
-    [_gohome addTarget:self action:@selector(gohome:) forControlEvents:UIControlEventTouchUpInside];
     
+    [_gohome addTarget:self action:@selector(gohome:) forControlEvents:UIControlEventTouchUpInside];
     
     [_collection setImage:[UIImage imageNamed:@"home_study_collection_nm"] forState:UIControlStateNormal];
     [_collection setImage:[UIImage imageNamed:@"home_study_collection_select"] forState:UIControlStateSelected];
@@ -75,9 +72,7 @@
         }else {
         if (button.selected == YES) {//已收藏 取消收藏
             [self _requestData:@"?c=wxjs&m=cancel_xjs_collection" type:NO];
-            
         }else{//取没有收藏，要收藏
-            
             [self _requestData:@"?c=wxjs&m=add_xjs_collection" type:YES];
         }
         
@@ -85,17 +80,48 @@
 
 }
 - (void)shareAction:(UIButton *)button{
+    
+
+    NSString *imageName = [kPictureURL stringByAppendingString:_model.zp1];
+
+    [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:imageName];
+    NSString *title = _model.fbwh;
+    
+    [UMSocialData defaultData].extConfig.qqData.title=title;
+    [UMSocialData defaultData].extConfig.qzoneData.title=title;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title=title;
+    [UMSocialData defaultData].extConfig.wechatSessionData.title=title;
+    
+    NSString *content = _model.title;
+    
+
+    //设置分享的内容
+    [UMSocialData defaultData].extConfig.wechatSessionData.shareText = content;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.shareText = content;
+    [UMSocialData defaultData].extConfig.qqData.shareText = content;
+    [UMSocialData defaultData].extConfig.qzoneData.shareText = content;
+    
+    NSString *contentURL =[NSString stringWithFormat:@"%@?%@",KshareURl,_model.bachid];
+    
+    //设置分享后的跳转
+    [UMSocialData defaultData].extConfig.qzoneData.url = contentURL;
+    [UMSocialData defaultData].extConfig.qqData.url =contentURL;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = contentURL;
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = contentURL;
+    
+    
     [UMSocialSnsService presentSnsIconSheetView:self.ViewController
                                          appKey:@"5663c9dee0f55a74a2000b0e"
-                                      shareText:@"友盟社会化分享让您快速实现分享等社会化功能，www.umeng.com/social"
+                                      shareText:@""
                                      shareImage:[UIImage imageNamed:@"icon.png"]
-                                shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone,]
-                                       delegate:self.ViewController];
-
+                                shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone]
+                                       delegate:self];
 }
+
 //实现回调方法（可选）：
 -(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
 {
+    
     //根据`responseCode`得到发送结果,如果分享成功
     if(response.responseCode == UMSResponseCodeSuccess)
     {
@@ -148,6 +174,11 @@
     if ([iscoll integerValue]!= 0) {
         _collection.selected = YES;
     }
+    
+}
+- (void)setModel:(DieaseModel *)model{
+
+    _model = model;
     
 }
 

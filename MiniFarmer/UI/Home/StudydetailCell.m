@@ -20,11 +20,7 @@
     return self;
 }
 - (void)_createSubView{
-    
-
     CGFloat weiht = (kScreenSizeWidth-30)/3;
-
-        
         for (int i = 0; i<3;i++ ) {
             if (_isStudymore == NO) {
                 
@@ -37,7 +33,6 @@
                 view.frame = CGRectMake(i*(weiht+6)+10, 0,weiht,weiht*0.75+30);
                 view.tag = i+1;
                 [self.contentView addSubview:view];
-                
                 self.selectionStyle =UITableViewCellSelectionStyleNone;
             }else {
             
@@ -52,12 +47,21 @@
                         [self.contentView addSubview:view];
 
                     }
-    
                 }
             }
         }
-  
+    //添加分割线
+    _line = [[UIView alloc] init];
+    _line.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+    [self.contentView addSubview:_line];
     
+    [_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.contentView);
+        make.left.equalTo(self.contentView);
+        make.height.equalTo(@0.5);
+        make.bottom.equalTo(self.contentView);
+        
+    }];
     
 }
 - (void)setModel:(StudyModel *)model{
@@ -69,10 +73,15 @@
     [self _createSubView];
    
 }
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+#pragma mark---显示和隐藏分割线
+- (void)showline{
+    _line.hidden = NO;
+}
+- (void)hiddnline{
+
+    _line.hidden = YES;
+
 }
 
 @end

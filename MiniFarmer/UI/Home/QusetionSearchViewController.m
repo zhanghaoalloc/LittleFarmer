@@ -12,6 +12,8 @@
 #import "QuestionCell.h"
 #import "UserInfo.h"
 #import "QuestionCellSource.h"
+#import "SearchNotFindView.h"
+#import "NetfailureView.h"
 
 #import "QuestionDetailViewController.h"
 
@@ -50,7 +52,6 @@
      [self _createSubView];
    
     
-    
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(0,kStatusBarHeight,44, 44)];
     [backButton setBackgroundImage:[UIImage imageNamed:@"home_navigation_back_btn"] forState:UIControlStateNormal];
@@ -60,20 +61,23 @@
     [self setLineToBarBottomWithColor:RGBCOLOR(169, 169, 169) heigth:kLineWidth];
     
     [self.view addSubview:backButton];
-    
 
-    
-    
 }
 - (void)backAction:(UIButton *)button{
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 - (void)_createSubView{
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        
+        [self NetWorkingfailure];
+        
+        return;
+    }
+
     //加载未成功的
     [self.view showLoadingWihtText:@"加载中"];
-    
-
     //1.创建搜索栏视图
     _seachView = [[NSBundle mainBundle] loadNibNamed:@"SeachView" owner:self options:nil].lastObject;
     _seachView.frame = CGRectMake(35, kStatusBarHeight, kScreenSizeWidth-35, kNavigationBarHeight);
@@ -172,6 +176,7 @@
                     QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:questioninfo];
                     [_sourceArr addObject:item];
                 }
+                [weself notfound];
                 [weself.tableView reloadData];
             }
         }
@@ -181,6 +186,21 @@
         
     }];
 }
+- (void)notfound{
+    if (_sourceArr.count == 0) {
+        SearchNotFindView *view = [[SearchNotFindView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeight-kNavigationBarHeight)];
+        self.tableView.hidden = YES;
+        [self.view addSubview:view];
+    }
+}
+- (void)NetWorkingfailure{
+    
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
+    
+}
+
+
 
 
 

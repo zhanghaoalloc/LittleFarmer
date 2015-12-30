@@ -13,6 +13,8 @@
 #import "MyAskQuestionModel.h"
 #import "MineAskQuestionCell.h"
 #import "MineAskQuestionImagesCell.h"
+#import "QuestionDetailViewController.h"
+#import "NetfailureView.h"
 
 @interface MineAskQuestionViewController ()
 
@@ -59,6 +61,11 @@
 
 - (void)requestDataWithLastId:(NSString *)lastId
 {
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
     //添加loading
     NSLog(@"---------- requestCount");
     if (!self.dataSourceArr.count)
@@ -67,6 +74,7 @@
     }
 
     NSDictionary *dic = @{@"userid":[APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]],@"id":lastId,@"pagesize":kPageSize,@"mobile":[[MiniAppEngine shareMiniAppEngine] userLoginNumber]};
+    
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=tw&m=gettw4userid" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [self.view dismissLoading];
@@ -97,7 +105,6 @@
         }
         [self.dataSourceArr addObjectsFromArray:model.list];
     }
-    
 //    for (int i = 0; i < 10; i++) {
 //        MyAskQuestionList *list = [[MyAskQuestionList alloc] init];
 //        [self.dataSourceArr addObject:list];
@@ -172,6 +179,22 @@
     }
     [cell refreshDataWithModel:model];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    MyAskQuestionList *model = [_dataSourceArr objectAtIndex:indexPath.row];
+    NSString *wtid =model.listId;
+    QuestionDetailViewController *quVC = [[QuestionDetailViewController alloc] initWithWtid:wtid];
+   // self.tabBarController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:quVC animated:YES];
+    
+}
+
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
 }
 
 

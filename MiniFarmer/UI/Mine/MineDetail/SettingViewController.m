@@ -149,11 +149,17 @@ typedef enum
     {
         [[MiniAppEngine shareMiniAppEngine] clearUserLoginInfos];
         [[MiniAppEngine shareMiniAppEngine] saveInfos];
+        
         [self.view showWeakPromptViewWithMessage:@"退出登录成功"];
+        
+        //退出登录成功的话,应该刷新个人中心界面的头视图,添加退出登录的通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUserSignOutNotification object:nil];
         [self.navigationController popViewControllerAnimated:YES];
+        
         return;
+        
     }
-   // 如果没有登陆的情况
+   
     
 }
 

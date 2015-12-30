@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="104.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_study_diseaseDeatial" translatesAutoresizingMaskIntoConstraints="NO" id="637-4R-Dln">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home_study_diseaseDeatial" translatesAutoresizingMaskIntoConstraints="NO" id="637-4R-Dln">
                         <rect key="frame" x="16" y="23" width="10" height="10"/>
                         <animations/>
                         <constraints>
@@ -30,8 +30,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tV6-zL-xZG">
-                        <rect key="frame" x="38" y="16" width="68" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tV6-zL-xZG">
+                        <rect key="frame" x="38" y="16" width="266" height="24"/>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="Aux-cu-wDq"/>
@@ -51,6 +51,7 @@
                     <constraint firstItem="HXp-zV-UVO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="bXc-a3-Keq"/>
                     <constraint firstItem="637-4R-Dln" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="sK3-ia-tN6"/>
                     <constraint firstAttribute="bottomMargin" secondItem="HXp-zV-UVO" secondAttribute="bottom" constant="8" id="sgZ-Wh-KOo"/>
+                    <constraint firstAttribute="trailing" secondItem="tV6-zL-xZG" secondAttribute="trailing" constant="16" id="wsZ-6L-cbd"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>

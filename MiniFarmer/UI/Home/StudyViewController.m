@@ -11,7 +11,8 @@
 #import "SeachView.h"
 #import "StudtydetailViewController.h"
 #import "UIView+FrameCategory.h"
-#
+#import "NetfailureView.h"
+
 
 @interface StudyViewController ()
 
@@ -48,6 +49,7 @@
     //[self addSubViews];
     
     //[self setupSegmentItem];
+    
     [self requesetData];
     
     //self.view.backgroundColor = ;
@@ -63,7 +65,8 @@
    
 }
 - (void)setNavigation{
-    [self.view showLoadingWihtText:@"加载中"];
+    
+   
     //1.搜索栏
     _searchView  = [[NSBundle mainBundle] loadNibNamed:@"SeachView" owner:self options:nil].lastObject;
     _searchView.frame = CGRectMake(35,kStatusBarHeight , kScreenSizeWidth-35,kNavigationBarHeigth);
@@ -196,7 +199,9 @@
 #pragma mark  ---- UISegementdelegate协议
 - (void)segmentView:(YHSegmentView *)segmentView
  didSelectedAtIndex:(NSInteger)index{
+    
     [self.studyScrollview setContentOffset:CGPointMake(CGRectGetWidth(self.studyScrollview.frame) * index, 0)];
+    
      [[self currentVC].tableView reloadData];
     
 
@@ -210,7 +215,11 @@
 #pragma mark ---请求网络数据
 - (void)requesetData{
     
-    
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfailure];
+        return;
+    }
     
     __weak StudyViewController *wself =  self;
     
@@ -219,8 +228,6 @@
     
         //刷新UI
         dispatch_async(dispatch_get_main_queue(),^{
-            
-            [self.view dismissLoading];
             NSDictionary *dic = responseObject[@"zwzl"];
             wself.idData = [dic allKeys];
             wself.data = [dic allValues];
@@ -233,12 +240,14 @@
         
     }];
 
+
+}
+- (void)NetWorkingfailure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 
 @end

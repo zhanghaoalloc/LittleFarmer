@@ -14,18 +14,27 @@
 //正式地址
 
 #if 1
-#define kCommServerUrl  @"http://www.enbs.com.cn/apps_2/index.php"
-#define kCommApiKey     @"457077ad3a4e86ff53fc5555"
+#define kCommServerUrl  @"http://www.enbs.com.cn/apps_test/index.php"
+#define kCommApiKey     @"26f9a2878862d3bb27165020c6b4e7f0"
+
 
  
 #else
 //测试环境
-#define kCommServerUrl  @"http://www.enbs.com.cn/apps_text/index.php"
-#define kCommApiKey     @"26f9a2878862d3bb27165020c6b4e7f0"
+#define kCommServerUrl  @"http://www.enbs.com.cn/apps_2/index.php"
+#define kCommApiKey     @"457077ad3a4e86ff53fc5555"
+
+
+
 
 #endif
 
-#define kPictureURL      @"http://www.enbs.com.cn/apps_test/uploads/"
+#define kPictureURL      @"http://www.enbs.com.cn/apps_2/uploads/"
+
+#define KQusetionURL     @"http://120.25.153.66/apps/tw/"
+
+
+#define KshareURl       @"http://www.enbs.com.cn/mobile/index.php"
 
 // 1, 系统函数
 #pragma mark - #define System Methods
@@ -140,13 +149,13 @@
 #define kAppRedirectURI_sina             @"http://m.letv.com"
 
 //QQ
-#define kQQAppID @"1104804134"
-#define kQQAppKey @"oclH9fA1PRv3h0ju"
+#define kQQAppID @"1104816396"
+#define kQQAppKey @"c1w5VhUl8t8xN6PO"
 
 //微信
 #define kAppRedirectURI_weixin    @"your app_rederict_uri"
-#define kAPPweixin            @"wxf0cf6ca93505c941"
-#define kAPpKeyweixin           @"83c2c6d797f04951c0363aa82d22d6b1"
+#define kAPPweixin            @"wxd963cb4bff24b438"
+#define kAPpKeyweixin           @"ffffe64716c35e2323767551d64c2900"
 
 // 3, 定义通知名
 #pragma mark - #define Notification Name
@@ -154,6 +163,9 @@
 #define kChangedUserNotification         @"ChangedUser"
 #define kBindSinaSuccNotification        @"BindSinaSuccNotification"
 #define kShowHomeVCNotification          @"ShowHomeVCNotification"
+#define kUserSignOutNotification         @"UserSigOut"
+#define kUserSignInNotification          @"UserSignIn"
+
 
 
 // #ifdef DEBUG

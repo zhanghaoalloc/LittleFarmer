@@ -9,6 +9,7 @@
 #import "MineRecipeViewController.h"
 #import "MyRecipeModel.h"
 #import "MyRecipeCell.h"
+#import "NetfailureView.h"
 
 @interface MineRecipeViewController ()
 @property (nonatomic, strong) NSMutableArray *dataSourceArr;
@@ -29,7 +30,12 @@
 }
 
 - (void)requestDataWithLastId:(NSString *)lastId
-{
+{    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
+
     NSDictionary *dic = @{@"userid":[[MiniAppEngine shareMiniAppEngine] userId],@"id":lastId,@"pageSize":@"10"};
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=wzpf&m=get_userpf" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
@@ -115,4 +121,12 @@
     [cell refreshDataWithModel:model];
     return cell;
 }
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
+}
+
+
 @end

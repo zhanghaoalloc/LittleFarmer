@@ -17,7 +17,7 @@
 #import "MineFocusViewController.h"
 #import "MineInfoViewController.h"
 #import "MineInfoViewController.h"
-
+#import "MineMonryViewController.h"
 #import "HeaderLoginView.h"
 #import "HeaderNotLoginView.h"
 #import "MineCell.h"
@@ -39,6 +39,20 @@
 @end
 
 @implementation MineViewController
+- (void)dealloc{
+    
+   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+     //监听退出登录的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initSubviews)name:kUserSignOutNotification object:nil];
+    //监听登录成功的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UserSianInNotfication:) name:kUserSignInNotification object:nil];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -48,7 +62,9 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     [self commonInit];
+    
     [self initSubviews];
+    
     if ([MiniAppEngine shareMiniAppEngine].isLogin)
     {
         [self requestPersonInfos];
@@ -66,7 +82,7 @@
     [appDelegate showTabbar];
 
     //获取个人中心的内容
-    [self requestCenterUserInfos];
+   // [self requestCenterUserInfos];
    
     [self.tableView reloadData];
     
@@ -78,12 +94,6 @@
 //    [self.navigationController setNavigationBarHidden:NO];
 
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 //获取个人信息的详情的方法
 - (void)requestPersonInfos
 {
@@ -97,18 +107,29 @@
     NSDictionary *dic =@{
                          @"userid":userid
                          };
+    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         [self.view dismissLoading];
         
-        MineInfos *infos = [[MineInfos alloc] initWithDictionary:responseObject error:nil];
-        [(HeaderLoginView *)(_tableView.tableHeaderView) refreshUIWithModel:infos];
-        [(HeaderLoginView *)(_tableView.tableHeaderView) setTapPhotoBT:^(){
+        weakSelf.headerInfos= [[MineInfos alloc] initWithDictionary:responseObject error:nil];
         
-            MineInfoViewController *infoVC = [[MineInfoViewController alloc] init];
+        [(HeaderLoginView *)(_tableView.tableHeaderView) refreshUIWithModel: weakSelf.headerInfos];
+        
+        
+        [(HeaderLoginView *)(_tableView.tableHeaderView) setTapPhotoBT:^(){
+             MineInfoViewController *infoVC = [[MineInfoViewController alloc] init];
+            infoVC.info =  weakSelf.headerInfos;
+            if ([ weakSelf.headerInfos.zjid integerValue]!= 0) {
             
-            infoVC.info = infos;
-            
+                [infoVC initTitleLabel:@"专家信息"];
+                infoVC.type = YES;
+            }else{
+                
+                [infoVC initTitleLabel:@"个人信息"];
+                infoVC.type = NO;
+            }
+    
             [weakSelf.navigationController pushViewController:infoVC animated:YES];
             
         }];
@@ -117,6 +138,7 @@
         [self.view showWeakPromptViewWithMessage:@"请求个人信息失败"];
     }];
 }
+/*
 //获取用户信息（个人中心）
 - (void)requestCenterUserInfos{
     NSString *userid = [APPHelper safeString:[[MiniAppEngine shareMiniAppEngine] userId]];
@@ -133,14 +155,11 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-
-
-
-
 }
+ */
 
 - (void)commonInit
-{
+{   
     sourceArray = [[NSMutableArray alloc] init];
     UserMenuItem *item1 = [UserMenuItem new];
     item1.type = TypeSegment;
@@ -195,15 +214,12 @@
     
     [sourceArray addObject:item10];
 
-
     UserMenuItem *item11 = [UserMenuItem new];
     item11.type = TypeOther;
     item11.title = @"设置";
     item11.imageString = @"setting";
     [sourceArray addObject:item11];
 
-    
-    
 }
 
 - (void)initSubviews
@@ -256,16 +272,15 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.bounces = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight);
+        _tableView.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight-49);
         _tableView.showsVerticalScrollIndicator = NO;
         [self.view addSubview:_tableView];
     }
      _tableView.tableHeaderView = headerView;
     
 }
-
-
 #pragma mark- UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -287,11 +302,7 @@
         return 0;
     }
 }
-
-
 #pragma mark- UITableViewDataSource
-
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return sourceArray.count;
@@ -337,10 +348,10 @@
     }
     
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
    // DLOG(@"secelected section is row is %d %d",indexPath.section,indexPath.row);
+    
     if (![MiniAppEngine shareMiniAppEngine].isLogin)
     {
         [self.view showWeakPromptViewWithMessage:@"没有登录!"];
@@ -348,15 +359,13 @@
     }
     switch (indexPath.row)
     {
-        case 0:
+        case 2:
         {
             if (indexPath.row == 2) {
                 //我的回答
                 MyResponseViewController *myVC = [[MyResponseViewController alloc] init];
                 [self.navigationController pushViewController:myVC animated:YES];
             }
-            
-            
         }
             break;
         case 4:
@@ -364,6 +373,13 @@
             //我的配方
 //            MineRecipeViewController *myVC = [[MineRecipeViewController alloc] init];
 //            [self.navigationController pushViewController:myVC animated:YES];
+        }
+            break;
+       //
+        case 6:{
+            MineMonryViewController *mineMonry = [[MineMonryViewController alloc] init];
+            mineMonry.infos = self.headerInfos;
+            [self.navigationController pushViewController:mineMonry animated:YES];
         }
             break;
         case 8:
@@ -376,7 +392,6 @@
         {
             SettingViewController *setVC = [[SettingViewController alloc] init];
             [self.navigationController pushViewController:setVC animated:YES];
-            
         }
             break;
             
@@ -384,13 +399,9 @@
             break;
     }
 }
-
 #pragma mark - delegate
-
 - (void)mineSegmentCell:(MineSegmentCell *)cell clickMineSave:(BOOL)clickMineSave
 {
-    
-
     //因为这里里面只有两个暂时 这么写 以后多了可能会用不上 或者用别的方案
     if (clickMineSave)
     {
@@ -403,4 +414,10 @@
     }
 }
 
+
+#pragma mark  登录成功的通知，重新加载视图以及请求数据
+- (void)UserSianInNotfication:(NSNotification *)notifucation{
+    [self initSubviews];
+    [self requestPersonInfos];
+}
 @end

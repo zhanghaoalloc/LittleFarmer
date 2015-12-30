@@ -11,11 +11,13 @@
 @interface UserInfo : NSObject<NSCoding>
 
 @property (nonatomic, copy) NSString *userName;
+@property (nonatomic, copy) NSString *mobile;
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *zjid;
 @property (nonatomic, assign) BOOL isSaveUserName;
 @property (nonatomic, assign) BOOL isLogin;
 
+@property (nonatomic, copy)NSString *xm;
 + (UserInfo *)shareUserInfo;
 
 

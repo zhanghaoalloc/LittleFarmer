@@ -18,6 +18,7 @@
 #import "QuestionCellSource.h"
 #import "MyAnswerCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import "QuestionDetailViewController.h"
 
 
 @interface ExpertDetailViewController ()
@@ -34,6 +35,7 @@
     NSString *_identify2;
     NSMutableArray *_sourceArr;
     BOOL _isgz ; //当前专家是否被当前浏览用户关注
+    NSInteger _count;//用户判断从我跳转的时候两次数据请求是否成功
 
 }
 
@@ -42,16 +44,19 @@
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeBottom;
-    self.view.backgroundColor = [UIColor  whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     [self commonInit];
     [self initNavigationView];
     
+    [self.view showLoadingWihtText:@"加载中"];
     
-
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
 
 }
 - (void)commonInit
@@ -62,31 +67,35 @@
 
 - (void)initTableView{
     
-    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor whiteColor];
-    
-    //注册第一种单元格
-    UINib *nib1 = [UINib nibWithNibName:@"BusinessCardCell" bundle:nil];
-    _identify1 = @"BusinessCardCell";
-    [_tableView registerNib:nib1 forCellReuseIdentifier:_identify1];
-    
-    //注册第二种单元格
-    _identify2 = @"MyAnswerCell";
-    [_tableView registerClass:[MyAnswerCell class] forCellReuseIdentifier:_identify2];
-    
-    
-    
+    if (_tableView == nil) {
+        
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.backgroundColor = [UIColor whiteColor];
+        
+        //注册第一种单元格
+        UINib *nib1 = [UINib nibWithNibName:@"BusinessCardCell" bundle:nil];
+        _identify1 = @"BusinessCardCell";
+        [_tableView registerNib:nib1 forCellReuseIdentifier:_identify1];
+        
+        //注册第二种单元格
+        _identify2 = @"MyAnswerCell";
+        [_tableView registerClass:[MyAnswerCell class] forCellReuseIdentifier:_identify2];
+        
+        [self.view insertSubview:_tableView atIndex:0];
+        
+        //添加子视图
+        ParallaxHeaderView *headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(kScreenSizeWidth, 300)];
+        
+        headerView.isgz = _isgz;
+        headerView.model = _model;
+        headerView.headerImage = [UIImage imageNamed:@"home_expert_detail_header_bg"];
+        _tableView.tableHeaderView = headerView;
+        
+    }
 
-    [self.view insertSubview:_tableView atIndex:0];
-    
-    //添加子视图
-    ParallaxHeaderView *headerView = [ParallaxHeaderView parallaxHeaderViewWithCGSize:CGSizeMake(kScreenSizeWidth, 300)];
-    headerView.model = _model;
-    headerView.headerImage = [UIImage imageNamed:@"home_expert_detail_header_bg"];
-    _tableView.tableHeaderView = headerView;
-    
 }
 - (void)initNavigationView{
     _navigaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kNavigationBarHeight+kStatusBarHeight)];
@@ -121,8 +130,6 @@
 - (void)back:(UIButton *)button{
 
     [self.navigationController popViewControllerAnimated:YES];
-
-
 }
 #pragma mark---数据源
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -144,7 +151,9 @@
     
     if (indexPath.section == 0) {
         BusinessCardCell *cell = [tableView dequeueReusableCellWithIdentifier:_identify1 forIndexPath:indexPath];
+        
         cell.model = self.model;
+        
         cell.expermodel = self.expertmodel;
         return cell;
     }
@@ -159,16 +168,15 @@
 }
 #pragma mark----UITableView的代理方法
 - (CGFloat )tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
     if (indexPath.section == 0) {
        CGFloat heigth = [BusinessCardCell countTotalHeigth:self.expertmodel];
+        
       return heigth;
     }
     
-    
-    
     QuestionCellSource *curSource = [_sourceArr objectAtIndex:indexPath.row];
-    return curSource.cellTotalHeight-20;
+    return curSource.cellTotalHeight-20-10;
 
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
@@ -185,7 +193,6 @@
         [view addSubview:line2];
 
         return view;
-        
     }
     return nil;
 }
@@ -203,23 +210,30 @@
     
     return view;
 }
-
-
 //组头尾视图的关系
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-
+    
     return 40;
-}
+    
+  }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-
+    
     return 12;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return;
+    }
+    QuestionCellSource *curSource = [_sourceArr objectAtIndex:indexPath.row];
+    QuestionDetailViewController *quesetiondetailVC = [[QuestionDetailViewController alloc] initWithWtid:curSource.qInfo.qid];
+    [self.navigationController pushViewController:quesetiondetailVC
+                                         animated:YES];
 }
 #pragma mark-----滚动视图的协议方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.tableView)
     {
-        // pass the current offset of the UITableView so that the ParallaxHeaderView layouts the subViews.
         [(ParallaxHeaderView *)self.tableView.tableHeaderView layoutHeaderViewForScrollViewOffset:scrollView.contentOffset];
         
         NSLog(@"偏移量为%lf",scrollView.contentOffset.y);
@@ -240,20 +254,17 @@
     }
 }
 #pragma mark ---数据处理
-- (void)setZjid:(NSString *)zjid{
-   
-    _zjid = zjid;
-    
-    [self requesteData:_zjid];
+- (void)setZjuserid:(NSString *)zjuserid{
+    _zjuserid = zjuserid;
+    [self requesteData:_zjuserid];
     
     NSDictionary *dic = @{
-                          @"userid":_zjid,
+                          @"userid":_zjuserid,
                           @"id":@"0",
                           @"pagesize":@"10"
                           };
-    [self requestequestionData:dic];
-
     
+    [self requestequestionData:dic];
 }
 //获取专家的信息
 - (void)requesteData:(NSString *)zjid{
@@ -263,46 +274,51 @@
         local_userid = @"0";
         _isgz = NO;
     }
-    
-    NSDictionary * dic1 = @{
-                            @"userid":local_userid,
-                            @"zjid":zjid
-                            };
-    
     __weak ExpertDetailViewController *wself = self;
     //获取当前专家是否被关注
-    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=user&m=gzzj" parameters:dic1 prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSDictionary *dic = @{
+                          @"local_userid":local_userid,
+                          @"userid":self.zjuserid
+                          };
+    
+
+    
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=user&m=get_user_info" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        NSString *code = [responseObject objectForKey:@"code"];
+        if ([code integerValue]== 1) {
+            _isgz = [[responseObject objectForKey:@"isgz"] boolValue];
+        }
+      
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+       
         
     }];
     
-    NSDictionary *dic = @{
-                          @"local_userid":local_userid,
-                          @"userid":zjid
-                          };
-
-    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    
+        [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_center_userinfo" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
         NSNumber *code = [responseObject objectForKey:@"code"];
         if ([code integerValue]==1) {//成功
         
-         wself.model = [[ExpertDetailModel alloc] initContentWithDic:responseObject];
+         _model = [[ExpertDetailModel alloc] initContentWithDic:responseObject];
         
         };//回到主线程刷新UI
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [wself initTableView];
-           
+            if (wself.expertmodel == nil) {
+                [self SynchronizeRequest];//同步请求
+                return ;
+            }else{
+                [wself.view dismissLoading];
+                [wself initTableView];}
         });
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-
 }
 //获取专家回答过的问题信息
 - (void)requestequestionData:(NSDictionary *)dic{
-    
     
     __weak ExpertDetailViewController *wself = self;
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=tw&m=gethdtw4userid" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -338,5 +354,50 @@
    
 }
 
+
+//个人中心跳转过来的逻辑
+- (void)setIsMineView:(BOOL)isMineView{
+    _isMineView = isMineView;
+    
+    if (_isMineView == YES) {
+        [self reqestExperModel];
+    }
+    
+
+}
+- (void)reqestExperModel{
+    
+    NSDictionary *dic = @{
+                          @"id":self.zjid
+                          };
+
+    __weak ExpertDetailViewController *wself = self;
+   
+    [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=get_zjinf" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
+        NSString *code = [responseObject objectForKey:@"code"];
+        
+        if ([code integerValue]==1) {
+            NSDictionary *dic = [responseObject objectForKey:@"zj"];
+            
+            wself.expertmodel = [[ExpertModel alloc]
+                                initContentWithDic:dic];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [wself SynchronizeRequest];
+            });
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+//改方法用来判断两个数据请求的是否都成功
+- (void)SynchronizeRequest{
+    _count++;
+    if (_count == 2) {
+        [self.view dismissLoading];
+        [self initTableView];
+    }
+}
 
 @end

@@ -7,15 +7,20 @@
 //
 
 #import "MIneExpertViewController.h"
-#import "MineFoucsExpertCell.h"
+
 #import "AskViewController.h"
-#import "ExpertModel.h"
 #import "ExpertListCell.h"
+#import "MineExpertModel.h"
+#import "NetfailureView.h"
+
 #import "ExpertDetailViewController.h"
 
 @interface MIneExpertViewController ()
 
+//列表的专家Model
 @property (nonatomic, strong) NSMutableArray *mineFocusExpertDataSource;
+//专家详情的Model
+
 
 @end
 
@@ -38,6 +43,7 @@
     
 }
 - (void)_createSubView{
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeigth-kNavigationBarHeight-42) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -46,6 +52,7 @@
     _identify = @"ExpertCell";
     
     UINib *nib = [UINib nibWithNibName:@"ExpertListCell" bundle:nil];
+    
     
     [_tableView registerNib:nib forCellReuseIdentifier:_identify];
     
@@ -59,21 +66,28 @@
 }
 - (void)requestInfoWithLastId:(NSString *)lastId
 {
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
     NSDictionary *dic =@{
-                         @"userid":[APPHelper safeString:userId]
-                         
+                         @"userid":[APPHelper safeString:userId],
+                         @"id":lastId,
+                         @"pagesize":@"10"
                          };
-    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
     subUrl:@"?c=user&m=get_mygzzj_list"parameters:dic prepareExecute:nil
     success:^(NSURLSessionDataTask *task, id responseObject){
    
     //解析数据
     [self.view dismissLoading];
+        
     [self cancelCurrentLoadAnimation];
+        
     [self handleSucessWithResult:responseObject lastId:lastId];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -87,16 +101,29 @@
 
 
 - (void)handleSucessWithResult:(id)responseObject lastId:(NSString *)lastId
-{     NSArray *array = [responseObject objectForKey:@"list"];
+{
+    NSArray *array = [responseObject objectForKey:@"list"];
+    
+    NSMutableArray *dataArray = [[NSMutableArray alloc] init];
     
     for (NSDictionary *dic in array) {
         ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
-        [self.mineFocusExpertDataSource addObject:model];
-        
+        [dataArray addObject:model];
+    }
+    if (!self.mineFocusExpertDataSource) {
+        self.mineFocusExpertDataSource = [NSMutableArray arrayWithArray:dataArray];
     }
     
-    [self.tableView reloadData];
+    if (array.count) {
+        if (lastId.intValue) {
+            [self.mineFocusExpertDataSource removeAllObjects];
+        }
+        [self.mineFocusExpertDataSource addObjectsFromArray:dataArray];
+    }
     
+    [self noMoreData:array.count<10];
+    
+    [self.tableView reloadData];
     
         if (!self.mineFocusExpertDataSource.count)
     {
@@ -109,8 +136,17 @@
 {
     [self.view showWeakPromptViewWithMessage:@"加载失败"];
 }
+- (void)loadMoreData{
+    [self requestInfoWithLastId:[self relyExpertModel].zjid];
 
+}
+- (ExpertModel *)relyExpertModel{
+  
+    return _mineFocusExpertDataSource.lastObject;
+   
 
+}
+#pragma mark-----UITaleViewdelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.mineFocusExpertDataSource.count;
 }
@@ -123,33 +159,40 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
      ExpertDetailViewController *expertVC = [[ExpertDetailViewController alloc] init];
-    ExpertModel *model = self.mineFocusExpertDataSource[indexPath.row];
     
-     expertVC.zjid = model.userid;
-     expertVC.expertmodel = model;
+     ExpertModel *model = self.mineFocusExpertDataSource[indexPath.row];
+    expertVC.zjuserid = model.userid;
+     expertVC.zjid = model.zjid;
     
-    [self.navigationController pushViewController:expertVC animated:YES];
+    
+     expertVC.isMineView = YES;
+    
 
+    [self.navigationController pushViewController:expertVC animated:YES];
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 150;
+    return 130;
 }
-
 #pragma mark - 加载和刷新
-- (void)loadMoreData
-{
-    MineExpertList *lastModel = [self.mineFocusExpertDataSource lastObject];
-    [self requestInfoWithLastId:lastModel.listId];
-}
+//- (void)loadMoreData
+//{
+//  MineExpertModel *lastModel = [self.mineFocusExpertDataSource lastObject];
+//    [self requestInfoWithLastId:lastModel.zjid];
+//}
 
 - (void)pullToRefresh
 {
     [self requestInfoWithLastId:@"0"];
+}
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
 }
 
 

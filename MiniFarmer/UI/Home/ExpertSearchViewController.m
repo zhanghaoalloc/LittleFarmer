@@ -10,7 +10,8 @@
 #import "SeachView.h"
 #import "BaseViewController+Navigation.h"
 #import "ExpertModel.h"
-
+#import "SearchNotFindView.h"
+#import "NetfailureView.h"
 
 @interface ExpertSearchViewController ()
 @property (nonatomic,strong) SeachView *searchView;
@@ -86,6 +87,14 @@
 
 }
 - (void)requestData{
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfailure];
+        return;
+    }
+
+    
+    [self.view showLoadingWihtText:@"加载中"];
     
     NSDictionary *dic = @{
                           @"pagesize":@"10",
@@ -96,7 +105,7 @@
     __weak ExpertSearchViewController *wself = self;
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=search&m=zj" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+        [self.view dismissLoading];
         NSNumber *code = [responseObject objectForKey:@"code"];
         if ([code integerValue]==1) {//成功
             NSArray *array = [responseObject objectForKey:@"list"];
@@ -105,10 +114,9 @@
                 ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
                 [self.data addObject:model];
             }
-            
             //回到主线程刷新UI
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+                [wself notfound];
                 wself.tableView.data = wself.data.mutableCopy;
                 
             });
@@ -117,13 +125,25 @@
         
         
     }];
-    
-
-
-
-
-
 }
+- (void)notfound{
+    if (_data.count == 0) {
+        SearchNotFindView *view = [[SearchNotFindView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeight-kNavigationBarHeight)];
+        self.tableView.hidden = YES;
+        [self.view addSubview:view];
+    }
+}
+- (void)NetWorkingfailure{
+    
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight+kStatusBarHeight,kScreenSizeWidth , kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
+    
+}
+
+
+
+
+
 
 
 

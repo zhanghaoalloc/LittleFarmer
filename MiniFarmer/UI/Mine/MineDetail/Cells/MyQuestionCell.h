@@ -8,6 +8,7 @@
 
 #import "MineBaseTableViewCell.h"
 
+
 @interface MyQuestionCell : MineBaseTableViewCell
 
 @end

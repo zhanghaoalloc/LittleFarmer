@@ -53,8 +53,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.arrayPhotos = [NSMutableArray array];
     self.edgesForExtendedLayout = UIRectEdgeAll;
+    
     self.photoSelect = [[XDPhotoSelect alloc] initWithController:self delegate:self];
+    
     [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
+    
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(dismissAskVC:)];
     [self setBarTitle:@"我的问题"];
     [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"a3a3a3"] heigth:kLineWidth];
@@ -145,9 +148,6 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-    
-    
-    
 
    }
 - (void)sendPicture{
@@ -155,8 +155,11 @@
     for (int i = 0;i<self.arrayPhotos.count-1; i++) {
         
         MTPickerInfo *info = self.arrayPhotos[i];
+        
         UIImage *image =info.image;
+        
         NSData *imgData = UIImageJPEGRepresentation(image, 0.5);
+        
         NSString  *wtid = _sendModel.wtid;
         
         NSString *number = [NSString  stringWithFormat:@"%d",i+1];
@@ -164,7 +167,6 @@
         NSDictionary * dic =@{
                               @"twid":wtid,
                               @"zpxh":number                             };
-        
         NSDictionary *fileData = @{
                                    @"upfile":imgData
                                    };
@@ -186,9 +188,6 @@
     
 }
 //此方法用于统计图片是否上传成功
-
-
-
 #pragma mark -
 - (void)mt_AssetsPickerController:(MTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
 {
@@ -208,13 +207,10 @@
             //TODO: 更新UI
             //显示图片
             [self reloadImagesView];
-
         });
     });
     
 }
-
-
 #pragma mark - subviews
 - (void)addSubviews
 {
@@ -223,7 +219,6 @@
     [self.askScrollview addSubview:self.askTextView];
     [self.askScrollview addSubview:self.askCropNameView];
     [self.askScrollview addSubview:self.imagesView];
-    
     
     
     [self.sendButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -372,15 +367,11 @@
 //添加
 - (void)imagesView:(ImagesView *)imagesView selectedItem:(NSInteger)selectedItem
 {
-    
-     
     MTPickerInfo *info = [self.arrayPhotos objectAtIndex:selectedItem];
+
     if (info.isSelectImage)
-    {
-        
-        //添加图片 进入相册进行选择
+    {//添加图片 进入相册进行选择
        // [self.photoSelect startPhotoSelect:XDPhotoSelectFromLibrary];
-        
         /// 另一套逻辑 mTime
         MTAssetsPickerController *picker = [[MTAssetsPickerController alloc] init];
         picker.assetsFilter = [ALAssetsFilter allPhotos];
@@ -393,13 +384,12 @@
     {
         //做别的处理 进入轮播啊 这样的
         AskScrollView *askScrollview = [[AskScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) images:[self newImagesWithImages:self.arrayPhotos] selectedIndex:selectedItem];
-        
+
         
         [self.view addSubview:askScrollview];
     }
-     
-
 }
+
 
 #pragma mark - other
 //切换控制器
@@ -414,6 +404,7 @@
     [self.sendButton setEnabled:enable];
 }
 //存放照片的数组
+
 - (NSMutableArray *)imagesArr
 {
     if (self.arrayPhotos.count < kImagesCount)
@@ -422,6 +413,7 @@
         pictureInfo.isSelectImage = YES;
         pictureInfo.image = [UIImage imageNamed:@"asd_btn_addimage"];
         [self.arrayPhotos addObject:pictureInfo];
+    
     }
     
     return self.arrayPhotos;
@@ -429,6 +421,7 @@
 //重新加载存放图片的视图
 - (void)reloadImagesView
 {
+    
     [self.imagesView reloadDataWithImagesInfo:[self imagesArr]];
     self.askScrollview.contentSize = CGSizeMake(kScreenSizeWidth, CGRectGetMaxY(self.imagesView.frame) + kBottomTabBarHeight);
 }

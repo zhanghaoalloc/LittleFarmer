@@ -67,11 +67,12 @@
     
     //功能方法
     [self _function];
-    
-    
-    
-    
-    
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+
 }
 - (void)_function{
 
@@ -291,6 +292,13 @@
     //没有图片的时候
     if (imgData == nil) {
         [[SHHttpClient defaultClient]requestWithMethod:SHHttpRequestPost subUrl:@"?c=tw&m=savewthf" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSString *code = [responseObject objectForKey:@"code"];
+            if ([code integerValue]==1) {
+                [self.view dismissLoading];
+                [self.view showWeakPromptViewWithMessage:@"回答成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+
+            }
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -310,11 +318,13 @@
             if (error == nil) {
                 [self.view dismissLoading];
                 [self.view showWeakPromptViewWithMessage:@"回答成功"];
+                [self.navigationController popViewControllerAnimated:YES];
                 
             }else{
-            
                 [self.view dismissLoading];
                 [self.view  showWeakPromptViewWithMessage:@"回答失败"];
+                [self.navigationController popViewControllerAnimated:YES];
+                
             
             }
         }];
@@ -407,6 +417,7 @@
     
     UIImagePickerControllerSourceType sourceType;
     if (buttonIndex == 0) {
+        
         sourceType = UIImagePickerControllerSourceTypeCamera;
     }else if(buttonIndex == 1){
         sourceType = UIImagePickerControllerSourceTypePhotoLibrary;

@@ -32,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor colorWithHexString:@"eeeeee"]];
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#fffffd"]];
     [self setBarTitle:@"我的回答"];
     [self addSubviews];
     [self setupSegmentItem];
@@ -42,6 +42,10 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
 }
 
 #pragma mark - other
@@ -65,8 +69,6 @@
     [self addChildViewController:mineVC];
     
    
-    
-    
     
     self.mineScrollview.frame = CGRectMake(0, CGRectGetMaxY(self.segmentView.frame), kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop);
     myQVC.view.frame = CGRectMake(0,0, kScreenSizeWidth, CGRectGetHeight(self.mineScrollview.frame));
@@ -97,15 +99,16 @@
     {
         _segmentView = [[YHSegmentView alloc] init];
         _segmentView.backgroundColor = [UIColor whiteColor];
-        _segmentView.itemToLeft = 64;
-        _segmentView.directionLineHeigth = 4;
-        _segmentView.itemsDispace = 64;
-        _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#ff6633"];
+        _segmentView.itemToLeft =(kScreenSizeWidth-64*2)/3 ;
+        _segmentView.directionLineHeigth = 1;
+        _segmentView.itemsDispace =(kScreenSizeWidth-64*2)/3 ;
+        _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.textNormalColor = [UIColor colorWithHexString:@"#666666"];
-        _segmentView.directionLineColor = [UIColor colorWithHexString:@"#ff6633"];
+        _segmentView.directionLineColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.bottomLineHeigth = 1;
-        _segmentView.bottomLineColor = [UIColor colorWithHexString:@"#e4e4e4"];
+        _segmentView.bottomLineColor = [UIColor colorWithHexString:@"#eeeeee"];
         _segmentView.delegate = self;
+
     }
     return _segmentView;
 }
@@ -113,7 +116,7 @@
 
 - (void)setupSegmentItem
 {
-    NSArray *titles = @[@"我的提问",@"我的问答"];
+    NSArray *titles = @[@"我的问题",@"我的回答"];
     
     for (NSString *title in titles) {
         YHSegmentItem *item = [[YHSegmentItem alloc] init];

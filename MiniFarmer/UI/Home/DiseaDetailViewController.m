@@ -15,6 +15,7 @@
 #import "DieaseModel.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "RootTabBarViewController.h"
+#import "NetfailureView.h"
 //#import "BaseViewController+Navigation.h"
 
 @interface DiseaDetailViewController ()
@@ -41,17 +42,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+        
     [self _createSubView];
-    //self.edgesForExtendedLayout = UIRectEdgeAll;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
                                  
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
-   [appDele hideTabbar];
+    [appDele hideTabbar];
+
+
+
+    
 }
 - (void)_createSubView{
+    
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfailure];
+        return;
+    }
+    
+
     [self.view showLoadingWihtText:@"加载中"];
    //1.创建头视图上面的导航条
     _topView = [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self   options:nil].lastObject;
@@ -183,7 +197,8 @@
         _tableView.hidden = NO;
         
         NSDictionary *jsonDic = responseObject[@"bchxq"];
-       _model = [[DieaseModel alloc] initContentWithDic:jsonDic];
+        _model = [[DieaseModel alloc] initContentWithDic:jsonDic];
+        
         images = responseObject[@"images"];
         _iscoll = responseObject[@"iscoll"];
        
@@ -200,12 +215,24 @@
     _headerView.model = _model;
     _headerView.images = images.mutableCopy;
     
-
     _tableView.tableHeaderView = _headerView;
     _topView.model = _model;
     _topView.iscoll = _iscoll;
     self.data = @[@"为害特征",@"发生规律",@"防治方法"];
     [_tableView reloadData];
+    
+}
+//网络状态不给力
+- (void)NetWorkingfailure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
+    
+    _topView = [[NSBundle mainBundle]loadNibNamed:@"ShareView" owner:self options:nil].lastObject;
+    _topView.frame = CGRectMake(0, 100, kScreenSizeWidth, kNavigationBarHeight);
+    _topView.backgroundColor = [UIColor redColor];
+    
+    [view addSubview:_tableView];
+
     
 }
 

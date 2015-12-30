@@ -78,11 +78,13 @@
         
     }else{
         NSString *str = [kPictureURL stringByAppendingString:iconStr];
+        
         iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
     }
 
     [self.photoBT sd_setImageWithURL:iconURL forState:
-        UIControlStateNormal placeholderImage:nil];
+        UIControlStateNormal placeholderImage:[UIImage imageNamed:@"Sys_defalut"]];
+    
     self.nameLabel.text = list.title;
     
     /*CGSize labsize = [label.text sizeWithFont:kTextFont16 constrainedToSize:size lineBreakMode:label.lineBreakMode];*/

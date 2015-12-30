@@ -15,5 +15,10 @@
 @property(nonatomic,assign)BOOL isStudymore;
 @property(nonatomic,retain)StudyModel *model;
 @property(nonatomic,strong)NSArray *data;
+@property(nonatomic,strong)UIView *line;
+
+
+- (void)showline;
+- (void)hiddnline;
 
 @end

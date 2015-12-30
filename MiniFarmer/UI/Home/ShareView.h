@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "DieaseModel.h"
 #import "UMSocialSnsService.h"
-@interface ShareView : UIView{
+@interface ShareView : UIView<UMSocialUIDelegate>{
 
 
     __weak IBOutlet UIButton *_back;

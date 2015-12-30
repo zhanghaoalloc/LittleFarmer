@@ -85,14 +85,14 @@
 - (void)setBarView
 {
     UIView *barView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight, kScreenSizeWidth, kNavigationBarHeight)];
-    barView.backgroundColor = [UIColor colorWithHexString:@"#f8f8f8"];
+    barView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
 
     [self.view addSubview:barView];
 }
 
 - (void)setLineToBarBottomWithColor:(UIColor *)color heigth:(CGFloat)heigth
 {
-    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight + 44, kScreenSizeWidth, heigth)];
+    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight + 43.5, kScreenSizeWidth, heigth)];
     [line setBackgroundColor:color];
     self.yDispaceToTop = CGRectGetMaxY(line.frame);
     [self.view addSubview:line];

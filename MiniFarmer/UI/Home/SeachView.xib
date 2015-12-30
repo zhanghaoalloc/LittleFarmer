@@ -27,7 +27,6 @@
                         </textField>
                     </subviews>
                     <animations/>
-                    <color key="backgroundColor" red="1" green="0.37555315316661819" blue="0.36030991842989968" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="JVs-AE-Kh5" firstAttribute="leading" secondItem="zUU-J9-noR" secondAttribute="trailing" constant="8" id="9oB-OY-kXG"/>
                         <constraint firstItem="zUU-J9-noR" firstAttribute="leading" secondItem="VAl-bd-unW" secondAttribute="leading" constant="8" id="GQj-UR-aDL"/>

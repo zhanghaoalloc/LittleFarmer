@@ -70,16 +70,15 @@
     
     if (_isrigth == YES) {
         NSString *number = [NSString stringWithFormat:@"%ld",indexPath.row+1];
-        
         _block(expertname,number);
+        self.hidden = YES;
     }else{
         
         NSDictionary *dic = self.data[indexPath.row];
         
         NSString *lxbh = [dic objectForKey:@"lxbh"];
-
         _block(expertname,lxbh);
-
+        self.hidden = YES;
     
     }
     

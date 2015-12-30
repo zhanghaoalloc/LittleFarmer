@@ -80,8 +80,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    
     AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
     [appDelegate hideTabbar];
     
@@ -93,6 +91,7 @@
     else{
         userId = @"0";
     }
+    
     [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#a3a3a3"] heigth:0.5];
     [self requestQuDataWithUserId:userId wtid:_curWtid];
     }
@@ -188,6 +187,7 @@
 //我解答的按钮
 - (void)answerButton:(UIButton *)button{
     
+    
     //判断是否登录
     NSString *userid = [UserInfo shareUserInfo].userId
     ;
@@ -205,7 +205,6 @@
         myanswerVC.wtid = _curWtid;
         
         [self.navigationController pushViewController:myanswerVC animated:YES ];
-
     
     }
 
@@ -251,8 +250,7 @@
         _noanswerView =[[UIView alloc] initWithFrame:CGRectMake(0, _commonView.bottom+kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-_commonView.bottom-60-kStatusBarHeight-kNavigationBarHeight)];
 
         _noanswerView.hidden = YES;
-        
-        
+        self.tableView.bounces = NO;
         //分割线
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 0.5)];
         lineView.backgroundColor  = [UIColor colorWithHexString:@"#dddddd"];
@@ -282,7 +280,7 @@
 
 #pragma mark- 网络请求
 - (void)requestQuDataWithUserId:(NSString *)uid wtid:(NSString *)wtid
-{
+{   [self.view showLoadingWihtText:@"加载中"];
     NSDictionary *dicPar =@{
 //                          @"c":@"tw",
 //                          @"m":@"getwthflist",
@@ -303,6 +301,7 @@
             return ;
         }
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
+            
             NSDictionary *dicResult = responseObject;
             BOOL code = [[dicResult objectForKey:@"code"] boolValue];
             NSString *msg = [dicResult objectForKey:@"msg"];
@@ -314,6 +313,7 @@
             }
             else{
                 //问题详情
+                [wself.view dismissLoading];
                 NSDictionary *dicQueInfo = [dicResult objectForKey:@"wt"];
                 
                 self.qInfo = [[QuestionInfo alloc] initWithDictionary:dicQueInfo error:nil];
@@ -327,6 +327,10 @@
                 }
                 //回答列表
                 self.qAnsArr = [QuestionAnsModel arrayOfModelsFromDictionaries:[dicResult objectForKey:@"list"]];
+                
+                if (_qAnsArr.count) {
+                    _noanswerView.hidden = YES;
+                }
                // NSDictionary *dic = [dicResult objectForKey:@"list"];
               //  BOOL iscoll = [[dic objectForKey:@"iscoll"] boolValue];
                 
@@ -427,27 +431,52 @@
     QuestionAnsModel *ansItem= [_qAnsArr objectAtIndex:indexPath.section];
     ReplyModel *repItem = [ansItem.relist objectAtIndex:indexPath.row];
     
-    
     replyVC.model =ansItem;
     replyVC.replymodel = repItem;
-    
     
     replyVC.tabBarController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:replyVC animated:YES];
 
-
-
 }
 #pragma mark----收藏和分享的按钮的点击事件
 - (void)shareAction:(UIButton *)button{
     
+    NSString *imageNmae;
+    if (self.qInfo.images.count != 0) {
+         imageNmae  = self.qInfo.images[0];
+        [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeImage url:imageNmae];
+    }else{
+        //如果问题没有图片就分享APP的图标
+         imageNmae = @"share_View";
+    }
+    [UMSocialData defaultData].extConfig.qqData.title= @"小农人邀请你回答一个问题";
+    NSString *title = self.qInfo.wtms;
+    
+    //设置分享的内容
+    [UMSocialData defaultData].extConfig.wechatSessionData.shareText = title;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.shareText = title;
+    [UMSocialData defaultData].extConfig.qqData.shareText = title;
+    [UMSocialData defaultData].extConfig.qzoneData.shareText = title;
+    
+     NSString *content =[NSString stringWithFormat:@"%@?%@",KshareURl,_curWtid];
+
+    //设置分享后的跳转
+     [UMSocialData defaultData].extConfig.qzoneData.url = content;
+     [UMSocialData defaultData].extConfig.qqData.url =content;
+     [UMSocialData defaultData].extConfig.wechatTimelineData.url = content;
+     [UMSocialData defaultData].extConfig.wechatSessionData.url = content;
+    
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"5663c9dee0f55a74a2000b0e"
-                                      shareText:@"友盟社会化分享让您快速实现分享等社会化功能，www.umeng.com/social"
-                                     shareImage:[UIImage imageNamed:@"icon.png"]
+                                appKey:@"5663c9dee0f55a74a2000b0e"
+                                      shareText:@"小农邀请你来解决大家遇到的一个问题"
+                                     shareImage:[UIImage imageNamed:imageNmae]
                                 shareToSnsNames:@[UMShareToWechatSession,UMShareToWechatTimeline,UMShareToQQ,UMShareToQzone,]
                                        delegate:self];
+}
+- (BOOL)isDirectShareInIconActionSheet{
+
+    return YES;
 
 }
 - (void)colloectionAction:(UIButton *)button{

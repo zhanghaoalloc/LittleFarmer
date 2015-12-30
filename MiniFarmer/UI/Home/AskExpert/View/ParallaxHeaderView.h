@@ -14,6 +14,8 @@
 @property (nonatomic,strong)  UILabel *headerTitleLabel;//主题
 @property (nonatomic,strong) UIImage *headerImage;//头部图片
 @property (nonatomic,strong) ExpertDetailModel *model;
+@property (nonatomic,assign) BOOL isgz;
+
 
 
 

@@ -14,6 +14,10 @@
 #import "UIViewAdditions.h"
 #import "UIView+FrameCategory.h"
 #import "AskViewController.h"
+#import "UserInfo.h"
+#import "LoginViewController.h"
+#import "UIViewAdditions.h"
+#import "MineChangeTXController.h"
 @interface ParallaxHeaderView ()
 @property (strong, nonatomic)  UIScrollView *imageScrollView;//滚动视图
 @property (strong, nonatomic)  UIImageView *imageView;//图片视图
@@ -229,12 +233,13 @@ static CGFloat kLabelPaddingDist = 8.0f;
 //头像视图的添加
 - (void)initIconView{
     if (self.iconView == nil) {
-        self.iconView = [[UIView alloc] init];
-        self.iconView.backgroundColor  =[UIColor colorWithHexString:@"#ffffff"];
         
+        self.iconView = [[UIView alloc] init];
+        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction1)];
+        [self.iconView addGestureRecognizer:tap1];
+        self.iconView.backgroundColor  =[UIColor colorWithHexString:@"#ffffff"];
         self.iconView.alpha = 0.6;
         [self addSubview:self.iconView];
-        
        self.iconImage = [[UIImageView alloc] init];
         self.iconImage.backgroundColor = [UIColor redColor];
         [self addSubview: self.iconImage];
@@ -266,8 +271,6 @@ static CGFloat kLabelPaddingDist = 8.0f;
     subRect.size.height = 29;
 
     self.expertTypeImage.frame =subRect;
-    
-    
     
     
 }
@@ -360,10 +363,55 @@ static CGFloat kLabelPaddingDist = 8.0f;
         [self.viewController.navigationController pushViewController:askVC animated:YES];
     }else if (button.tag == 2){//关注该专家
         
+        NSString *local_userid = [UserInfo shareUserInfo].userId;
         
-    
+        if (local_userid == nil) {
+            button.selected = NO;
+            LoginViewController *loginVC = [[LoginViewController alloc] init];
+            [self.viewController presentViewController:loginVC animated:YES completion:nil];
+            loginVC.loginBackBlock = ^{
+            };
+        }
+        
+        NSString *zjid = _model.zjid;
+        NSDictionary * dic1 = @{
+                                @"userid":local_userid,
+                                @"zjid":zjid
+                                };
+
+        __weak ParallaxHeaderView *wself = self;
+
+        [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=user&m=gzzj" parameters:dic1 prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSString *code = [responseObject objectForKey:@"code"];
+            if ([code integerValue]== 1) {
+                if (wself.isgz == YES) {
+                    
+                    [wself showWeakPromptViewWithMessage:@"取消关注"];
+                    wself.isgz = NO;
+                   
+                    
+        
+                }else{
+                    
+                    [wself showWeakPromptViewWithMessage:@"关注成功"];
+                    wself.isgz = YES;
+                   
+                    
+                }
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+        }];
     }
    
+
+}
+- (void)tapAction1{
+    MineChangeTXController *mineChangeTX = [[MineChangeTXController alloc] init];
+    mineChangeTX.url = _model.usertx;
+    
+    [self.viewController.navigationController pushViewController:mineChangeTX animated:YES];
+
 
 }
 - (void)backAction:(UIButton *)button{
@@ -374,23 +422,20 @@ static CGFloat kLabelPaddingDist = 8.0f;
 #pragma mark---数据处理
 - (void)setModel:(ExpertDetailModel *)model{
     _model = model;
-    
     //头像
     NSString *iconimage = _model.usertx;
 
     NSURL *iconURL;
-    
     if ([iconimage rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
         //有前缀
-        
         iconURL = [NSURL URLWithString:[APPHelper safeString:iconimage]];
-        
     }else{
         NSString *str = [kPictureURL stringByAppendingString:iconimage];
+        
         iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
     }
     
-    [_iconImage sd_setImageWithURL:iconURL];
+    [_iconImage sd_setImageWithURL:iconURL placeholderImage:[UIImage imageNamed:@"Expert_defalut"]];
     
     
     
@@ -416,9 +461,16 @@ static CGFloat kLabelPaddingDist = 8.0f;
         _fansCount.text =[NSString stringWithFormat:@"%ld",count];
     
     }
-   
+}
+- (void)setIsgz:(BOOL)isgz{
     
-    //[self reloadInputViews];
+    _isgz = isgz;
+    
+    if (_isgz == YES) {
+        self.rigthButton.selected = YES;
+    }else{
+        self.rigthButton.selected = NO;
+    }
 
 }
 //返回专家的称号标志视图

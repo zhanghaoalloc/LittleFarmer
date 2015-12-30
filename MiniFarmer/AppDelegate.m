@@ -13,6 +13,7 @@
 #import "UMSocialQQHandler.h"
 
 
+
 @interface AppDelegate ()
 
 @end
@@ -41,18 +42,20 @@
     [UMSocialData setAppKey:@"5663c9dee0f55a74a2000b0e"];
     
     //微信
-    [UMSocialWechatHandler setWXAppId:@"wxf0cf6ca93505c941" appSecret:@"83c2c6d797f04951c0363aa82d22d6b1" url:@"your app_rederict_uri"];
+    [UMSocialWechatHandler setWXAppId:kAPPweixin appSecret:kAPpKeyweixin url:@"http://www.enbs.com.cn/mobile/index.php"];
     //QQ
-    [UMSocialQQHandler setQQWithAppId:@"1104804134" appKey:@"oclH9fA1PRv3h0ju" url:@"your app_rederict_uri"];
-    
+    [UMSocialQQHandler setQQWithAppId:kAppID appKey:kQQAppKey url:@"http://www.enbs.com.cn/mobile/index.php"];
+   
     
     
     return YES;
 }
 //用于分享回调
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
     BOOL result = [UMSocialSnsService handleOpenURL:url];
     if (result) {
+        
         //用于调用其他的SDK例如支付宝
     }
     return result;

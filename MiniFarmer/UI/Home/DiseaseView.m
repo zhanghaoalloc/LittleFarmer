@@ -21,12 +21,6 @@
     _name.font = kTextFont14;
     _name.textColor = [UIColor colorWithHexString:@"#666666"];
     
-    _count.font = kTextFont(11);
-    _count.textColor = [UIColor colorWithHexString:@"#ffffff"];
-    
-   
-
-    
     _imageView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
     [_imageView addGestureRecognizer:tap];
@@ -47,7 +41,7 @@
     
     
     [_imageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"Sys_defalut"]];
-     [_browseV setImage:[UIImage imageNamed:@"home_study_detail_browse"]];
+
     
    // [_imageView setImageWithURL:url];
 }
@@ -68,7 +62,7 @@
     
     
     [_imageView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"Sys_defalut"]];
-     [_browseV setImage:[UIImage imageNamed:@"home_study_detail_browse"]];
+    
     
 }
 - (void)tap{

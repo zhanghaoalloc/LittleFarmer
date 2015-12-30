@@ -9,6 +9,9 @@
 #import "MineSaveTechnoliyViewController.h"
 #import "MineSaveAskCell.h"
 #import "MineSaveTechnology.h"
+#import "DiseaDetailViewController.h"
+#import "MyQuestionCell.h"
+#import "NetfailureView.h"
 
 @interface MineSaveTechnoliyViewController ()
 
@@ -20,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //    [self.view addSubview:self.tableView];
+    
     
 }
 
@@ -34,13 +37,22 @@
 }
 
 - (void)requestInfoWithLastId:(NSString *)lastId
-{
+{   BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
     //添加loading
-    [self.view showLoadingWihtText:@"加载中..."];
+    NSLog(@"---------- requestCount");
+    if (!self.mineAskDataSource.count)
+    {
+        [self.view showLoadingWihtText:@"加载中"];
+    }
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
     NSDictionary *dic = @{
-                          @"userid":[APPHelper safeString:userId]
-                          
+                          @"userid":[APPHelper safeString:userId],
+                          @"id":lastId,
+                          @"pagesize":@"10"
                           };
     
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet
@@ -48,7 +60,6 @@
         
     //解析数据
     [self.view dismissLoading];
-        
     
     [self cancelCurrentLoadAnimation];
     [self handleSucessWithResult:responseObject lastId:lastId];
@@ -62,21 +73,27 @@
     }];
 }
 
-
 - (void)handleSucessWithResult:(id)responseObject lastId:(NSString *)lastId
 {
     MineSaveTechnology *model = [[MineSaveTechnology alloc] initWithDictionary:responseObject error:nil];
     
     if (!self.mineAskDataSource)
     {
-        self.mineAskDataSource = [NSMutableArray array];
+        self.mineAskDataSource = [NSMutableArray arrayWithArray:model.list];
     }
-    if (!lastId && model.list.count)
+    if ( model.list.count)
     {
-        [self.mineAskDataSource removeAllObjects];
+        if (!lastId) {
+            [self.mineAskDataSource removeAllObjects];
+
+        }
+        [self.mineAskDataSource addObjectsFromArray:model.list];
     }
-    [self.mineAskDataSource addObjectsFromArray:model.list];
+    
+   
+    
     [self noMoreData:model.list.count < kPageSize.intValue];
+   
     [super reloadData];
     
     if (!self.mineAskDataSource.count)
@@ -90,6 +107,17 @@
 {
     [self.view showWeakPromptViewWithMessage:@"加载失败"];
 }
+- (void)loadMoreData{
+    [self requestInfoWithLastId:[self lastMysaveTechnology].listId];
+
+
+}
+- (MineSaveTechnologyList *)lastMysaveTechnology{
+
+    return [_mineAskDataSource lastObject];
+}
+
+#pragma mark----UITabelView协议
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //    return 100;
@@ -107,6 +135,8 @@
     MineSaveTechnologyList *list = [self.mineAskDataSource objectAtIndex:indexPath.row];
     
     [cell refreshDataWithModel:list];
+    
+    
     return cell;
 }
 
@@ -114,19 +144,28 @@
 {
     return [MineSaveAskCell cellHeightWihtModel:nil];
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    MineSaveTechnologyList *list = [self.mineAskDataSource objectAtIndex:indexPath.row];
+    
+    DiseaDetailViewController *detailVC = [[DiseaDetailViewController alloc] init];
+    detailVC.bchid = list.listId;
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
 
 #pragma mark - 加载和刷新
-
-- (void)loadMoreData
-{
-    MineSaveTechnologyList *lastModel = [self.mineAskDataSource lastObject];
-    [self requestInfoWithLastId:lastModel.listId];
-}
 
 - (void)pullToRefresh
 {
     [self requestInfoWithLastId:@"0"];
 }
 
+//无网络状态
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
+}
 
 @end

@@ -50,9 +50,6 @@
 {
     
 }
-
-
-
 -(void)updateViewConstraints{
     [self.commonTab mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -85,7 +82,7 @@
     MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [self loadMoreData];
     }];
-    [footer setTitle:@"没有更多数据" forState:MJRefreshStateNoMoreData];
+    [footer setTitle:@"暂无更多" forState:MJRefreshStateNoMoreData];
     [footer.stateLabel setHidden:YES];
     
     self.commonTab.footer = footer;
@@ -93,19 +90,16 @@
 
 - (void)loadMoreData
 {
-    
 }
 
 - (void)pullToRefresh
 {
-    
 }
 
 - (void)setTableBackGroundColor:(UIColor *)color
 {
     [self.commonTab setBackgroundColor:color];
 }
-
 - (void)noMoreData:(BOOL)noMore
 {
     if (noMore)
@@ -117,10 +111,8 @@
         {
             MJRefreshAutoNormalFooter *footer = (MJRefreshAutoNormalFooter *)self.commonTab.footer;
             [footer.stateLabel setHidden:NO];
-            
         }
             break;
-            
         default:
         {
             MJRefreshAutoNormalFooter *footer = (MJRefreshAutoNormalFooter *)self.commonTab.footer;

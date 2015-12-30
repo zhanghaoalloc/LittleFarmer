@@ -11,6 +11,6 @@
 #import "MineBaseViewController.h"
 
 
-@interface MineViewController : MineBaseViewController
+@interface MineViewController : BaseViewController
 
 @end

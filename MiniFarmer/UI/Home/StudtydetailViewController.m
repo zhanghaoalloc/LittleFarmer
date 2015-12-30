@@ -13,6 +13,7 @@
 #import "UIView+FrameCategory.h"
 #import "StudyModel.h"
 #import "DiseaPicViewController.h"
+#import "NetfailureView.h"
 @interface StudtydetailViewController ()
 @property(nonatomic ,strong)NSMutableArray *data;
 
@@ -49,24 +50,28 @@
 }
 - (void)_addSubViews{
     
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfailure];
+        return;
+    }
     //添加显示加载中的视图
     [self.view showLoadingWihtText:@"加载中"];
     
     
     //1.创建表视图
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeigth-kNavigationBarHeight-42) style:UITableViewStyleGrouped];
-
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     _tableView.bounces =NO;
     _tableView.hidden = YES;
-    [self.view addSubview:_tableView];
+    _tableView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     
+    [self.view addSubview:_tableView];
     //2.注册单元格
     identify1 = @"morecell";
     identify2 = @"detailcell";
-    
     
     UINib *nib1 = [UINib nibWithNibName:@"StudymoreCell" bundle:nil];
     [_tableView registerNib:nib1 forCellReuseIdentifier:identify1];
@@ -83,7 +88,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
 
-    return self.data.count/2;
+    return self.data.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
@@ -93,9 +98,11 @@
         return cell;
     }else{
         StudydetailCell *cell = [tableView dequeueReusableCellWithIdentifier:identify2 forIndexPath:indexPath];
-        
         cell.isStudymore = NO;
         cell.model = _data[indexPath.section];
+        if (self.data.count == indexPath.section+1) {
+            [cell hiddnline];
+        }
         return cell;
     }
     
@@ -121,9 +128,12 @@
     return 6;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 6)];
     view.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-    
+    if (self.data.count == section+1) {
+        view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    }
     return view;
 
 }
@@ -136,6 +146,7 @@
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (indexPath.row == 0) {
         StudyModel *model  = self.data[indexPath.section];
         
@@ -184,11 +195,11 @@
                 [weself.data addObject:model];
                 
             }
-             
-            [weself.tableView reloadData];
             
+            [weself.tableView reloadData];
         });
-        return ;
+        
+      
     
   } failure:^(NSURLSessionDataTask *task, NSError *error) {
       
@@ -196,4 +207,13 @@
   }];
 
 }
+- (void)NetWorkingfailure{
+    
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
+}
+
+
+
+
 @end

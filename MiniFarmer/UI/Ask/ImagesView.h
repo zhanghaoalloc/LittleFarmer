@@ -14,11 +14,12 @@
 @optional
 - (void)imagesView:(ImagesView *)imagesView selectedItem:(NSInteger)selectedItem;
 
+
 @end
 
-@interface ImagesView : UIView
+@interface ImagesView : UIView<UIActionSheetDelegate>
 
-@property (nonatomic, assign)id<ImagesViewDelegate,UIActionSheetDelegate> delegate;
+@property (nonatomic, assign)id<ImagesViewDelegate> delegate;
 
 - (void)reloadDataWithImagesInfo:(NSArray *)images;
 @end

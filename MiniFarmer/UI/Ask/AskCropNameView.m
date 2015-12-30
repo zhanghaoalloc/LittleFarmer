@@ -62,12 +62,15 @@
         make.left.equalTo(self.cropImageView.mas_right).offset(12);
         make.centerY.equalTo(self.mas_centerY);
     }];
-    
+    //self.textView.backgroundColor = [UIColor redColor];
     [self.textView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.cropNameLabel.mas_right).offset(12);
-        make.top.equalTo(self.mas_top).offset(kLineWidth);
+        make.top.equalTo(self.mas_top).offset(8);
         make.right.equalTo(self.mas_right);
-        make.bottom.equalTo(self.mas_bottom).offset(-kLineWidth);
+       // make.height.equalTo(@24);
+        //make.centerY.equalTo(self.mas_centerY);
+        //make.height.equalTo()
+        make.bottom.equalTo(self.mas_bottom).offset(-12);
     }];
 //
 }
@@ -78,12 +81,13 @@
     if (!_textView)
     {
         _textView = [[GCPlaceholderTextView alloc] initWithFrame:CGRectZero];
-        _textView.textColor = [UIColor colorWithHexString:@"a3a3a3"];
+        _textView.textColor = [UIColor colorWithHexString:@"#333333"];
         _textView.font = kTextFont(14);
         _textView.placeholderColor = _textView.textColor;
         _textView.delegate = self;
         //TODO:作物名称 要看了android的以后才可以确定
         _textView.placeholder = @"请输入作物名称";
+        _textView.placeholderColor = [UIColor colorWithHexString:@"#a3a3a3"];
     }
     return _textView;
 }
@@ -124,7 +128,7 @@
     {
         _cropNameLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _cropNameLabel.textColor = [UIColor blackColor];
-        _cropNameLabel.font = kTextFont(13);
+        _cropNameLabel.font = kTextFont(14);
         _cropNameLabel.text = @"作物名称:";
         
     }

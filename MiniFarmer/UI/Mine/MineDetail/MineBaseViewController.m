@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
+    [self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(popVC)];
 }
 

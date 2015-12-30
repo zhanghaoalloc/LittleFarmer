@@ -72,7 +72,8 @@
     NSString *url = _model.zp1;
     NSString *str = [kPictureURL stringByAppendingString:url];
     NSURL *URL = [NSURL URLWithString:str];
-    [_backgroundView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"Sys_defalut"]];
+
+    [_backgroundView sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:nil]];
     
     _diseasedetail.text = _model.fbwh;
     CGFloat heigth =[self countHeigthForLabel:_diseasedetail Labelwidth:kScreenSizeWidth-32 LineSpacing:10];

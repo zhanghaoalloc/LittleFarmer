@@ -11,6 +11,7 @@
 #import "QuestionCell.h"
 #import "QuestionCellSource.h"
 #import "QuestionDetailViewController.h"
+#import "NetfailureView.h"
 
 @interface MineReponseTableViewController ()
 
@@ -57,6 +58,12 @@
 
 - (void)requestDataWithLastId:(NSString *)lastId
 {
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
+
     //添加loading
     if (!self.dataSourceArr.count)
     {
@@ -164,6 +171,15 @@
 }
 
 #pragma mark - 刷新和加载
+
+
+//无网络状态
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
+}
 
 
 

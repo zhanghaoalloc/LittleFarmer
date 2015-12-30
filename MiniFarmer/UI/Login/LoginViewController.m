@@ -147,9 +147,14 @@
         {
             //登陆成功保存电话号码 保存用户userid
             [[MiniAppEngine shareMiniAppEngine] saveUserId:loginModel.rows.userId];
+            [[MiniAppEngine shareMiniAppEngine]saveUserXm:loginModel.rows.username];
             [[MiniAppEngine shareMiniAppEngine] saveUserLoginNumber:self.usernameTF.text];
+            
             [[MiniAppEngine shareMiniAppEngine] saveLogin];
             [[MiniAppEngine shareMiniAppEngine] saveInfos];
+            
+            //登录成功发出通知
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserSignInNotification object:nil];
             
             strongSelf.loginBackBlock();
             

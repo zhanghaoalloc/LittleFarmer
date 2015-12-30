@@ -16,4 +16,6 @@
 
 @property (nonatomic,copy)NSString *url;
 
+@property (nonatomic,copy)NSString *zjid;
+
 @end

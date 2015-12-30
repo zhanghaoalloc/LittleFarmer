@@ -15,6 +15,7 @@
 @implementation ExpertListCell
 
 - (void)awakeFromNib {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     //图像
     _icon.layer.cornerRadius = 32;
     _icon.layer.masksToBounds = YES;
@@ -56,7 +57,7 @@
      iconURL =[NSURL URLWithString:[APPHelper safeString:str]];
     }
 
-    [_icon sd_setImageWithURL:iconURL];
+    [_icon sd_setImageWithURL:iconURL placeholderImage:[UIImage imageNamed:@"Expert_defalut"]];
    
     _name.text = _model.xm;
     _type.text = _model.zjlxms;
@@ -71,7 +72,7 @@
     askVC.zjid = _model.zjid;
     askVC.tabBarController.hidesBottomBarWhenPushed = YES;
     [self.viewController.navigationController pushViewController:askVC animated:YES];
-    
+
     
 }
 

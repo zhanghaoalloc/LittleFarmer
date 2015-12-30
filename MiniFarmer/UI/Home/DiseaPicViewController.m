@@ -13,6 +13,8 @@
 #import "UIView+FrameCategory.h"
 #import "UserInfo.h"
 #import "SeachView.h"
+#import "SearchNotFindView.h"
+#import "NetfailureView.h"
 
 
 @interface DiseaPicViewController ()
@@ -38,8 +40,10 @@
     [self setNavigationBarIsHidden:NO];
     
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
-    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:1];
-    [self.view showLoadingWihtText:@"加载中"];
+    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#eeeeee"] heigth:0.5];
+   // [self setBarLeftDefualtButtonWithTarget:self action:@selector(backBtnPressed)];
+    
+    
     
     
    // [self _creaSubView];
@@ -72,6 +76,7 @@
     _tableView.dataSource = self;
     _tableView.bounces = NO;
     identify = @"studydetailcell";
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     [_tableView registerClass:[StudydetailCell class] forCellReuseIdentifier:identify];
     
@@ -114,6 +119,21 @@
     }
     cell.data =array.mutableCopy;
     
+    NSInteger max;
+    if (self.data.count%3==0) {
+       max = self.data.count/3;
+    }else{
+        max = self.data.count/3+1;
+    }
+    
+    
+    
+    if (indexPath.row+1 == max) {
+        [cell hiddnline];
+    }else{
+        [cell showline];
+    }
+    
         return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -131,7 +151,7 @@
     _isSearch = isSearch;
    
     _seachView = [[NSBundle mainBundle] loadNibNamed:@"SeachView" owner:self options:nil].lastObject;
-    _seachView.frame = CGRectMake(35, kStatusBarHeight, kScreenSizeWidth-35, kNavigationBarHeight);
+    _seachView.frame = CGRectMake(35, kStatusBarHeight, kScreenSizeWidth-35, kNavigationBarHeight-0.5);
     _seachView.imageNmae = @"home_btn_message_nm";
     _seachView.isSearch = NO;
     _seachView.index = 3;
@@ -163,6 +183,13 @@
 
 }
 - (void)_reqestData:(NSString *)url with:(NSDictionary *)dic type:(NSInteger)typemethod{
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfailure];
+        return;
+    }
+
+    [self.view showLoadingWihtText:@"加载中"];
     
     if (_data ==nil) {
         _data = [NSMutableArray array];
@@ -180,35 +207,35 @@
                         TwoclassMode *model = [[TwoclassMode alloc] initContentWithDic:dic];
                         
                         [weself.data addObject:model];
-                        
+                    }
+                    if (_isSearch == YES) {
+                        [weself notfound];
                     }
                     [weself _creaSubView];
                     
                     [weself.tableView reloadData];
-
         });
         return ;
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+}
+//没有搜索到
+- (void)notfound{
+    if (_data.count == 0) {
+        SearchNotFindView *view = [[SearchNotFindView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeight-kNavigationBarHeight)];
+        self.tableView.hidden = YES;
+        [self.view addSubview:view];
+    }
+}
+//网络不行
+- (void)NetWorkingfailure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight))];
+    [self.view addSubview:view];
+  
     
-    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

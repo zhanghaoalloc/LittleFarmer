@@ -32,10 +32,14 @@ static MiniAppEngine *miniAppEngine;
 {
     [UserInfo shareUserInfo].userId = userId;
 }
+- (void)saveUserXm:(NSString *)xm{
+
+    [UserInfo shareUserInfo].userName = xm;
+}
 
 - (void)saveUserLoginNumber:(NSString *)number
 {
-    [UserInfo shareUserInfo].userName = number;
+    [UserInfo shareUserInfo].mobile = number;
 }
 
 - (void)clearUserNumber
@@ -49,10 +53,13 @@ static MiniAppEngine *miniAppEngine;
     [UserInfo shareUserInfo].isLogin = NO;
 }
 
+
+
 - (void)saveLogin;
 {
     [UserInfo shareUserInfo].isLogin = YES;
 }
+
 
 
 - (void)setSaveNumber:(BOOL)saveNumber
@@ -64,8 +71,6 @@ static MiniAppEngine *miniAppEngine;
         [self clearUserNumber];
     }
 }
-
-
 - (NSString *)userLoginNumber
 {
     return [UserInfo shareUserInfo].userName;
@@ -74,6 +79,10 @@ static MiniAppEngine *miniAppEngine;
 - (NSString *)userId
 {
     return [UserInfo shareUserInfo].userId;
+}
+- (NSString *)mobile{
+
+    return [UserInfo shareUserInfo].mobile;
 }
 
 - (BOOL)isHasSaveUserLoginNumber
@@ -94,6 +103,7 @@ static MiniAppEngine *miniAppEngine;
 - (void)saveInfos
 {
     NSMutableData *data = [NSMutableData data];
+    
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [archiver encodeObject:[UserInfo shareUserInfo] forKey:kUserInfo];
     [archiver finishEncoding];
@@ -112,9 +122,11 @@ static MiniAppEngine *miniAppEngine;
     //有时间可以研究属性列表 然后用属性列表来实现
     [UserInfo shareUserInfo].userId = info.userId;
     [UserInfo shareUserInfo].userName = info.userName;
+    [UserInfo shareUserInfo].mobile = info.mobile;
     [UserInfo shareUserInfo].isLogin = info.isLogin;
     [UserInfo shareUserInfo].zjid = info.zjid;
     [UserInfo shareUserInfo].isSaveUserName = info.isSaveUserName;
+    
 }
 
 - (NSString *)userInfoPath

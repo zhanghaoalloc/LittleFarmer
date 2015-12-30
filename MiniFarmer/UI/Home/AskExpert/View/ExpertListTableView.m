@@ -54,25 +54,17 @@
 #pragma mark----协议方法
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    CGFloat heigt = [tableView fd_heightForCellWithIdentifier:_identify configuration:^(ExpertListCell * cell) {
-        
-        cell.model =self.data[indexPath.row];
-    }];
-
-
-    return 150;
+   
+    return 130;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     ExpertDetailViewController *expertVC = [[ExpertDetailViewController alloc] init];
-    
     ExpertModel *model = self.data[indexPath.row];
     
-    expertVC.zjid = model.userid;
-    
+    expertVC.zjuserid = model.userid;
     expertVC.expertmodel = model;
     
-
     self.viewController.tabBarController.hidesBottomBarWhenPushed = YES;
     
     [self.viewController.navigationController pushViewController:expertVC animated:YES];
@@ -101,7 +93,7 @@
 }
 - (void)setIsSearch:(BOOL)isSearch{
     _isSearch = isSearch;
-
+    
 }
 
 @end

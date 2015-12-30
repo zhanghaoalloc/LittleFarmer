@@ -384,6 +384,7 @@
 - (void)lickeAction:(UIButton *)button{
     NSString *userid = [UserInfo shareUserInfo].userId
     ;
+    
     if (userid == nil) {
 
         LoginViewController *loginVC = [[LoginViewController alloc] init];

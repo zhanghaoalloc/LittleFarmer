@@ -219,7 +219,7 @@
 //返回按钮
 - (void)backBtnPressed{
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 
     
 }

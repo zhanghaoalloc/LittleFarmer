@@ -15,7 +15,6 @@
 
 @implementation MyAnswerCell{
 
-    
     UIView *_outputView;
     UILabel *_contentLabel;
 
@@ -40,15 +39,14 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = RGBCOLOR(238, 238, 238);
+       
         self.selectionStyle =UITableViewCellSelectionStyleNone;
-        
-        
+    
         _outputView = [UIView new];
         [self.contentView addSubview:_outputView];
         _outputView.backgroundColor = [UIColor whiteColor];
         [_outputView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.contentView).offset(kOutputViewTopPadding);
+            make.top.equalTo(self.contentView);
             make.left.equalTo(self.contentView);
             make.right.equalTo(self.contentView);
             make.bottom.equalTo(self.contentView);
@@ -139,19 +137,47 @@
         _pictureView.hidden = NO;
     }
     
-    NSURL *firImg = [NSURL URLWithString:[APPHelper safeString:[_qSource.qInfo.images objectAtIndex:0]]];
+    NSURL *firImg ;
+    NSString *firStr1 = [_qSource.qInfo.images objectAtIndex:0];
+    if ([firStr1 rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+        //有前缀
+        firImg = [NSURL URLWithString:[APPHelper safeString:firStr1]];
+
+    }else{
+        NSString *str = [KQusetionURL stringByAppendingString:firStr1];
+        firImg =[NSURL URLWithString:[APPHelper safeString:str]];
+    }
     [_firstPicBtn sd_setImageWithURL:firImg forState:UIControlStateNormal];
     _firstPicBtn.hidden = NO;
     
     _secondPicBtn.hidden = YES;
     if (picCount > 1) {
-        NSURL *secImg = [NSURL URLWithString:[APPHelper safeString:[_qSource.qInfo.images objectAtIndex:1]]];
+    NSString *firStr2 = [_qSource.qInfo.images objectAtIndex:1];
+    NSURL *secImg;
+        if ([firStr2 rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+            //有前缀
+            secImg = [NSURL URLWithString:[APPHelper safeString:firStr2]];
+            
+        }else{
+            NSString *str = [KQusetionURL stringByAppendingString:firStr2];
+            secImg =[NSURL URLWithString:[APPHelper safeString:str]];
+        }
+
         [_secondPicBtn sd_setImageWithURL:secImg forState:UIControlStateNormal];
         _secondPicBtn.hidden = NO;
     }
     _thirdPicBtn.hidden = YES;
     if (picCount > 2) {
-        NSURL *thrImg = [NSURL URLWithString:[APPHelper safeString:[_qSource.qInfo.images objectAtIndex:2]]];
+        NSString *thrStr = [_qSource.qInfo.images objectAtIndex:2];
+        NSURL *thrImg;
+        if ([thrStr rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+            //有前缀
+            thrImg = [NSURL URLWithString:[APPHelper safeString:thrStr]];
+            
+        }else{
+            NSString *str = [KQusetionURL stringByAppendingString:thrStr];
+            thrImg =[NSURL URLWithString:[APPHelper safeString:str]];
+        }
         [_thirdPicBtn  sd_setImageWithURL:thrImg forState:UIControlStateNormal];
         _thirdPicBtn.hidden = NO;
     }
@@ -201,8 +227,6 @@
     _nameLabel.font = kTextFont14;
     _nameLabel.textColor = kTextBlackColor;
     
-   
-    
 }
 
 - (void)updateBottemView
@@ -217,11 +241,11 @@
         {
             tmpView = _pictureView;
         }
-        make.top.equalTo(tmpView.mas_bottom);
+        make.top.equalTo(tmpView.mas_bottom).offset(10);
         make.left.equalTo(_outputView).offset(kLeftSpace);
         
         make.right.equalTo(_outputView).offset(-kRightSpace);
-        make.height.mas_equalTo(kBottemViewHeight);
+        make.height.mas_equalTo(@26);
     }];
     
     _plantImgView.image = [UIImage imageNamed:@"home_icon_plant"];
@@ -247,7 +271,7 @@
         make.size.mas_equalTo(CGSizeMake(26, 26));
     }];
     [_plantNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_bottomView);
+        make.bottom.equalTo(_nameLabel.mas_bottom);
         make.left.equalTo(_plantImgView.mas_right).offset(5);
         make.height.mas_equalTo(21);
     }];
@@ -256,7 +280,7 @@
     _dateLable.textColor = kTextLightBlackColor;
     _dateLable.font = kTextFont12;
     [_dateLable mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_bottomView);
+        make.bottom.equalTo(_nameLabel.mas_bottom);
         make.right.equalTo(_bottomView.mas_right).offset(-12);
         make.height.mas_equalTo(21);
     }];

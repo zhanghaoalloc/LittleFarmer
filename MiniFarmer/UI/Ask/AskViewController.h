@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface AskViewController : BaseViewController<UIActionSheetDelegate>
+@interface AskViewController : BaseViewController<UIActionSheetDelegate,UIPickerViewDelegate>
 
 - (void)changeSelectedVC:(NSInteger)selectedIndex;
 

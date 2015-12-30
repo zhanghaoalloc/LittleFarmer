@@ -68,6 +68,7 @@
     {
         _saveScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.yDispaceToTop + 47, kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop - 47)];
         _saveScrollview.contentSize = CGSizeMake(2 * kScreenSizeWidth, CGRectGetHeight(_saveScrollview.frame));
+        _saveScrollview.bounces = NO;
     }
     return _saveScrollview;
 }

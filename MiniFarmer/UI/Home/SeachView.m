@@ -23,12 +23,12 @@
     
     _textfiled = (UITextField *)[_textView viewWithTag:201];
     _textfiled.delegate = self;
-    [_textfiled setTextColor:[UIColor colorWithHexString:@"#a3a3a3"]];
+    [_textfiled setTextColor:[UIColor colorWithHexString:@"#333333"]];
     _textfiled.font = kTextFont(14);
     _textfiled.returnKeyType = UIReturnKeySearch;
-
+    
     _message.titleLabel.font = kTextFont18;
-    [_message setTitleColor:[UIColor colorWithHexString:@"#a3a3a3"] forState:UIControlStateNormal];
+    [_message setTitleColor:[UIColor colorWithHexString:@"#666666"] forState:UIControlStateNormal];
     self.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
     
 }
@@ -73,6 +73,7 @@
 
 }
 - (void)textAction:(UIButton *)button{
+    
     [self.ViewController.navigationController popViewControllerAnimated:YES];
 }
 - (void)imageAction:(UIButton *)button{
@@ -80,7 +81,7 @@
     MessageViewController *messageVC = [[MessageViewController alloc] init];
     messageVC.view.backgroundColor = [UIColor whiteColor];
    
-    self.ViewController.tabBarController.hidesBottomBarWhenPushed = YES;
+  //  self.ViewController.tabBarController.hidesBottomBarWhenPushed = YES;
     
     [self.ViewController.navigationController pushViewController:messageVC animated:YES];
     

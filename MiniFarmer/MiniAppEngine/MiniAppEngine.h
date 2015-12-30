@@ -19,7 +19,7 @@
 
 //保存密码
 - (void)saveUserLoginNumber:(NSString *)number;
-
+- (void)saveUserXm:(NSString *)xm;
 
 //清除用户信息
 - (void)clearUserLoginInfos;
@@ -38,6 +38,8 @@
 - (BOOL)isHasSaveUserLoginNumber;
 
 - (NSString *)userId;
+
+- (NSString *)mobile;
 
 #pragma mark - 存入本地和从本地中读取
 

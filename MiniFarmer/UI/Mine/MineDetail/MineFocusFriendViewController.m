@@ -8,6 +8,7 @@
 
 #import "MineFocusFriendViewController.h"
 #import "MineFocusFriendCell.h"
+#import "NetfailureView.h"
 
 @interface MineFocusFriendViewController ()
 
@@ -34,6 +35,11 @@
 
 - (void)requestInfoWithLastId:(NSString *)lastId
 {
+    BOOL status =[[SHHttpClient defaultClient] isConnectionAvailable];
+    if (status == NO) {
+        [self NetWorkingfaiure];
+        return;
+    }
     //添加loading
     [self.view showLoadingWihtText:@"加载中..."];
     NSString *userId = [[MiniAppEngine shareMiniAppEngine] userId];
@@ -119,6 +125,13 @@
 - (void)pullToRefresh
 {
     [self requestInfoWithLastId:@"0"];
+}
+
+- (void)NetWorkingfaiure{
+    NetfailureView *view = [[NetfailureView alloc] initWithFrame:CGRectMake(0,0 , kScreenSizeWidth, kScreenSizeHeight-(kStatusBarHeight+kNavigationBarHeight+47))];
+    
+    [self.view addSubview:view];
+    
 }
 
 

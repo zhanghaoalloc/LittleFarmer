@@ -46,6 +46,7 @@
 @implementation AskSpecialistViewController{
 
     NSString *_identify;
+    NSString *_expertType;
 
 }
 #pragma mark - life cycle
@@ -59,15 +60,16 @@
     
     _data = [NSMutableArray array];
     
+    
    
     //初始化导航栏
     [self setNavigation];
+   
     
     //获取列表的数据
     [self loadListData];
     //创建专家信息的tableView
-    [self initexpertTableView];
-    
+
     
     [self initsubviews];
     
@@ -76,8 +78,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    
     
     
     
@@ -105,55 +105,47 @@
 }
 - (void)loadListData{
     self.rigthdata = @[@"距离",@"关注度",@"智能排序"];
-
-    
+   
+    [self.view showLoadingWihtText:@"加载中"];
     __weak AskSpecialistViewController *wself = self;
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=wwzj&m=get_zjlx_list"parameters:nil prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+
         wself.leftdata = [responseObject objectForKey:@"list"];
         dispatch_async(dispatch_get_main_queue(), ^{
-            
             //回到主线程刷新UI
            // [wself.leftList reloadData];
             [wself initlistTableView];
-
+            NSDictionary *dic = @{
+                                  @"id":@"0",
+                                  @"pagesize":@"10"
+                                  };
+            [wself requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic withMethod:SHHttpRequestGet];
         });
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-    
-    
-    
-    
 }
 //初始化UITableView
 - (void)initexpertTableView{
-    
 
     _expertTableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44)) style:UITableViewStylePlain];
-   
-    NSDictionary *dic = @{
-                          @"id":@"0",
-                          @"pagesize":@"10"
-                          };
-    
-    [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic withMethod:SHHttpRequestGet];
-    //上拉刷新
+        //下拉刷新
     MJRefreshNormalHeader *mjHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        NSString *lastid = @"0";
         NSDictionary *dic1 = @{
-                              @"id":@"0",
+                              @"id":lastid,
                               @"pagesize":@"10"
                               };
+    
        // [self requestQuDataWithUserId:userid wtid:_curWtid];
         [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic1
                withMethod:SHHttpRequestGet];
     }];
     _expertTableView.header = mjHeader;
-    
-    
+    mjHeader.lastUpdatedTimeLabel.hidden = YES;
     //上拉加载更多
-    _expertTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    MJRefreshAutoNormalFooter *footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         if (self.data == 0) {
             return ;
         }
@@ -161,15 +153,23 @@
         
        ExpertModel *model = [self.data lastObject];
         
+        if (_expertType == nil) {
+            _expertType = @"0";
+        }
+        
         NSDictionary *dic2 = @{
                                @"id":model.zjid,
-                               @"pagesize":@"10"
+                               @"pagesize":@"10",
+                               @"zjlx":_expertType
                                };
-        
-        [self requestData:@"?c=wwzj&m=getzjlist" withDictionary:dic2 withMethod:SHHttpRequestGet];
+        [self requestData:@"?c=wwzj&m=getzjlist4lx" withDictionary:dic2 withMethod:SHHttpRequestGet];
     }];
+    [footer setTitle:@"努力加载中" forState:MJRefreshStateRefreshing];
+    _expertTableView.footer = footer;
 
-    [self.view addSubview:_expertTableView];
+    
+    
+    [self.view insertSubview:_expertTableView atIndex:0];
     
 }
 #pragma mark - clickevent
@@ -177,8 +177,6 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
 
 #pragma mark - 添加子视图 以及添加约束方法
 - (void)initlistTableView{
@@ -190,8 +188,9 @@
     
     __weak AskSpecialistViewController *wself = self;
     _leftList.block = ^(NSString *str,NSString *lxbh){
-        
+        _expertType = lxbh;
         wself.leftLabel.text = str;
+        _identify = str;
         
         [wself addConstraints];
         
@@ -203,7 +202,6 @@
                               };
         
         [wself requestData:@"?c=wwzj&m=getzjlist4lx" withDictionary:dic withMethod:SHHttpRequestGet];
-        
     };
     [self.view addSubview:_leftList];
     //右边
@@ -213,8 +211,8 @@
     
     _rigthList.block =^(NSString *str,NSString *number){
         wself.rigthLabel.text = str;
-        [wself addConstraints];
         
+        [wself addConstraints];
         NSDictionary *dic = @{
                              @"pxlx":number,
                              @"id":@"0",
@@ -224,7 +222,6 @@
         [wself requestData:@"?c=wwzj&m=getzjlist4znpx" withDictionary:dic withMethod:SHHttpRequestGet];
     
     };
-    
     _rigthList.data = _rigthdata;
     
     [self.view addSubview:_rigthList];
@@ -327,6 +324,7 @@
 #pragma mark -
 - (void)leftViewAction{
     
+    
     _leftList.hidden = !_leftList.hidden;
     
     if (_leftList.hidden ==  NO) {
@@ -348,33 +346,56 @@
 #pragma mark----数据处理
 -(void)requestData:(NSString *)url withDictionary:(NSDictionary *)dic withMethod:(NSInteger)type{
     
-    [self.data removeAllObjects];
-
+   // [self.data removeAllObjects];
     __weak AskSpecialistViewController *wself = self;
     
     [[SHHttpClient defaultClient] requestWithMethod:type subUrl:url parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         
+        [wself.expertTableView.header endRefreshing ];
+        [wself.expertTableView.footer endRefreshing];
+        
         NSNumber *code = [responseObject objectForKey:@"code"];
         if ([code integerValue]==1) {//成功
-            NSArray *array = [responseObject objectForKey:@"list"];
+            [wself.view dismissLoading];
             
+            //判断一下是刷新数据，还是加载更多数据
+            if ([[dic objectForKey:@"id"] isEqualToString:@"0"]) {
+                [wself.data removeAllObjects];
+            }
+            NSArray *array = [responseObject objectForKey:@"list"];
+            NSMutableArray *dataArray = [[NSMutableArray alloc] init];
+                       
             for (NSDictionary *dic in array) {
                 ExpertModel *model = [[ExpertModel alloc] initContentWithDic:dic];
-                [self.data addObject:model];
+                [dataArray addObject:model];
             }
+            if (dataArray.count <10) {
+                MJRefreshAutoNormalFooter *footer = (MJRefreshAutoNormalFooter *)wself.expertTableView.footer;
+                [footer setTitle:@"暂无更多" forState:MJRefreshStateIdle];
+          
+            }
+            
+            [self.data addObjectsFromArray:dataArray];
+            
+            
             //回到主线程刷新UI
             dispatch_async(dispatch_get_main_queue(), ^{
-    
+                if (wself.expertTableView == nil) {
+                    [wself initexpertTableView];
+                }
                 wself.expertTableView.data = wself.data.mutableCopy;
-                
+                [wself.expertTableView reloadData];
             });
         }
-    
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-
 }
+
+
+
+
+
 
 
 @end

@@ -27,6 +27,7 @@
     NSUInteger      _totalQuestionCount;
     UIView          *_headView;
     SeachView        *_seachView;
+    UIView          *_defoultView;
 }
 
 @property (nonatomic , strong) UITableView *homeTableView;
@@ -38,6 +39,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.navigationController.navigationBar.hidden = YES;
     [self commonInit];
     [self addSubviews];
@@ -68,9 +70,10 @@
 - (void)addSubviews
 {
     [self headViewInit];
-    _homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeight) style:UITableViewStylePlain];
+    _homeTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight, kScreenSizeWidth, kScreenSizeHeight-kStatusBarHeight-kNavigationBarHeight) style:UITableViewStylePlain];
     _homeTableView.dataSource = self;
     _homeTableView.delegate = self;
+    _homeTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _homeTableView.tableHeaderView = _headView;
     [self.view addSubview:_homeTableView];
     
@@ -82,6 +85,9 @@
     _seachView.imageNmae = @"home_btn_message_nm";
     _seachView.isSearch = NO;
     _seachView.index = 1;
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, kNavigationBarHeight-0.5, kScreenSizeWidth,0.5)];
+    lineView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    [_seachView addSubview:lineView];
     [self.view addSubview:_seachView];
     
     //下拉刷新
@@ -109,6 +115,7 @@
 - (void)headViewInit
 {
     _headView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, CGRectGetWidth(self.view.bounds),255)];
+    
     //_headView.backgroundColor = [UIColor yellowColor];
     CGFloat bannerHeight = 155;
     UIImageView *hImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_headView.bounds), bannerHeight)];
@@ -156,6 +163,8 @@
         make.left.equalTo(askBtn.mas_right).offset(menuSpadding);
         make.size.mas_equalTo(buyBtn);
     }];
+    
+    
 }
 
 //创建一个菜单按钮
@@ -171,9 +180,23 @@
     
     return tmpBtn;
 }
+//创一个视图，在问题数据还未加载出来的时候显示
+- (void)initdefoultView{
+    _defoultView = [[UIView alloc] initWithFrame:CGRectMake(0, 255+kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-255)];
+    _defoultView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, 0.5)];
+    line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
+    [_defoultView addSubview:line];
+    
+    _homeTableView.bounces = NO;
+    
+    [self.view addSubview:_defoultView];
+}
+
 
 - (void)requestHomeDataWithId:(NSString *)lastId
-{
+{    [self initdefoultView];
+    
     NSDictionary *dicPar =@{
                             @"id":lastId,
                             @"pagesize":kPageSize,
@@ -215,6 +238,8 @@
                     QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:info];
                     [_sourceArr addObject:item];
                 }
+                _defoultView.hidden = YES;
+                wself.homeTableView.bounces = YES;
                 [wself.homeTableView reloadData];
             }
         }
@@ -236,6 +261,7 @@
     NSUInteger row = indexPath.row;
     QuestionCellSource *tmpSou = [_sourceArr objectAtIndex:row];
     NSString *wtid = tmpSou.qInfo.qid;
+    
     QuestionDetailViewController *quVC = [[QuestionDetailViewController alloc] initWithWtid:wtid];
     self.tabBarController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:quVC animated:YES];
@@ -282,17 +308,14 @@
 //找配方
 //点击按钮跳转到配方
 - (void)tapMethodBtn:(UIButton *)button{
+    /*
     
     MethodViewController *methodVC = [[MethodViewController alloc] init];
-    
     methodVC.view.backgroundColor = [UIColor whiteColor];
-    
-    
     self.tabBarController.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:methodVC animated:YES];
-    
-    
+    [self.navigationController pushViewController:methodVC animated:YES]
+     ;
+     */
 }
 
 

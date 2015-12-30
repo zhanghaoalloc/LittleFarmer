@@ -12,6 +12,7 @@
 NSString *const kUserName = @"userName";
 NSString *const kUserId = @"userId";
 NSString *const kZJId = @"zjid";
+NSString *const KMobile = @"mobile";
 
 NSString *const kIsLogin = @"isLogin";
 NSString *const kIsSaveNumber = @"isSaveNumber";
@@ -33,7 +34,9 @@ static UserInfo *userInfo;
 
 //编码的时候调用
 - (void)encodeWithCoder:(NSCoder *)aCoder{
+    
     [aCoder encodeObject:self.userName forKey:kUserName];
+    [aCoder encodeObject:self.mobile forKey:KMobile];
     [aCoder encodeObject:self.userId forKey:kUserId];
     [aCoder encodeObject:self.zjid forKey:kZJId];
     [aCoder encodeBool:self.isLogin forKey:kIsLogin];
@@ -48,9 +51,11 @@ static UserInfo *userInfo;
         NSString *userName = [aDecoder decodeObjectForKey:kUserName];
         NSString *userId = [aDecoder decodeObjectForKey:kUserId];
         NSString *zjid = [aDecoder decodeObjectForKey:kZJId];
+        NSString *mobile = [aDecoder decodeObjectForKey:KMobile];
         BOOL isLogin = [aDecoder decodeBoolForKey:kIsLogin];
         BOOL isSaveNumber = [aDecoder decodeBoolForKey:kIsSaveNumber];
         
+        self.mobile = mobile;
         self.userName = userName;
         self.userId = userId;
         self.zjid = zjid;
