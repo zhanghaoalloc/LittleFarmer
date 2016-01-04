@@ -54,18 +54,18 @@
         [message addAttribute:NSForegroundColorAttributeName value:kTextBlackColor range:NSMakeRange(nameLength, message.length-nameLength)];
         _replyContentLabel.attributedText = message;
     }else{
-        NSString *content = [NSString stringWithFormat:@"%@回复%@：%@",model.username,model.rr_name,model.replaytext];
+        NSString *content = [NSString stringWithFormat:@"%@ 回复 %@：%@",model.username,model.rr_name,model.replaytext];
         NSMutableAttributedString *message = [[NSMutableAttributedString alloc]initWithString:content];
         NSUInteger nameLength = model.username.length;
         NSUInteger rr_nameLength = model.rr_name.length;
         
         
-        [message addAttribute:NSForegroundColorAttributeName value:kLightBlueColor range:NSMakeRange(0, nameLength)];
+        [message addAttribute:NSForegroundColorAttributeName value:kLightBlueColor range:NSMakeRange(0, nameLength+1)];
         //回复黑色
-        [message addAttribute:NSForegroundColorAttributeName value:kTextBlackColor range:NSMakeRange(nameLength,2)];
-        [message addAttribute:NSForegroundColorAttributeName value:kLightBlueColor range:NSMakeRange(nameLength+2, rr_nameLength)];
+        [message addAttribute:NSForegroundColorAttributeName value:kTextBlackColor range:NSMakeRange(nameLength+1,2)];
+        [message addAttribute:NSForegroundColorAttributeName value:kLightBlueColor range:NSMakeRange(nameLength+4, rr_nameLength)];
        
-        [message addAttribute:NSForegroundColorAttributeName value:kTextBlackColor range:NSMakeRange(nameLength+2+rr_nameLength, message.length-(nameLength+2+rr_nameLength))];
+        [message addAttribute:NSForegroundColorAttributeName value:kTextBlackColor range:NSMakeRange(nameLength+4+rr_nameLength, message.length-(nameLength+4+rr_nameLength))];
         _replyContentLabel.attributedText = message;
     }
 }

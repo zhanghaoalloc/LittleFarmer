@@ -201,10 +201,6 @@
     
     _favButton.selected = [_ansModel.isdz boolValue];
     
-   
-   
-    
-    
     
     [self addViewConstraints];
 }
@@ -281,6 +277,7 @@
         make.top.equalTo(self).offset(kNameTopPadding);
         make.left.equalTo(_userIcon.mas_right).offset(12);
     }];
+    //专家标志
     [_expertView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_nameLabel.mas_top);
         make.left.equalTo(_nameLabel.mas_right).offset(6);
@@ -336,7 +333,7 @@
     
     //点赞按钮
     [_favButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_timeLabel.mas_bottom);
+        make.bottom.equalTo(_timeLabel.mas_bottom).offset(3);
         //make.left.equalTo(_nameLabel.mas_right).offset(10);
         make.size.mas_equalTo(CGSizeMake(25, 25));
         make.right.equalTo(_favCountLabel.mas_left).offset(-5);
@@ -384,7 +381,6 @@
 - (void)lickeAction:(UIButton *)button{
     NSString *userid = [UserInfo shareUserInfo].userId
     ;
-    
     if (userid == nil) {
 
         LoginViewController *loginVC = [[LoginViewController alloc] init];
@@ -395,14 +391,12 @@
         };
     }else {
         if (button.selected == YES) {//已点赞，取消点赞
-            [self _requestData:@"?c=tw&m=canceluserdzhf" type:NO];
+            [self _requestData:@"?c=tw&m=saveuserdzhf" type:NO];
         }else{//没有点赞，点赞
-
-            [self _requestData:@"?c=tw&m=canceluserdzhf" type:YES];
+            [self _requestData:@"?c=tw&m=saveuserdzhf" type:YES];
         }
         
     }
-
 }
 //视图的触摸事件
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

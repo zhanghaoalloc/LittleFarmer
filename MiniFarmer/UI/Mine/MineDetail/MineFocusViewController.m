@@ -36,9 +36,18 @@
         make.left.equalTo(self.view.mas_left);
         make.top.equalTo(self.view.mas_top).offset(self.yDispaceToTop);
         make.size.mas_equalTo(CGSizeMake(kScreenSizeWidth, 47));
+        make.centerX.equalTo(self.view.mas_centerX);
     }];
     
     [self addVC];
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+   
 
 }
 
@@ -48,13 +57,16 @@
     [self.focusScrollview addSubview:expertVC.view];
     [self addChildViewController:expertVC];
     expertVC.view.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop);
-//    self.expertVC.tableView.frame = self.expertVC.view.bounds;
+    self.expertVC.tableView.frame = self.expertVC.view.bounds;
     
+    /*
     MineFocusFriendViewController *friendVC = [[MineFocusFriendViewController alloc] init];
     [self.focusScrollview addSubview:friendVC.view];
     [self addChildViewController:friendVC];
     friendVC.view.frame = CGRectMake(kScreenSizeWidth,0, kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop);
+     */
     [expertVC reloadData];
+     
 }
 
 
@@ -63,7 +75,7 @@
     if (!_focusScrollview)
     {
         _focusScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.yDispaceToTop + 47, kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop - 47)];
-        _focusScrollview.contentSize = CGSizeMake(2 * kScreenSizeWidth, CGRectGetHeight(_focusScrollview.frame));
+        _focusScrollview.contentSize = CGSizeMake(kScreenSizeWidth, CGRectGetHeight(_focusScrollview.frame));
     }
     return _focusScrollview;
 }
@@ -71,7 +83,7 @@
 
 - (void)setupSegmentItem
 {
-    NSArray *titles = @[@"专家",@"农友"];
+    NSArray *titles = @[@"专家"];
     
     for (NSString *title in titles) {
         YHSegmentItem *item = [[YHSegmentItem alloc] init];
@@ -96,9 +108,9 @@
     {
         _segmentView = [[YHSegmentView alloc] init];
         _segmentView.backgroundColor = [UIColor whiteColor];
-        _segmentView.itemToLeft =(kScreenSizeWidth-32*2)/3 ;
+        _segmentView.itemToLeft =(kScreenSizeWidth-50)/2;
         _segmentView.directionLineHeigth = 1;
-        _segmentView.itemsDispace =(kScreenSizeWidth-32*2)/3 ;
+       // _segmentView.itemsDispace = ;
         _segmentView.textSelectedColor = [UIColor colorWithHexString:@"#3872f4"];
         _segmentView.textNormalColor = [UIColor colorWithHexString:@"#666666"];
         _segmentView.directionLineColor = [UIColor colorWithHexString:@"#3872f4"];

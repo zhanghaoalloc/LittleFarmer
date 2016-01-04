@@ -61,7 +61,6 @@
     
     ExpertDetailViewController *expertVC = [[ExpertDetailViewController alloc] init];
     ExpertModel *model = self.data[indexPath.row];
-    
     expertVC.zjuserid = model.userid;
     expertVC.expertmodel = model;
     

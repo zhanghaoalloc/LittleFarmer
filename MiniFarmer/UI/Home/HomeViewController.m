@@ -27,7 +27,7 @@
     NSUInteger      _totalQuestionCount;
     UIView          *_headView;
     SeachView        *_seachView;
-    UIView          *_defoultView;
+    
 }
 
 @property (nonatomic , strong) UITableView *homeTableView;
@@ -114,10 +114,10 @@
 
 - (void)headViewInit
 {
-    _headView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, CGRectGetWidth(self.view.bounds),255)];
+    _headView = [[UIView alloc] initWithFrame:CGRectMake(0, kStatusBarHeight+kNavigationBarHeight, CGRectGetWidth(self.view.bounds),225)];
     
     //_headView.backgroundColor = [UIColor yellowColor];
-    CGFloat bannerHeight = 155;
+    CGFloat bannerHeight = 125;
     UIImageView *hImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(_headView.bounds), bannerHeight)];
     [_headView addSubview:hImage];
     hImage.image = [UIImage imageNamed:@"home_banner.jpg"];
@@ -181,6 +181,7 @@
     return tmpBtn;
 }
 //创一个视图，在问题数据还未加载出来的时候显示
+/*
 - (void)initdefoultView{
     _defoultView = [[UIView alloc] initWithFrame:CGRectMake(0, 255+kNavigationBarHeight+kStatusBarHeight, kScreenSizeWidth, kScreenSizeHeight-255)];
     _defoultView.backgroundColor = [UIColor colorWithHexString:@"#ffffff"];
@@ -192,11 +193,11 @@
     
     [self.view addSubview:_defoultView];
 }
+ */
 
 
 - (void)requestHomeDataWithId:(NSString *)lastId
-{    [self initdefoultView];
-    
+{
     NSDictionary *dicPar =@{
                             @"id":lastId,
                             @"pagesize":kPageSize,
@@ -238,7 +239,7 @@
                     QuestionCellSource *item = [[QuestionCellSource alloc] initWithQuestionInfo:info];
                     [_sourceArr addObject:item];
                 }
-                _defoultView.hidden = YES;
+               
                 wself.homeTableView.bounces = YES;
                 [wself.homeTableView reloadData];
             }
@@ -309,7 +310,6 @@
 //点击按钮跳转到配方
 - (void)tapMethodBtn:(UIButton *)button{
     /*
-    
     MethodViewController *methodVC = [[MethodViewController alloc] init];
     methodVC.view.backgroundColor = [UIColor whiteColor];
     self.tabBarController.hidesBottomBarWhenPushed = YES;

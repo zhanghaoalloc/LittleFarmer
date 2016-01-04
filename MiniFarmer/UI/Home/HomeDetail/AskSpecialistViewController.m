@@ -33,12 +33,8 @@
 
 @property(nonatomic,strong)NSArray *rigthdata;
 @property(nonatomic,strong)NSArray *leftdata;
-
 @property(nonatomic,strong)ExpertListTableView *expertTableView;
-
 @property(nonatomic,strong)NSMutableArray *data;
-
-
 
 
 @end
@@ -59,28 +55,17 @@
     [self setNavigationBarIsHidden:NO];
     
     _data = [NSMutableArray array];
-    
-    
-   
     //初始化导航栏
     [self setNavigation];
-   
-    
     //获取列表的数据
     [self loadListData];
     //创建专家信息的tableView
-
-    
     [self initsubviews];
-    
-    
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
-    
-    
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
 }
 - (void)setNavigation{
     //1.搜索栏
@@ -113,7 +98,7 @@
         wself.leftdata = [responseObject objectForKey:@"list"];
         dispatch_async(dispatch_get_main_queue(), ^{
             //回到主线程刷新UI
-           // [wself.leftList reloadData];
+           //[wself.leftList reloadData];
             [wself initlistTableView];
             NSDictionary *dic = @{
                                   @"id":@"0",
@@ -131,7 +116,7 @@
 
     _expertTableView = [[ExpertListTableView alloc] initWithFrame:CGRectMake(0,kNavigationBarHeight+kStatusBarHeight+44, kScreenSizeWidth, kScreenSizeHeight-(kNavigationBarHeight+kStatusBarHeight+44)) style:UITableViewStylePlain];
         //下拉刷新
-    MJRefreshNormalHeader *mjHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+     MJRefreshNormalHeader *mjHeader = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         NSString *lastid = @"0";
         NSDictionary *dic1 = @{
                               @"id":lastid,
@@ -167,8 +152,6 @@
     [footer setTitle:@"努力加载中" forState:MJRefreshStateRefreshing];
     _expertTableView.footer = footer;
 
-    
-    
     [self.view insertSubview:_expertTableView atIndex:0];
     
 }
@@ -241,11 +224,18 @@
         _leftLabel.text = @"专家类型";
         _leftLabel.textColor = [UIColor colorWithHexString:@"#33333"];
         _leftLabel.font = kTextFont16;
+        
         [_leftView addSubview:_leftLabel];
         _leftView.backgroundColor = [UIColor colorWithHexString:@"#f8f8f8"];
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
-        line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [_leftView addSubview:line];
+        //上边的分界线
+        UIView *topline = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
+        topline.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+        [_leftView addSubview:topline];
+        //下边的分界线
+        UIView *bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, kScreenSizeWidth/2, 0.5)];
+        bottomline.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+        [_leftView addSubview:bottomline];
+        
         //添加点击事件
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(leftViewAction)];
         [_leftView addGestureRecognizer:tap];
@@ -268,10 +258,15 @@
         [_rigthView addSubview:_rigthLabel];
         
         _rigthView.backgroundColor = [UIColor colorWithHexString:@"f8f8f8"];
+        //上边的分界线
+        UIView *topline = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
+        topline.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+        [_rigthView addSubview:topline];
+        //下边的分界线
+        UIView *bottomline = [[UIView alloc] initWithFrame:CGRectMake(0, 43.5, kScreenSizeWidth/2, 0.5)];
+        bottomline.backgroundColor = [UIColor colorWithHexString:@"#dddddd"];
+        [_rigthView addSubview:bottomline];
         
-        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth/2, 0.5)];
-        line.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
-        [_rigthView addSubview:line];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(rigthViewAction)];
         [_rigthView addGestureRecognizer:tap];
         

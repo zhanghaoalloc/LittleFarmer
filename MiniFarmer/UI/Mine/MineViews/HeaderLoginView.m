@@ -56,17 +56,16 @@
     [self addSubview:self.line1];
     [self addSubview:self.line2];
 
-    [self.headerIconBT setBackgroundColor:[UIColor redColor]];
-    
     [self.headerImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self);
     }];
     
     [self.headerIconBT mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.headerImageView.mas_top).offset(25);
+        make.top.equalTo(self.headerImageView.mas_top).offset(50);
         make.centerX.equalTo(self.headerImageView);
         make.size.mas_equalTo(CGSizeMake(76, 76));
     }];
+    
     
     [self.speiclistTypeBT mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.headerIconBT.mas_centerX);
@@ -148,7 +147,7 @@
         _headerIconBT.layer.cornerRadius = 38;
         _headerIconBT.layer.masksToBounds = YES;
         [_headerIconBT addTarget:self action:@selector(tapHeaderLoginPhotoBT:) forControlEvents:UIControlEventTouchUpInside];
-//        _headerIconBT.layer.borderWidth = 3;
+
     }
     return _headerIconBT;
 }

@@ -402,6 +402,7 @@ static CGFloat CELL_LINE_MARGIN = 2;
 {
     MTAssetsViewController *vc = [[MTAssetsViewController alloc] init];
     vc.assetsGroup = [self.groups objectAtIndex:indexPath.row];
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

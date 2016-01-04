@@ -31,6 +31,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f8f8f8"];
     
+    [self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
     [self setNavigationBarIsHidden:YES];
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(dismissAction)];
     [self setBarRightDefaultButtonWithTarget:self action:@selector(registAction)];
@@ -255,7 +256,7 @@
     if (!_loginButton)
     {
         _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _loginButton.backgroundColor = RGBACOLOR(234, 85, 6, 1.0f);
+        _loginButton.backgroundColor = [UIColor colorWithHexString:@"#488bff"];
         [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
         [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _loginButton.titleLabel.font = [UIFont systemFontOfSize:16];

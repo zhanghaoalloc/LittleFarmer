@@ -8,6 +8,8 @@
 
 #import "MineAskQuestionImagesCell.h"
 #import "MyAskQuestionModel.h"
+#import "ZLPhoto.h"
+#import "UIViewAdditions.h"
 
 
 #define kCountOfRow 3
@@ -30,6 +32,8 @@
 @property (nonatomic, strong) NSMutableArray *imageButtons;
 
 @property (nonatomic, strong) UIButton *imagesCountBT;
+
+@property (nonatomic ,strong) NSMutableArray *photos;
 
 @end
 
@@ -140,6 +144,7 @@
     for (int i = 0; i<self.imageButtons.count; i++)
     {
         UIButton *btn = [self.imageButtons objectAtIndex:i];
+        btn.tag = i+1;
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.contentLabel.mas_bottom).offset(14);
             make.left.equalTo(self.backContentView).offset(12 + i *(dwidth + kItemsDispace));
@@ -158,11 +163,50 @@
 //
     
 }
-
+#pragma mark---图片浏览
+//图片按钮的点击事件
 - (void)tapBtn:(UIButton *)btn
-{
+{       //图片浏览器
+    ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+    // pickerBrowser.delegate = self;
+    // 数据源可以不传，传photos数组 photos<里面是ZLPhotoPickerBrowserPhoto>
+    pickerBrowser.photos = self.photos;
+    // 是否可以删除照片
+    pickerBrowser.editing = NO;
+    // 当前选中的值
+    pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:btn.tag-1 inSection:0];
+    // 展示控制器
+    [pickerBrowser showPickerVc:self.viewController];
     
 }
+- (NSMutableArray *)photos:(NSArray *)array{
+    _photos = nil;
+    if (!_photos) {
+        _photos = [NSMutableArray array];
+        
+        for (NSString *str in array) {
+            //判断路径是否是拼接的
+            NSURL *iconURL = [NSURL URLWithString:[APPHelper safeString:str]];
+            if([str rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+                //有前缀
+                iconURL = [NSURL URLWithString:str];
+            }else{
+                
+                NSString *str1 = [kPictureURL stringByAppendingString:str];
+                iconURL =[NSURL URLWithString:str1];
+            }
+            ZLPhotoPickerBrowserPhoto *photo = [[ZLPhotoPickerBrowserPhoto alloc] init]
+            ;
+            photo.photoURL = iconURL;
+            [_photos addObject:photo];
+            
+        }
+    }
+    
+    return _photos;
+}
+
+
 
 + (CGFloat)cellHeightWihtModel:(id)model
 {
@@ -182,12 +226,6 @@
 - (void)refreshDataWithModel:(id)model
 {
     MyAskQuestionList *list = (MyAskQuestionList *)model;
-//    self.contentLabel.text = @"最近发现家里的葡萄叶子都黄了，刚长出来的果实也蔫了，不知道是什么情况，有专家能帮我看看吗？非常急，先谢谢，！";
-//    [self.contentLabel setTextLineSpace:8 font:kTextFont(16)];
-//    self.messageCountLabel.text = @"20";
-//    self.timeLabel.text = @"20天前";
-//    [self.imagesCountBT setTitle:@"共6张" forState:UIControlStateNormal];
-//    return;
     
     [self.contentLabel setText:list.wtms];
     [self.messageCountLabel setText:list.hdcs];
@@ -196,6 +234,8 @@
     NSString *title = [NSString stringWithFormat:@"共%ld张",list.images.count];
     
     [self.imagesCountBT setTitle:title forState:UIControlStateNormal];
+    
+    [self photos:list.images];
     
     [self setImagesToBtnWithModel:list];
     
@@ -221,6 +261,7 @@
     for (NSInteger j = (self.imageButtons.count - 1); j >= list.images.count; j--)
     {
         UIButton *btn = [self.imageButtons objectAtIndex:j];
+        
         [btn setBackgroundImage:nil forState:UIControlStateNormal];
         [btn setEnabled:NO];
     }

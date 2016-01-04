@@ -12,19 +12,14 @@
 
 //服务器地址及加密密钥
 //正式地址
-
 #if 1
 #define kCommServerUrl  @"http://www.enbs.com.cn/apps_test/index.php"
 #define kCommApiKey     @"26f9a2878862d3bb27165020c6b4e7f0"
 
-
- 
 #else
 //测试环境
 #define kCommServerUrl  @"http://www.enbs.com.cn/apps_2/index.php"
 #define kCommApiKey     @"457077ad3a4e86ff53fc5555"
-
-
 
 
 #endif
@@ -149,8 +144,8 @@
 #define kAppRedirectURI_sina             @"http://m.letv.com"
 
 //QQ
-#define kQQAppID @"1104816396"
-#define kQQAppKey @"c1w5VhUl8t8xN6PO"
+#define kQQAppID @"1104823270"
+#define kQQAppKey @"SPVAaFVN7wMHhFji"
 
 //微信
 #define kAppRedirectURI_weixin    @"your app_rederict_uri"

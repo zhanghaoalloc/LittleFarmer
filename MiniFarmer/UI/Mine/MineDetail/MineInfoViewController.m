@@ -29,10 +29,10 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+    //[self.view setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(back:)];
-    [self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
+    //[self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
     
     if (self.type == YES) {
         
@@ -330,15 +330,16 @@
 
 }
 - (void)requesetData:(NSString *)url withDic:(NSDictionary *)dic{
-    
+    [self.view showLoadingWihtText:@"加载中"];
     __weak MineInfoViewController *wself = self;
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:url parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
+         [self.view dismissLoading];
         NSString *code = [responseObject objectForKey:@"code"];
         
         if ([code integerValue]== 1) {
             
             if (wself.type == YES) {
+               
                 NSDictionary *dic = [responseObject objectForKey:@"zj"];
                 
                 wself.model = [[ExpertModel alloc] initContentWithDic:dic];
@@ -359,8 +360,10 @@
                 });
             }
         }
-        
+    
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [wself.view dismissLoading];
+        [wself.view showWeakPromptViewWithMessage:@"加载失败"];
         
     }];
 

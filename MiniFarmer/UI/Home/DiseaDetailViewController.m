@@ -52,10 +52,6 @@
     [super viewWillAppear:animated];
     AppDelegate *appDele = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [appDele hideTabbar];
-
-
-
-    
 }
 - (void)_createSubView{
     

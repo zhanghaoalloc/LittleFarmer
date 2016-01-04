@@ -21,10 +21,9 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TON-P6-eSr">
-                    <rect key="frame" x="53" y="48" width="120" height="38"/>
+                    <rect key="frame" x="30" y="48" width="127" height="38"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="120" id="3UA-Ma-ufq"/>
                         <constraint firstAttribute="height" constant="38" id="hS7-io-hhN"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -39,10 +38,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYC-XH-aqW">
-                    <rect key="frame" x="202" y="48" width="130" height="38"/>
+                    <rect key="frame" x="218" y="48" width="127" height="38"/>
                     <animations/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="130" id="X76-FL-0zp"/>
                         <constraint firstAttribute="height" constant="38" id="eIc-aH-Wyh"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -59,8 +57,10 @@
             <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="rYC-XH-aqW" firstAttribute="leading" secondItem="Qon-is-iA4" secondAttribute="trailing" constant="14" id="apI-gq-bxG"/>
-                <constraint firstItem="Qon-is-iA4" firstAttribute="leading" secondItem="TON-P6-eSr" secondAttribute="trailing" constant="14" id="gDz-wH-wSe"/>
+                <constraint firstItem="TON-P6-eSr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="AJz-k0-WWY"/>
+                <constraint firstAttribute="trailing" secondItem="rYC-XH-aqW" secondAttribute="trailing" constant="30" id="EGT-DB-UWr"/>
+                <constraint firstItem="rYC-XH-aqW" firstAttribute="leading" secondItem="Qon-is-iA4" secondAttribute="trailing" constant="30" id="apI-gq-bxG"/>
+                <constraint firstItem="Qon-is-iA4" firstAttribute="leading" secondItem="TON-P6-eSr" secondAttribute="trailing" constant="30" id="gDz-wH-wSe"/>
                 <constraint firstItem="Qon-is-iA4" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="kV5-Hg-7P5"/>
                 <constraint firstItem="rYC-XH-aqW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="pzz-zQ-oYR"/>
                 <constraint firstItem="TON-P6-eSr" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="uYc-kV-b9k"/>
@@ -72,7 +72,7 @@
                 <outlet property="mineLineWidth" destination="u6U-Ns-aTm" id="Feh-gy-dBG"/>
                 <outlet property="mineSaveBT" destination="TON-P6-eSr" id="euK-Yl-vHG"/>
             </connections>
-            <point key="canvasLocation" x="339.5" y="137"/>
+            <point key="canvasLocation" x="330.5" y="140"/>
         </view>
     </objects>
     <resources>

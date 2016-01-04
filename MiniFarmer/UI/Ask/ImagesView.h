@@ -14,7 +14,6 @@
 @optional
 - (void)imagesView:(ImagesView *)imagesView selectedItem:(NSInteger)selectedItem;
 
-
 @end
 
 @interface ImagesView : UIView<UIActionSheetDelegate>
@@ -22,4 +21,9 @@
 @property (nonatomic, assign)id<ImagesViewDelegate> delegate;
 
 - (void)reloadDataWithImagesInfo:(NSArray *)images;
+
+//清空容器
+- (void)clearPicture;
+
+
 @end

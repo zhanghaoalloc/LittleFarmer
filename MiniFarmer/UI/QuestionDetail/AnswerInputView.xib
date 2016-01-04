@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1Qv-Ac-QQG" customClass="GCPlaceholderTextView">
-                    <rect key="frame" x="30" y="5" width="218" height="31"/>
+                    <rect key="frame" x="12" y="5" width="244" height="31"/>
                     <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,11 +39,11 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="EyY-lA-dna" secondAttribute="bottom" constant="6" id="7bv-QC-o6x"/>
-                <constraint firstItem="1Qv-Ac-QQG" firstAttribute="leading" secondItem="WQk-CY-aMJ" secondAttribute="leading" constant="30" id="7xt-zQ-tFo"/>
+                <constraint firstItem="1Qv-Ac-QQG" firstAttribute="leading" secondItem="WQk-CY-aMJ" secondAttribute="leading" constant="12" id="7xt-zQ-tFo"/>
                 <constraint firstAttribute="bottom" secondItem="1Qv-Ac-QQG" secondAttribute="bottom" constant="8" id="Gd2-hw-0rb"/>
                 <constraint firstItem="EyY-lA-dna" firstAttribute="top" secondItem="WQk-CY-aMJ" secondAttribute="top" constant="6" id="LT0-Us-vFf"/>
                 <constraint firstItem="tIq-hj-7Q3" firstAttribute="leading" secondItem="WQk-CY-aMJ" secondAttribute="leading" id="M5g-iu-MvD"/>
-                <constraint firstItem="EyY-lA-dna" firstAttribute="leading" secondItem="1Qv-Ac-QQG" secondAttribute="trailing" constant="20" id="PPY-AV-ZtR"/>
+                <constraint firstItem="EyY-lA-dna" firstAttribute="leading" secondItem="1Qv-Ac-QQG" secondAttribute="trailing" constant="12" id="PPY-AV-ZtR"/>
                 <constraint firstItem="1Qv-Ac-QQG" firstAttribute="top" secondItem="WQk-CY-aMJ" secondAttribute="top" constant="5" id="RlW-vK-jwc"/>
                 <constraint firstAttribute="trailing" secondItem="EyY-lA-dna" secondAttribute="trailing" constant="20" id="ULd-XW-RmT"/>
                 <constraint firstAttribute="trailing" secondItem="tIq-hj-7Q3" secondAttribute="trailing" id="eTP-kP-9Td"/>

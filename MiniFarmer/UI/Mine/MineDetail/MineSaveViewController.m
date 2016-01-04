@@ -10,8 +10,9 @@
 #import "YHSegmentView.h"
 #import "MineSaveQuestionViewController.h"
 #import "MineSaveTechnoliyViewController.h"
+#import "UIViewAdditions.h"
 
-@interface MineSaveViewController ()<YHSegmentViewDelegate>
+@interface MineSaveViewController ()<YHSegmentViewDelegate,UIScrollViewDelegate>
 
 @property (nonatomic, strong) YHSegmentView *segmentView;
 @property (nonatomic, strong) UIScrollView *saveScrollview;
@@ -69,6 +70,7 @@
         _saveScrollview = [[UIScrollView alloc] initWithFrame:CGRectMake(0, self.yDispaceToTop + 47, kScreenSizeWidth, kScreenSizeHeight - self.yDispaceToTop - 47)];
         _saveScrollview.contentSize = CGSizeMake(2 * kScreenSizeWidth, CGRectGetHeight(_saveScrollview.frame));
         _saveScrollview.bounces = NO;
+        _saveScrollview.delegate = self;
     }
     return _saveScrollview;
 }
@@ -86,7 +88,11 @@
     }
 }
 
-
+#pragma mark UIScrollView协议方法
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    
+   [self.segmentView setOffsetWithScrollViewWidth:_saveScrollview.width scrollViewOffset:scrollView.contentOffset.x];
+}
 #pragma mark - YHSegmentViewDelegate
 - (void)segmentView:(YHSegmentView *)segmentView didSelectedAtIndex:(NSInteger)index
 {
@@ -113,4 +119,7 @@
     }
     return _segmentView;
 }
+
+
+
 @end

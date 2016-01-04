@@ -9,9 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "QuestionInfo.h"
 #import "QuestionCellSource.h"
+#import "ZLPhoto.h"
 
 @interface QuestionCell : UITableViewCell
 
 - (void)refreshWithQuestionCellSource:(QuestionCellSource *)source;
+
+@property(nonatomic,strong)ZLPhotoPickerBrowserViewController *pickerBrowser;
+
+
+
+
+
 
 @end

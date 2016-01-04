@@ -36,8 +36,14 @@
 {
     [super viewDidLoad];
     [self setBarTitle:@"填写邀请码"];
-    [self.view setBackgroundColor:[UIColor colorWithHexString:@"f8f8f8"]];
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#ffffff"]];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     [self configureSubviews];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -57,10 +63,10 @@
 #define kBTTitleColor [UIColor colorWithHexString:@"333333"]
 #define kLabelColor [UIColor colorWithHexString:@"666666"]
 #define kLineDispace 8
-    self.invitedTF.textColor = [UIColor colorWithHexString:@"a3a3a3"];
+    self.invitedTF.textColor = [UIColor colorWithHexString:@"#333333"];
     [self.invitedBT setBackgroundColor:RGBCOLOR(17, 132, 255)];
     self.invitedBT.layer.cornerRadius = 7;
-    [self.invitedLine setBackgroundColor:[UIColor colorWithHexString:@"dddddd"]];
+    [self.invitedLine setBackgroundColor:[UIColor colorWithHexString:@"#dddddd"]];
     self.invitedLineHeight.constant = kLineWidth;
     [self.wathInvitedBT setTitleColor:kBTTitleColor forState:UIControlStateNormal];
     [self.howUseInvitedCodeBT setTitleColor:kBTTitleColor forState:UIControlStateNormal];
@@ -93,11 +99,18 @@
     NSDictionary *dic = @{@"userid":[[MiniAppEngine shareMiniAppEngine] userId],@"username":[[MiniAppEngine shareMiniAppEngine] userLoginNumber],@"icode":self.invitedTF.text};
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:@"?c=user&m=save_vicode" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         InvitedCode *invitedCode = [[InvitedCode alloc] initWithDictionary:responseObject error:nil];
+        [self.view showWeakPromptViewWithMessage:invitedCode.msg];
+        
         if (invitedCode.code.intValue == RequestResultStateSuccess)
         {
             [self.view showWeakPromptViewWithMessage:invitedCode.msg];
+            
             [self.navigationController popViewControllerAnimated:YES];
-
+            //发出通知，邀请码填写成功
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"invitedCodeSuccess" object:self userInfo:nil];
+        }else{
+        
+            
         }
        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

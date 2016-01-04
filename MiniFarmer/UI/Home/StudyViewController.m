@@ -55,14 +55,12 @@
     //self.view.backgroundColor = ;
     //配置导航栏和状态栏的底色
     [self initNavigationbgView:[UIColor colorWithHexString:@"#ffffff"]];
-    
-    
-
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
-    
-   
+    [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+
 }
 - (void)setNavigation{
     
@@ -193,7 +191,6 @@
 {
     [self.segmentView setOffsetWithScrollViewWidth:scrollView.width scrollViewOffset:scrollView.contentOffset.x];
     
-   
     
 }
 #pragma mark  ---- UISegementdelegate协议

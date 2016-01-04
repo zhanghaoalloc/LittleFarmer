@@ -19,6 +19,10 @@
 
 
 @implementation HeaderNotLoginView
+- (void)awakeFromNib{
+    [_registerBT setTitle:@"注册" forState:UIControlStateNormal];
+    _headerImageView.backgroundColor = [UIColor colorWithHexString:@"#e4e4e4"];
+}
 - (IBAction)tapRegisterBT:(id)sender {
     self.tapRegistBT();
 }

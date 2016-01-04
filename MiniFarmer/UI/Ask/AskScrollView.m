@@ -9,6 +9,7 @@
 #import "AskScrollView.h"
 #import "ZoomScrollView.h"
 
+
 @interface AskScrollView ()
 
 ///当前选中的selectedindex
@@ -47,9 +48,12 @@
     CGFloat dheigth = kScreenSizeHeight;
     for (int i = 0; i<infos.count; i++)
     {
+        
         ZoomScrollView *zoom = [[ZoomScrollView alloc] initWithFrame:CGRectMake(dwidth * i,(CGRectGetHeight(self.frame) - dheigth)/2, dwidth, dheigth)];
-        MTPickerInfo *info = [infos objectAtIndex:i];
-        [zoom setImage:info.image];
+        zoom.backgroundColor = [UIColor blackColor];
+        
+        id info = [infos objectAtIndex:i];
+        
         [self addSubview:zoom];
     }
 }

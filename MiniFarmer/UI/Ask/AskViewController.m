@@ -19,11 +19,17 @@
 #import "AskScrollView.h"
 #import "UIScrollView+LGKeyboard.h"
 
+
+#import "ZLPhoto.h"
+#import "ZLPhotoAssets.h"
+
+
+
 #define kPlaceHolderText @"请描述作物的异常情况和您的问题, 越详细专家越好给您准确的回答哟! (必填)"
 #define kCountOfNumber 3
 #define kImagesCount 6
 
-@interface AskViewController ()<XDPhotoSelectDelegate,MTAssetsPickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,ImagesViewDelegate>
+@interface AskViewController ()<XDPhotoSelectDelegate,MTAssetsPickerControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,ImagesViewDelegate,ZLPhotoPickerViewControllerDelegate,ZLPhotoPickerBrowserViewControllerDataSource,ZLPhotoPickerBrowserViewControllerDelegate>
 
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) GCPlaceholderTextView *askTextView;
@@ -40,6 +46,11 @@
 
 /// 存放的对象是 MTPickerInfo 类型
 @property (nonatomic, strong) NSMutableArray *arrayPhotos;
+
+//存放的对象是 assets类型的
+@property (nonatomic ,strong)NSMutableArray *assets;
+
+
 @end
 
 @implementation AskViewController{
@@ -47,31 +58,42 @@
     NSInteger index;
 
 }
-
+- (NSMutableArray *)assetsArray{
+    
+    if(!_assets){
+        _assets = [NSMutableArray array];
+        
+    }
+    return _assets;
+        
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.assets = [self assetsArray];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.arrayPhotos = [NSMutableArray array];
     self.edgesForExtendedLayout = UIRectEdgeAll;
     
-    self.photoSelect = [[XDPhotoSelect alloc] initWithController:self delegate:self];
-    
-    [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
-    
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(dismissAskVC:)];
     [self setBarTitle:@"我的问题"];
-    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"a3a3a3"] heigth:kLineWidth];
+    [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"#a3a3a3"] heigth:kLineWidth];
+    [self initNavigationbgView:[UIColor colorWithHexString:@"#ffffff"]];
     [self addSubviews];
     [self addGesture];
     
-    
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
+    
+    //[self addSubviews];
     [self setNavigationBarIsHidden:YES];
+    
     [self.askScrollview enableAvoidKeyboard];
 }
 
@@ -83,7 +105,12 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+   
+
+    
     [self setNavigationBarIsHidden:NO];
+    [self.view setNeedsDisplay];
+    
     [self.askScrollview disableAvoidKeyboard];
 }
 - (void)didReceiveMemoryWarning
@@ -94,9 +121,17 @@
 
 #pragma mark - event
 //切换控制器到主页
-- (void)dismissAskVC:(UIButton *)btn
-{   [self.navigationController popViewControllerAnimated:YES];
-    [self changeSelectedVC:0];
+- (void)dismissAskVC:(UIButton *)btn{
+    
+    
+    //[self.imagesView clearPicture];
+   
+   // UIView *view = self.view;
+      
+    [self.navigationController popViewControllerAnimated:YES];
+    
+   // [self changeSelectedVC:0];
+    
 }
 
 - (void)sendAsk:(UIButton *)btn
@@ -133,11 +168,9 @@
                            (NSDictionary *)responseObject error:nil];
         NSNumber *code = [responseObject objectForKey:@"code"];
         int  i = [code intValue];
-        
         if (i == 1) {
-            
             [wself sendPicture];
-           
+        
         }
         else
         {
@@ -151,19 +184,17 @@
 
    }
 - (void)sendPicture{
-    
+    UIImage *image ;
     for (int i = 0;i<self.arrayPhotos.count-1; i++) {
-        
-        MTPickerInfo *info = self.arrayPhotos[i];
-        
-        UIImage *image =info.image;
-        
+        ZLPhotoAssets *info = self.arrayPhotos[i];
+        if ([info isKindOfClass:[UIImage class]]) {
+            image = (UIImage *)info;
+        }else{
+            image = info.originImage;
+        }
         NSData *imgData = UIImageJPEGRepresentation(image, 0.5);
-        
         NSString  *wtid = _sendModel.wtid;
-        
         NSString *number = [NSString  stringWithFormat:@"%d",i+1];
-        
         NSDictionary * dic =@{
                               @"twid":wtid,
                               @"zpxh":number                             };
@@ -185,32 +216,8 @@
             }
         }];
     }
-    
 }
-//此方法用于统计图片是否上传成功
-#pragma mark -
-- (void)mt_AssetsPickerController:(MTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets
-{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.arrayPhotos removeAllObjects];
-        
-        for (ALAsset *asset in assets) {
-            MTPickerInfo *pictureInfo =[MTPickerInfo new];
-            pictureInfo.image =[UIImage imageWithCGImage:asset.thumbnail];
-            pictureInfo.photoType = album;
-            [pictureInfo bind:asset];
-            [self.arrayPhotos insertObject:pictureInfo atIndex:0];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //TODO: 更新UI
-            //显示图片
-            [self reloadImagesView];
-        });
-    });
-    
-}
+//此方法用于统计图片是否选择成功
 #pragma mark - subviews
 - (void)addSubviews
 {
@@ -247,12 +254,8 @@
     subRect.size.width = kScreenSizeWidth - 2 * 12;
     self.imagesView.frame = subRect;
     
-    
     [self reloadImagesView];
-    
-    
 }
-
 - (ImagesView *)imagesView
 {
     if (!_imagesView)
@@ -296,9 +299,9 @@
     if (!_askTextView)
     {
         _askTextView = [[GCPlaceholderTextView alloc] initWithFrame:CGRectZero];
-        _askTextView.textColor = [UIColor colorWithHexString:@"a3a3a3"];
+        _askTextView.textColor = [UIColor colorWithHexString:@"#333333"];
         _askTextView.font = kTextFont(14);
-        _askTextView.placeholderColor = _askTextView.textColor;
+        _askTextView.placeholderColor =[UIColor colorWithHexString:@"#a3a3a3"];
         _askTextView.delegate = self;
         _askTextView.placeholder = kPlaceHolderText;
         
@@ -367,34 +370,88 @@
 //添加
 - (void)imagesView:(ImagesView *)imagesView selectedItem:(NSInteger)selectedItem
 {
-    MTPickerInfo *info = [self.arrayPhotos objectAtIndex:selectedItem];
-
-    if (info.isSelectImage)
-    {//添加图片 进入相册进行选择
-       // [self.photoSelect startPhotoSelect:XDPhotoSelectFromLibrary];
-        /// 另一套逻辑 mTime
-        MTAssetsPickerController *picker = [[MTAssetsPickerController alloc] init];
-        picker.assetsFilter = [ALAssetsFilter allPhotos];
-        picker.delegate = self;
-        [MTAssetsPickerController selections:self.arrayPhotos withMaximNum:6];
+    id info = [self.arrayPhotos objectAtIndex:selectedItem];
     
-        [self presentViewController:picker animated:YES completion:nil];
+    if ([info isKindOfClass:[MTPickerInfo class]])
+    {//创建控制器
+        ZLPhotoPickerViewController *pickerVC = [[ZLPhotoPickerViewController alloc] init];
+      //  pickerVC.selectPickers = [self assets];
+        pickerVC.topShowPhotoPicker = YES;
+        pickerVC.status = PickerViewShowStatusCameraRoll ;
+        pickerVC.maxCount = 6-self.assets.count;
+        pickerVC.delegate = self;
+        //pickerVC.editing = YES;
+        [pickerVC showPickerVc:self];
     }
     else
     {
-        //做别的处理 进入轮播啊 这样的
-        AskScrollView *askScrollview = [[AskScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeHeight) images:[self newImagesWithImages:self.arrayPhotos] selectedIndex:selectedItem];
-
-        
-        [self.view addSubview:askScrollview];
-    }
+        //[self.assets removeLastObject];
+        ZLPhotoPickerBrowserViewController *browserVc = [[ZLPhotoPickerBrowserViewController alloc] init];
+        browserVc.editing = YES;
+        browserVc.delegate = self;
+        browserVc.dataSource = self;
+        if (self.assets.count>6) {
+            [self.assets removeLastObject];
+        }
+        browserVc.currentIndexPath =  [NSIndexPath indexPathForRow:0
+                                                         inSection:0];
+        [self presentViewController:browserVc animated:YES completion:nil];
+        }
 }
+#pragma ----mark图片选择器的代理方法
+- (NSInteger)numberOfSectionInPhotosInPickerBrowser:(ZLPhotoPickerBrowserViewController *)pickerBrowser{
+
+    return 1;
+}
+- (NSInteger)photoBrowser:(ZLPhotoPickerBrowserViewController *)photoBrowser numberOfItemsInSection:(NSUInteger)section{
+    
+    
+    
+    NSInteger  count = self.assets.count;
+    
+    return count;
+
+   
+}
+#pragma mark - 点击Cell通知拍照代理
+- (void)pickerCollectionViewSelectCamera:(ZLPhotoPickerViewController *)pickerVc withImage:(UIImage *)image{
+    NSLog(@" --- 拍照回调: %@",image);
+}
+
+#pragma mark - <ZLPhotoPickerBrowserViewControllerDelegate>
+#pragma mark 删除调用
+- (void)photoBrowser:(ZLPhotoPickerBrowserViewController *)photoBrowser removePhotoAtIndexPath:(NSIndexPath *)indexPath{
+    // 删除照片时调用
+    if (indexPath.row > [self.assets count]) return;
+    
+    [self.assets removeObjectAtIndex:indexPath.row];
+    [self.arrayPhotos  removeObjectAtIndex:indexPath.row];
+    [self.arrayPhotos removeLastObject];
+    
+    [self  reloadImagesView];
+}
+
+- (ZLPhotoPickerBrowserPhoto *) photoBrowser:(ZLPhotoPickerBrowserViewController *)pickerBrowser photoAtIndexPath:(NSIndexPath *)indexPath{
+    ZLPhotoAssets *imageObj = [self.assets objectAtIndex:indexPath.row];
+    // 包装下imageObj 成 ZLPhotoPickerBrowserPhoto 传给数据源
+    ZLPhotoPickerBrowserPhoto *photo = [ZLPhotoPickerBrowserPhoto photoAnyImageObjWith:imageObj];
+    if ([imageObj isKindOfClass:[UIImage class]]) {
+        photo.thumbImage = (UIImage *)imageObj;
+    }else {
+        photo.thumbImage = imageObj.originImage;
+    }
+
+       return photo;
+}
+
+
 
 
 #pragma mark - other
 //切换控制器
 - (void)changeSelectedVC:(NSInteger)selectedIndex
 {
+    
     [self.navigationController.tabBarController setSelectedIndex:selectedIndex];
     [(RootTabBarViewController *)(self.navigationController.tabBarController) changeIndexToSelected:selectedIndex];
 }
@@ -404,7 +461,6 @@
     [self.sendButton setEnabled:enable];
 }
 //存放照片的数组
-
 - (NSMutableArray *)imagesArr
 {
     if (self.arrayPhotos.count < kImagesCount)
@@ -413,15 +469,13 @@
         pictureInfo.isSelectImage = YES;
         pictureInfo.image = [UIImage imageNamed:@"asd_btn_addimage"];
         [self.arrayPhotos addObject:pictureInfo];
-    
+        
     }
-    
     return self.arrayPhotos;
 }
 //重新加载存放图片的视图
 - (void)reloadImagesView
 {
-    
     [self.imagesView reloadDataWithImagesInfo:[self imagesArr]];
     self.askScrollview.contentSize = CGSizeMake(kScreenSizeWidth, CGRectGetMaxY(self.imagesView.frame) + kBottomTabBarHeight);
 }
@@ -429,14 +483,38 @@
 - (NSMutableArray *)newImagesWithImages:(NSMutableArray *)infos
 {
     NSMutableArray *newImages = [[NSMutableArray alloc] initWithArray:infos];
-
-    MTPickerInfo *info = [newImages lastObject];
     
+    MTPickerInfo *info = [newImages lastObject];
     if (info.isSelectImage)
     {
         [newImages removeObject:info];
     }
     return newImages;
+}
+#pragma mark----相册回调
+- (void)pickerViewControllerDoneAsstes:(NSArray *)assets{
+    
+    [self.arrayPhotos removeLastObject];
+    
+    
+    
+    for (int i=0; i<assets.count; i++) {
+        ZLPhotoAssets *Asset = assets[i];
+        
+        if (self.assets.count<=6) {
+             [self.assets addObject:Asset];
+        }
+        if (self.arrayPhotos.count <= 6) {
+             [self.arrayPhotos addObject:Asset];
+        }
+    
+       
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //TODO: 更新UI
+        //显示图片
+        [self reloadImagesView];
+    });
 }
 
 

@@ -10,6 +10,8 @@
 #import "SingleImgCollectionViewCell.h"
 #import "UIViewAdditions.h"
 #import "PhotoViewController.h"
+#import "ZLPhoto.h"
+
 
 #define kCommonCelIdentifier    @"QuCommonViewIdent"
 
@@ -44,6 +46,7 @@
     CGFloat _picViewHeight;
 }
 @property (nonatomic,assign)CGFloat totalViewHeight;
+@property (nonatomic,strong)NSMutableArray *photos;
 @end
 
 @implementation QuCommonView
@@ -91,6 +94,7 @@
     _plantNameLabel.text = _qInfo.zwmc;
 
     _dateLable.text = [APPHelper describeTimeWithMSec:info.twsj];
+    [self photos:_qInfo.images];
     [self updateViewConstraint];
 }
 
@@ -211,10 +215,12 @@
 //        }]
 //    }
 }
-
+//计算高度
 - (void)calculateHeight
 {
-    _contentLabelSize = [APPHelper getStringWordWrappingSize:_qInfo.wtms andConstrainToSize:CGSizeMake(kMaxContentWidth, kMaxContentLabelHeight) andFont:kTextFont16];
+   CGFloat heigth =  [self countHeigthForLabel:_contentLable Labelwidth:(kScreenSizeWidth-24) LineSpacing:6];
+    _contentLabelSize = CGSizeMake((kScreenSizeWidth-24), heigth);
+    
     //图片高度
     _picViewHeight = 0;
     NSUInteger imgCount = _qInfo.images.count;
@@ -226,13 +232,37 @@
         _picViewHeight = rows*(kPicImgHeight+kPicPadding);
     }
     //总高度
-    self.totalViewHeight = kContentTopPadding + _contentLabelSize.height + kMiddleViewTopPadding + kMiddleViewHeight;
+    self.totalViewHeight = kContentTopPadding + heigth + kMiddleViewTopPadding + kMiddleViewHeight;
     if (_qInfo.images.count > 0)
     {
         self.totalViewHeight += kPicViewTopPadding + _picViewHeight;
     }
    self.totalViewHeight += 12;
 }
+- (CGFloat)countHeigthForLabel:(UILabel *)label Labelwidth:(CGFloat )witdh LineSpacing:(CGFloat)spacing{
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:label.text];
+    NSMutableParagraphStyle *paragrahStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragrahStyle setLineSpacing:spacing];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragrahStyle range:NSMakeRange(0,[label.text length])];
+    [label setAttributedText:attributedString];
+    [label sizeToFit];
+    
+    label.lineBreakMode = NSLineBreakByCharWrapping;
+    
+    CGSize size = CGSizeMake(witdh, 2000);
+    
+    CGSize labsize = [label.text sizeWithFont:kTextFont16 constrainedToSize:size lineBreakMode:label.lineBreakMode];
+    CGFloat texetheigth= labsize.height;
+    
+    CGFloat linespaceHeigth = labsize.height/20*10;
+    
+    CGFloat  heigth = texetheigth+linespaceHeigth;
+    
+    return heigth;
+}
+
+
+
 
 #pragma mark- UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -257,20 +287,42 @@
 #pragma mark- UICollectionViewDelegate
 //点击事件
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    PhotoViewController *photoVC = [[PhotoViewController alloc] init]
-    ;
-    photoVC.imageUrls = _qInfo.images.mutableCopy;
-    photoVC.indexPath = indexPath
-    ;
-  // self.viewController.tabBarController.hidesBottomBarWhenPushed = YES;
-    
-    [self.viewController.navigationController pushViewController:photoVC animated:YES];
-    
-    
-
-
+    //图片浏览器
+    ZLPhotoPickerBrowserViewController *pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+    // pickerBrowser.delegate = self;
+    // 数据源可以不传，传photos数组 photos<里面是ZLPhotoPickerBrowserPhoto>
+    pickerBrowser.photos = self.photos;
+    // 是否可以删除照片
+    pickerBrowser.editing = NO;
+    // 当前选中的值
+    pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+    // 展示控制器
+    [pickerBrowser showPickerVc:self.viewController];
 }
+- (NSMutableArray *)photos:(NSArray *)array{
+    if (!_photos) {
+        _photos = [NSMutableArray array];
+        
+        for (NSString *str in array) {
+            //判断路径是否是拼接的
+            NSURL *iconURL = [NSURL URLWithString:[APPHelper safeString:str]];
+            if([str rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+                //有前缀
+                iconURL = [NSURL URLWithString:str];
+            }else{
+                
+                NSString *str1 = [kPictureURL stringByAppendingString:str];
+                iconURL =[NSURL URLWithString:str1];
+            }
+            ZLPhotoPickerBrowserPhoto *photo = [[ZLPhotoPickerBrowserPhoto alloc] init]
+            ;
+            photo.photoURL = iconURL;
+            [_photos addObject:photo];
+        }
+    }
+    return _photos;
+}
+
 
 
 @end

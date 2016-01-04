@@ -14,7 +14,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mine_back_image" translatesAutoresizingMaskIntoConstraints="NO" id="NI4-Lf-gBY">
                     <rect key="frame" x="0.0" y="0.0" width="412" height="289"/>
                     <animations/>
-                    <color key="backgroundColor" red="1" green="0.19150539080439177" blue="0.1257780711174451" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xat-pB-Q0d">
                     <rect key="frame" x="205" y="154" width="1" height="18"/>
@@ -47,14 +47,20 @@
                         <action selector="tapLoginBT:" destination="iN0-l3-epB" eventType="touchUpInside" id="r4P-wh-BYC"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nvp-dR-FE5">
-                    <rect key="frame" x="168" y="62" width="76" height="76"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nvp-dR-FE5">
+                    <rect key="frame" x="168" y="58" width="76" height="76"/>
                     <animations/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="76" id="S9x-I9-ZgJ"/>
                         <constraint firstAttribute="width" constant="76" id="lPt-Dw-Nvl"/>
                     </constraints>
                     <state key="normal" backgroundImage="mine_notlogin_pic"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="S9x-I9-ZgJ"/>
+                        </mask>
+                    </variation>
                     <connections>
                         <action selector="tapPhoto:" destination="iN0-l3-epB" eventType="touchUpInside" id="f30-N7-6XW"/>
                     </connections>
@@ -84,7 +90,7 @@
                 <outlet property="loginBT" destination="ETZ-LY-2Qe" id="Gd6-6I-3yI"/>
                 <outlet property="registerBT" destination="QPg-bB-lz0" id="cb8-7b-eKf"/>
             </connections>
-            <point key="canvasLocation" x="388" y="204.5"/>
+            <point key="canvasLocation" x="342" y="198.5"/>
         </view>
     </objects>
     <resources>

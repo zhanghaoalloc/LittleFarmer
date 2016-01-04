@@ -45,7 +45,10 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
    // [self _requestData];
+    AppDelegate *appDelegate =(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate hideTabbar];
 
 }
 - (void)_addSubViews{

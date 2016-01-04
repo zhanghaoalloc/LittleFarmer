@@ -25,6 +25,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>appiconweixin.png</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>wxd963cb4bff24b438</string>
@@ -33,17 +35,21 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>appiconqq.png</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>QQ41DA290C</string>
+				<string>QQ41DA43E6</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>appicontencent.png</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>tencent1104816396</string>
+				<string>tencent1104823270</string>
 			</array>
 		</dict>
 	</array>

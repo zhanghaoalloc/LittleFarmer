@@ -12,6 +12,7 @@
 #import "UIViewAdditions.h"
 #import "MyanswerViewController.h"
 #import "UIImageView+WebCache.h"
+#import "ZLPhoto.h"
 
 
 #define kLeftSpace  12
@@ -44,6 +45,8 @@
 }
 
 @property (nonatomic,strong)QuestionCellSource *qSource;
+
+@property (nonatomic,strong)NSMutableArray *photos;
 @end
 
 @implementation QuestionCell
@@ -224,17 +227,47 @@
         _thirdPicBtn.hidden = NO;
     }
 }
+#pragma mark ---处理图片浏览的问题
 //图片按钮的点击事件
 - (void)pictureAction:(UIButton *)button{
+  //图片浏览器
+    _pickerBrowser = [[ZLPhotoPickerBrowserViewController alloc] init];
+   // pickerBrowser.delegate = self;
+    // 数据源可以不传，传photos数组 photos<里面是ZLPhotoPickerBrowserPhoto>
+    _pickerBrowser.photos = self.photos;
+    // 是否可以删除照片
+    _pickerBrowser.editing = NO;
+    // 当前选中的值
+    _pickerBrowser.currentIndexPath = [NSIndexPath indexPathForRow:button.tag-1 inSection:0];
+    // 展示控制器
+    [_pickerBrowser showPickerVc:self.viewController];
     
-    PhotoViewController *photoVC = [[PhotoViewController alloc] init];
     
-    self.viewController.tabBarController.hidesBottomBarWhenPushed = YES;
-    QuestionInfo *info = _qSource.qInfo;
-    photoVC.imageUrls =info.images.mutableCopy;
-    
-    [self.viewController.navigationController pushViewController:photoVC animated:YES];
+}
+- (NSMutableArray *)photos:(NSArray *)array{
+    _photos = nil;
+    if (!_photos) {
+        _photos = [NSMutableArray array];
+        for (NSString *str in array) {
+           //判断路径是否是拼接的
+            NSURL *iconURL = [NSURL URLWithString:[APPHelper safeString:str]];
+            if([str rangeOfString:@"http://www.enbs.com.cn"].location!= NSNotFound) {
+                //有前缀
+                iconURL = [NSURL URLWithString:str];
+            }else{
+                
+                NSString *str1 = [kPictureURL stringByAppendingString:str];
+                iconURL =[NSURL URLWithString:str1];
+            }
+            ZLPhotoPickerBrowserPhoto *photo = [[ZLPhotoPickerBrowserPhoto alloc] init]
+            ;
+            photo.photoURL = iconURL;
+            [_photos addObject:photo];
+            
+        }
+    }
 
+    return _photos;
 }
 
 - (void)bottemViewInit
@@ -397,7 +430,9 @@
     _plantNameLabel.text = info.zwmc;
     _dateLable.text = [APPHelper describeTimeWithMSec:info.twsj];
     
+    [self photos:self.qSource.qInfo.images];
 
+    
     [self updateViewConstraint];
 }
 
@@ -415,4 +450,6 @@
 
 
 }
+
+
 @end

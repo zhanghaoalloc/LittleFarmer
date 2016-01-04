@@ -50,19 +50,19 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initSubviews)name:kUserSignOutNotification object:nil];
     //监听登录成功的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UserSianInNotfication:) name:kUserSignInNotification object:nil];
+    //监听邀请码填写成功的通知
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(requestPersonInfos) name:@"invitedCodeSuccess" object:nil];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
-
+    [self setStatusBarColor:[UIColor colorWithHexString:@"#eeeeee"]];
+    self.edgesForExtendedLayout = UIRectEdgeAll;
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
     [self commonInit];
-    
     [self initSubviews];
     
     if ([MiniAppEngine shareMiniAppEngine].isLogin)
@@ -129,7 +129,7 @@
                 [infoVC initTitleLabel:@"个人信息"];
                 infoVC.type = NO;
             }
-    
+            infoVC.tabBarController.hidesBottomBarWhenPushed = YES;
             [weakSelf.navigationController pushViewController:infoVC animated:YES];
             
         }];
@@ -153,7 +153,7 @@
         MineInfos *infos = [[MineInfos alloc] initWithDictionary:responseObject error:nil];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+ 
     }];
 }
  */
@@ -200,7 +200,6 @@
     
     UserMenuItem *item8 = [UserMenuItem new];
     item8.type = TypeNothing;
-    
     [sourceArray addObject:item8];
 
     UserMenuItem *item9 = [UserMenuItem new];
@@ -219,7 +218,6 @@
     item11.title = @"设置";
     item11.imageString = @"setting";
     [sourceArray addObject:item11];
-
 }
 
 - (void)initSubviews
@@ -231,9 +229,6 @@
         HeaderLoginView *loginView = [[HeaderLoginView alloc] initWithFrame:CGRectMake(0, 0, kScreenSizeWidth, kScreenSizeWidth * 476.0 / 750)];
         
         [loginView refreshUIWithModel:self.headerInfos];
-        
-        
-//        [self.view addSubview:loginView];
         
         headerView = loginView;
     }
@@ -259,7 +254,7 @@
         notLoginView.tapRegistBT = ^()
         {
             RegisterViewController *registVC = [[RegisterViewController alloc] init];
-            [weakself.navigationController pushViewController:registVC animated:YES];
+            [weakself presentViewController:registVC animated:YES completion:nil];
         };
         
         notLoginView.tapPhotoBT = ^(){
@@ -272,10 +267,10 @@
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.bounces = NO;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.frame = CGRectMake(0,0, kScreenSizeWidth, kScreenSizeHeight-49);
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.backgroundColor = [UIColor colorWithHexString:@"#eeeeee"];
         [self.view addSubview:_tableView];
     }
      _tableView.tableHeaderView = headerView;
@@ -297,8 +292,8 @@
     {
         return [MineSegmentCell cellHeightWihtModel:nil];
     }
-    else
-    {
+    else{
+    
         return 0;
     }
 }

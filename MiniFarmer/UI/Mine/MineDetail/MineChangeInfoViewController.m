@@ -10,6 +10,7 @@
 #import "MineJobTableView.h"
 #import "AFNetworking.h"
 #import "PlantListModel.h"
+#import "BaseViewController+Navigation.h"
 
 @interface MineChangeInfoViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -46,9 +47,14 @@
     [super viewDidLoad];
     
     self.jobarray = [NSMutableArray array];
-    [self setStatusBarColor:[UIColor colorWithHexString:@"f8f8f8"]];
-    [self.view setBackgroundColor:[UIColor colorWithHexString:@"eeeeee"]];
+    [self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
+    [self.view setBackgroundColor:[UIColor colorWithHexString:@"#eeeeee"]];
+    
+    [self initNavigationbgView:[UIColor colorWithHexString:@"#ffffff"]];
     self.edgesForExtendedLayout = UIRectEdgeAll;
+
+    
+    [self lightStatusBar];
     [self setBarLeftDefualtButtonWithTarget:self action:@selector(back)];
 
     [self setLineToBarBottomWithColor:[UIColor colorWithHexString:@"a3a3a3"] heigth:kLineWidth];
@@ -117,6 +123,7 @@
     NSDictionary *dic ;
 
     
+    
     // 这里怎么区分 传入的是哪些个字段
     if (self.zjid ==nil) {//普通用户
         subUrl = @"?c=user&m=edit_personal";
@@ -133,12 +140,10 @@
                 @"id":self.zjid,
                 @"fieldname":self.item.filename,
                 @"fieldvalue":self.fileValue
-                
                 };
     }
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestPost subUrl:subUrl parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        
-        
+
         BaseModel *baseModel = [[BaseModel alloc] initWithDictionary:responseObject error:nil];
         
         if (baseModel.code.intValue)
@@ -188,8 +193,9 @@
         _mineTextField.layer.cornerRadius = 8;
         _mineTextField.layer.borderColor = [UIColor colorWithHexString:@"e4e4e4"].CGColor;
         _mineTextField.layer.borderWidth = kLineWidth; //也就是0.5dp
-        _mineTextField.textColor = [UIColor colorWithHexString:@"333333"];
+        _mineTextField.textColor = [UIColor colorWithHexString:@"#333333"];
         _mineTextField.font = kTextFont(16);
+        _mineTextField.text = _item.subTitle;
         [_mineTextField setBackgroundColor:[UIColor whiteColor]];
         _mineTextField.delegate = self;
     }
@@ -255,8 +261,6 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
-
-
 }
 
 #pragma----- mark修改作物
@@ -279,6 +283,7 @@
     _identify1 = @"plantCell";
     [_plantTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:_identify1];
 }
+//作物种类的列表
 - (void)requestPlantData{
     _plantKindArray = [NSMutableArray array];
     _plantSectionArrary = [NSMutableArray array];
@@ -319,7 +324,6 @@
             });
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
     }];
     
 }
@@ -411,8 +415,10 @@
         _introduceView.delegate = self;
         _introduceView.layer.cornerRadius = 8;
         _introduceView.layer.borderWidth = kLineWidth; //也就是0.5dp
-        _introduceView.textColor = [UIColor colorWithHexString:@"333333"];
+        _introduceView.textColor = [UIColor colorWithHexString:@"#333333"];
         _introduceView.font = kTextFont(16);
+        _introduceView.text = _item.subTitle;
+        _introduceView.layer.borderColor = [[UIColor colorWithHexString:@"#dddddd"]CGColor];
         [_introduceView setBackgroundColor:[UIColor whiteColor]];
     }
 
@@ -494,10 +500,10 @@
         self.sendButton = nil;
         
         [self addSubviews];
-        
     }
 
 }
+
 
 
 @end

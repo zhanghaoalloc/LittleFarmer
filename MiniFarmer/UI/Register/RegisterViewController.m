@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexString:@"#f8f8f8"];
+    [self setStatusBarColor:[UIColor colorWithHexString:@"#ffffff"]];
 
     [self initSubViews];
     
@@ -290,7 +291,7 @@
         [self setLayerWithView:_registerButton];
         [_registerButton setTitle:@"注册" forState:UIControlStateNormal];
         [_registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_registerButton setBackgroundColor:RGBACOLOR(234, 85, 6, 1.0f)];
+        [_registerButton setBackgroundColor:[UIColor colorWithHexString:@"#488bff"]];
         [_registerButton.titleLabel setFont:[UIFont systemFontOfSize:16]];
         [_registerButton addTarget:self action:@selector(registerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -343,17 +344,25 @@
     }
     //开始注册
     NSDictionary *dic = @{/*@"c":@"user",@"m":@"register",*/@"mobile":[APPHelper safeString:self.phoneTF.text],@"yzm":[APPHelper safeString:self.verificationCodeTF.text],@"password":[APPHelper safeString:self.passwordTF.text]};
+    
     [[SHHttpClient defaultClient] requestWithMethod:SHHttpRequestGet subUrl:@"?c=user&m=register" parameters:dic prepareExecute:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        
         RegisterModel *registerModel = [[RegisterModel alloc] initWithDictionary:(NSDictionary *)responseObject error:nil];
+        
         [self.view showWeakPromptViewWithMessage:registerModel.msg];
         
         if (registerModel.code.intValue == RequestResultStateSuccess)
         {
-            //这里要做特殊的处理
+            //发送通知给mineViewController,刷新头视图信息
+            
+            
+            
+            
             [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
         [self.view showWeakPromptViewWithMessage:@"注册失败"];
 
     }];
@@ -363,7 +372,7 @@
 
 - (void)dismissRegisterVCAction
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)backKeyboard

@@ -74,6 +74,7 @@
 + (NSString *)timeFormatted:(int)totalSeconds;
 
 
+
 //数字超过1000时显示 x.xk
 - (NSString *)kNumWithNumber:(NSString*)nums;
 
